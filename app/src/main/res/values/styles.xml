@@ -1,0 +1,56 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/appgreen</item>
+        <item name="colorPrimaryDark">@color/appgreen</item>
+        <item name="colorAccent">@color/appgreen</item>
+        <item name="android:actionMenuTextColor">@color/appgreen</item>
+    </style>
+
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorPrimary">@color/Black</item>
+        <item name="android:colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/Black</item>
+
+    </style>
+
+
+    <style name="btpostcash" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="backgroundColor">@color/LimeGreen</item>
+
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+       
+
+    </style>
+
+    <style name="menu_text_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+
+
+
+
+</resources>
