@@ -129,8 +129,8 @@ public class QuestionairePostFeedFrag extends BaseFragment {
                     if (dialog != null) {
                         dialog.dismiss();
                     }
-                    AlertUtils.showAlert(context, "FeedBack submitted successfully.");
-                    context.homeFrag();
+                    AlertUtils.showAlert(context, "Feedback submitted successfully.");
+                    context.executedCompletedEvent();
 
                 }
 

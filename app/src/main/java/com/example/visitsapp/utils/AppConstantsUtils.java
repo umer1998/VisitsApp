@@ -21,8 +21,11 @@ public class AppConstantsUtils {
 
     public static final String UPLOAD_IMAGE = "uploadProfileImage";
 
-    public static final String COMPLETED_PLAN = "completedPlan";
+    public static final String COMPLETED_PLAN = "getCompletedEvents";
+    public static final String GET_UNEXECUTED_EVENTS = "getUnexecutedEvents";
 
+    public static final String UNAPPROVED_EVENT = "unapprovedEvents";
+    public static final String CREATE_EVENT_FEEDBACK = "createEventFeedback";
 
 
 

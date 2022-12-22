@@ -15,4 +15,7 @@ public class EventSummary {
 
     @SerializedName("leaves")
     public int leaves;
+
+    @SerializedName("unexecuted")
+    public int unexecuted;
 }

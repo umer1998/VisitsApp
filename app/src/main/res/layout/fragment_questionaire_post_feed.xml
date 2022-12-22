@@ -7,6 +7,7 @@ android:orientation="vertical"
 tools:context=".ui.fragments.QuestionairePostFeedFrag">
 
 <RelativeLayout
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="70dp">
 
@@ -30,8 +31,7 @@ tools:context=".ui.fragments.QuestionairePostFeedFrag">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:orientation="vertical">
 
 <FrameLayout
     android:layout_width="match_parent"
@@ -41,8 +41,7 @@ tools:context=".ui.fragments.QuestionairePostFeedFrag">
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="75dp" />
+        android:layout_marginBottom="80dp" />
 
 </FrameLayout>
 

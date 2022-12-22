@@ -28,19 +28,23 @@ import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
 import com.example.visitsapp.model.request.CreatePlanRequest;
 import com.example.visitsapp.model.request.PostFeedBackRequest;
 import com.example.visitsapp.model.request.ReplaceEventRequest;
+import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.GetReportingTeamResponce;
-import com.example.visitsapp.model.responce.PlansData;
 import com.example.visitsapp.ui.activities.Login;
 import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
 import com.example.visitsapp.ui.fragments.ApprovalListingFrag;
 import com.example.visitsapp.ui.fragments.BaseFragment;
 import com.example.visitsapp.ui.fragments.CalenderViewFrag;
-import com.example.visitsapp.ui.fragments.ExecutedFrag;
+import com.example.visitsapp.ui.fragments.UnApprovedEvent;
+import com.example.visitsapp.ui.fragments.UnExecutedEvent;
+import com.example.visitsapp.ui.fragments.executedevent.CurrentExecutedFrag;
 import com.example.visitsapp.ui.fragments.ExecutionListingFrag;
 import com.example.visitsapp.ui.fragments.HomeFragment;
 import com.example.visitsapp.ui.fragments.QuestionairePostFeedFrag;
 import com.example.visitsapp.ui.fragments.QuestionaireReplaceEventFragment;
 import com.example.visitsapp.ui.fragments.ReportingTeamFragment;
+import com.example.visitsapp.ui.fragments.executedevent.ExecutedEventsFragment;
+import com.example.visitsapp.ui.fragments.executedevent.ExecutionCompletedEvents;
 import com.example.visitsapp.ui.fragments.leaves.LeavesFrag;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
@@ -154,7 +158,21 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.leave:
                         drawer.closeDrawer(Gravity.LEFT);
-                        leavesFrag();
+                        getLeaves();
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        llcplan.setVisibility(View.VISIBLE);
+                        break;
+
+                    case R.id.unapprove:
+                        drawer.closeDrawer(Gravity.LEFT);
+                        getUnApprovedEvents();
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        llcplan.setVisibility(View.VISIBLE);
+                        break;
+
+                    case R.id.unExecuted:
+                        drawer.closeDrawer(Gravity.LEFT);
+                        getUnExecutedEvents();
                         bottomNavigationView.setVisibility(View.VISIBLE);
                         llcplan.setVisibility(View.VISIBLE);
                         break;
@@ -195,12 +213,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void leavesFrag() {
+    public void leavesFrag(ArrayList<GetLeavesResponce> pendingLeaves, ArrayList<GetLeavesResponce> approveLeaves) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
         if (!(fragment instanceof LeavesFrag)) {
 
-            LeavesFrag recfrag = new LeavesFrag(this);
+            LeavesFrag recfrag = new LeavesFrag(this, pendingLeaves, approveLeaves);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
@@ -222,13 +240,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void getUnApprovedEvents() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof UnApprovedEvent)) {
+            bottomNavigationView.setVisibility(View.GONE);
+            llcplan.setVisibility(View.GONE);
+
+            UnApprovedEvent recfrag = new UnApprovedEvent(this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
+
+    public void getUnExecutedEvents() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof UnExecutedEvent)) {
+            bottomNavigationView.setVisibility(View.GONE);
+            llcplan.setVisibility(View.GONE);
+
+            UnExecutedEvent recfrag = new UnExecutedEvent(this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
     public void getExecutedEvent() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if (!(fragment instanceof ExecutedFrag)) {
+        if (!(fragment instanceof ExecutedEventsFragment )) {
 
 
-            ExecutedFrag recfrag = new ExecutedFrag(this);
+            ExecutedEventsFragment recfrag = new ExecutedEventsFragment(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
@@ -298,6 +347,19 @@ public class MainActivity extends AppCompatActivity {
         if (!(fragment instanceof ExecutionListingFrag)) {
 
             ExecutionListingFrag recfrag = new ExecutionListingFrag(this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
+    public void executedCompletedEvent() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof ExecutionCompletedEvents)) {
+
+            ExecutionCompletedEvents recfrag = new ExecutionCompletedEvents(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
@@ -390,7 +452,9 @@ public class MainActivity extends AppCompatActivity {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                AlertUtils.showAlert(MainActivity.this, "FeedBack submitted successfully.");
+
+                SharedPrefrences.getInstance().setPostFeedBack(null);
+                AlertUtils.showAlert(MainActivity.this, "Feedback submitted successfully.");
 
 
             }
@@ -419,13 +483,13 @@ public class MainActivity extends AppCompatActivity {
         serviceImp.replaceevent(replaceEventRequest, new ResponseCallBack<String>() {
             @Override
             public void onSuccess(String body) {
-
+                SharedPrefrences.getInstance().setReplaceEventFeedBack(null);
 
                 if (dialog != null) {
                     dialog.dismiss();
                 }
 
-                AlertUtils.showAlert(MainActivity.this, "FeedBack submitted successfully.");
+                AlertUtils.showAlert(MainActivity.this, "Feedback submitted successfully.");
 
             }
 
@@ -449,9 +513,58 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public void getLeaves() {
+        final AlertDialog dialog = AlertUtils.showLoader(MainActivity.this);
+
+        if (dialog != null) {
+            dialog.show();
+        }
+
+
+
+
+        Business serviceImp = new Business() ;
+        serviceImp.getLeaves( new ResponseCallBack<ArrayList<GetLeavesResponce>>() {
+            @Override
+            public void onSuccess(ArrayList<GetLeavesResponce> body) {
+
+
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+
+                ArrayList<GetLeavesResponce> pendingLeaves = new ArrayList<>();
+                ArrayList<GetLeavesResponce> approveLeaves = new ArrayList<>();
+
+                for(int i =0 ; i< body.size(); i++){
+                    if(body.get(i).status.equalsIgnoreCase("pending")){
+                        pendingLeaves.add(body.get(i));
+                    } else {
+                        approveLeaves.add(body.get(i));
+                    }
+                }
+                leavesFrag(pendingLeaves, approveLeaves);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+
+                AlertUtils.showAlert(MainActivity.this, message);
+
+
+            }
+        });
+    }
 
 
 }
+
+
+
 
 
 

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
@@ -53,6 +54,7 @@ public class CalenderViewFrag extends BaseFragment {
     List<String> data = new ArrayList<>();
     private LinearLayout llcplan;
     private RelativeLayout rlcplan;
+    private TextView tvmonthtext;
 
     private NavigationView navigationView;
 
@@ -76,6 +78,10 @@ public class CalenderViewFrag extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calender_view, container, false);
+
+        tvmonthtext = view.findViewById(R.id.monthtext);
+        Date date = new Date();
+        tvmonthtext.setText(new SimpleDateFormat("MMMM yyyy").format(date));
 
         rlcplan = view.findViewById(R.id.cplan);
         rlcplan.setOnClickListener(new View.OnClickListener() {

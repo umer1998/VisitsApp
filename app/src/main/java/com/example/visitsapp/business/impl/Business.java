@@ -512,10 +512,10 @@ public class Business {
     }
 
 
-    public void getCompletedEvents(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+    public void getCompletedEvents(String filter,final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
 
 
-        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.getExecutedPlan();
+        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.completedPlan(filter);
 
         call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
             @Override
@@ -539,6 +539,98 @@ public class Business {
             }
         });
     }
+
+
+    public void unExecutedEvent(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+
+
+        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.unExecutedEvent();
+
+        call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
+            @Override
+            public void onResponse(Call<ResponceObject<ArrayList<PlansData>>> call,
+                                   Response<ResponceObject<ArrayList<PlansData>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null
+                            && response.body().getResponsecode() == 200) {
+                        responseCallBack.onSuccess(response.body().getData());
+                    } else if (response.body() != null
+                            && response.body().getMessage() != null) {
+                        responseCallBack.onFailure(response.body().getMessage());
+                    }
+                } else {
+                    responseCallBack.onFailure(response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponceObject<ArrayList<PlansData>>> call, Throwable t) {
+                responseCallBack.onFailure(t.getMessage());
+            }
+        });
+    }
+
+
+
+
+    public void unApproved(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+
+
+        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.unApprovedEvent();
+
+        call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
+            @Override
+            public void onResponse(Call<ResponceObject<ArrayList<PlansData>>> call,
+                                   Response<ResponceObject<ArrayList<PlansData>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null
+                            && response.body().getResponsecode() == 200) {
+                        responseCallBack.onSuccess(response.body().getData());
+                    } else if (response.body() != null
+                            && response.body().getMessage() != null) {
+                        responseCallBack.onFailure(response.body().getMessage());
+                    }
+                } else {
+                    responseCallBack.onFailure(response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponceObject<ArrayList<PlansData>>> call, Throwable t) {
+                responseCallBack.onFailure(t.getMessage());
+            }
+        });
+    }
+
+
+
+
+    public void createFeedback(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+
+
+        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.createEventFeedback();
+
+        call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
+            @Override
+            public void onResponse(Call<ResponceObject<ArrayList<PlansData>>> call,
+                                   Response<ResponceObject<ArrayList<PlansData>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null
+                            && response.body().getResponsecode() == 200) {
+                        responseCallBack.onSuccess(response.body().getData());
+                    } else if (response.body() != null
+                            && response.body().getMessage() != null) {
+                        responseCallBack.onFailure(response.body().getMessage());
+                    }
+                } else {
+                    responseCallBack.onFailure(response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponceObject<ArrayList<PlansData>>> call, Throwable t) {
+                responseCallBack.onFailure(t.getMessage());
+            }
+        });
+    }
+
 
 
 }

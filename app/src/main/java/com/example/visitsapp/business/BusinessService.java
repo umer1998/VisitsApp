@@ -84,8 +84,19 @@ public interface BusinessService {
     @POST(AppConstantsUtils.UPLOAD_IMAGE)
     Call<ResponceObject<String>> uploadImage(@Body UploadImageRequest uploadImageRequest);
 
-    @POST(AppConstantsUtils.COMPLETED_PLAN)
-    Call<ResponceObject<ArrayList<PlansData>>> completedPlan();
+    @GET(AppConstantsUtils.COMPLETED_PLAN)
+    Call<ResponceObject<ArrayList<PlansData>>> completedPlan(@Query("period") String filter);
+
+    @GET(AppConstantsUtils.UNAPPROVED_EVENT)
+    Call<ResponceObject<ArrayList<PlansData>>> unApprovedEvent();
+
+
+    @GET(AppConstantsUtils.CREATE_EVENT_FEEDBACK)
+    Call<ResponceObject<ArrayList<PlansData>>> createEventFeedback();
+
+
+    @GET(AppConstantsUtils.GET_UNEXECUTED_EVENTS)
+    Call<ResponceObject<ArrayList<PlansData>>> unExecutedEvent();
 
 
 }

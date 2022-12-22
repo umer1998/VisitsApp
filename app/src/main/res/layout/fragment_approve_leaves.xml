@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/bg"
     android:layout_height="match_parent"
+    android:id="@+id/swipe"
     tools:context=".ui.fragments.leaves.ApproveLeavesFrag">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,4 +13,4 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"/>
 
-</FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

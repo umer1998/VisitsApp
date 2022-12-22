@@ -48,16 +48,16 @@ public class ExecutedPlanAdapted extends RecyclerView.Adapter<ExecutedPlanAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-//        try {
-//            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
-//                    format(new SimpleDateFormat("hh:mm:ss").
-//                            parse(body.get(position).time)));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        holder.tvPurpose.setText(body.get(position).event_purpose);
-//        holder.tvEvent.setText(body.get(position).event);
+        try {
+            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
+                    format(new SimpleDateFormat("hh:mm:ss").
+                            parse(body.get(position).time)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.tvPurpose.setText(body.get(position).event_purpose);
+        holder.tvEvent.setText(body.get(position).event);
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +69,7 @@ public class ExecutedPlanAdapted extends RecyclerView.Adapter<ExecutedPlanAdapte
 
     @Override
     public int getItemCount() {
-        return 4;
+        return body.size();
     }
 
 

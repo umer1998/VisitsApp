@@ -20,7 +20,7 @@ public class GetLeavesResponce {
     @SerializedName("planned_on")
     public String planned_on;
 
-    @SerializedName("event_status")
+    @SerializedName("status")
     public String status;
 
     @SerializedName("time")

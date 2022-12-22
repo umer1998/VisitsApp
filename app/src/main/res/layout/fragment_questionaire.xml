@@ -7,6 +7,7 @@
     tools:context=".ui.fragments.ReportingTeamFragment">
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
@@ -30,8 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg">
+        android:orientation="vertical">
 
 
 
@@ -39,8 +39,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="75dp" />
+            android:layout_marginBottom="80dp" />
 
 
         <LinearLayout
@@ -64,7 +63,7 @@
                     android:layout_centerInParent="true"
                     android:text="SUBMITT"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_18"/>
+                    android:textSize="@dimen/dp_18" />
 
             </RelativeLayout>
 

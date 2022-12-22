@@ -1,5 +1,6 @@
 package com.example.visitsapp.ui.fragments.leaves;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -35,11 +36,21 @@ public class LeavesFrag extends BaseFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private MainActivity context;
+    ArrayList<GetLeavesResponce> pendingLeaves = new ArrayList<>();
+    private ArrayList<GetLeavesResponce> approveLeaves = new ArrayList<>();
+    ViewPagerAdapter viewPagerAdapter;
 
-    public LeavesFrag(MainActivity context) {
+    public LeavesFrag(MainActivity context, ArrayList<GetLeavesResponce> pendingLeaves, ArrayList<GetLeavesResponce> approveLeaves) {
         this.context = context;
+        this.pendingLeaves = pendingLeaves;
+        this.approveLeaves = approveLeaves;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +62,7 @@ public class LeavesFrag extends BaseFragment {
         tabLayout = view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Pending \nLeaves"));
         tabLayout.addTab(tabLayout.newTab().setText("Approved \nLeaves"));
-        getLeaves();
+        addTabs();
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -74,56 +85,9 @@ public class LeavesFrag extends BaseFragment {
 
         return view;
     }
+//
+    private void addTabs() {
 
-    private void getLeaves() {
-        final AlertDialog dialog = AlertUtils.showLoader(context);
-
-        if (dialog != null) {
-            dialog.show();
-        }
-
-
-
-
-        Business serviceImp = new Business() ;
-        serviceImp.getLeaves( new ResponseCallBack<ArrayList<GetLeavesResponce>>() {
-            @Override
-            public void onSuccess(ArrayList<GetLeavesResponce> body) {
-
-
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                ArrayList<GetLeavesResponce> pendingLeaves = new ArrayList<>();
-                ArrayList<GetLeavesResponce> approveLeaves = new ArrayList<>();
-
-                for(int i =0 ; i< body.size(); i++){
-                    if(body.get(i).status.equalsIgnoreCase("pending")){
-                        pendingLeaves.add(body.get(i));
-                    } else {
-                        approveLeaves.add(body.get(i));
-                    }
-                }
-                addTabs(pendingLeaves, approveLeaves);
-
-            }
-
-            @Override
-            public void onFailure(String message) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                AlertUtils.showAlert(context, message);
-
-
-            }
-        });
-    }
-
-    private void addTabs(ArrayList<GetLeavesResponce> pendingLeaves, ArrayList<GetLeavesResponce> approveLeaves) {
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(context.getSupportFragmentManager());
         viewPagerAdapter.addFrag(new PendingLeavesFrag(context, pendingLeaves),"Pending");
         viewPagerAdapter.addFrag(new ApproveLeavesFrag(context, approveLeaves), "Approved");
 

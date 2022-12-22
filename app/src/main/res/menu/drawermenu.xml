@@ -26,6 +26,14 @@
         <item android:id="@+id/leave"
             android:icon="@drawable/leave_icon"
             android:title="Leaves"/>
+        <item android:id="@+id/unapprove"
+            android:icon="@drawable/leave_icon"
+            android:title="UnApproved Events"/>
+
+
+        <item android:id="@+id/unExecuted"
+            android:icon="@drawable/leave_icon"
+            android:title="UnExecuted Events"/>
     </group>
 
 

@@ -142,8 +142,8 @@ public class QuestionaireReplaceEventFragment extends BaseFragment {
                         dialog.dismiss();
                     }
 
-                    AlertUtils.showAlert(context, "FeedBack submitted successfully.");
-                    context.homeFrag();
+                    AlertUtils.showAlert(context, "Feedback submitted successfully.");
+                    context.executedCompletedEvent();
                 }
 
                 @Override

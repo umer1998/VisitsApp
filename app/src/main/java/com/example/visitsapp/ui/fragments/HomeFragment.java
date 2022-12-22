@@ -151,6 +151,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         setProfileImage();
         getDashBoardData();
+        getExecutionEvent();
 
 
 
@@ -231,7 +232,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 tvExecutedCount.setText(String.valueOf(body.event_summary.visits_executed));
                 tvPendingCount.setText(String.valueOf(body.event_summary.visit_pending));
                 tvPlannedCount.setText(String.valueOf(body.event_summary.visit_planned));
-                tvLeavesCount.setText(String.valueOf(body.event_summary.leaves));
+                tvLeavesCount.setText(String.valueOf(body.event_summary.unexecuted));
                 setAdapter(body.plans);
                 if (dialog != null) {
                     dialog.dismiss();
@@ -307,7 +308,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.executed:
-                context.getExecutedEvent();
+                context.executedCompletedEvent();
                 context.bottomNavigationView.setVisibility(View.VISIBLE);
                 context.llcplan.setVisibility(View.VISIBLE);
                 break;
@@ -320,7 +321,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
             case R.id.leaves:
-                context.leavesFrag();
+                context.getLeaves();
                 context.bottomNavigationView.setVisibility(View.GONE);
                 context.llcplan.setVisibility(View.GONE);
                 break;
