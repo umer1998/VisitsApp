@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.CalenderViewFrag">
+    tools:context=".ui.fragments.pending.CalenderViewFrag">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,25 +45,24 @@
     </LinearLayout>
 
 
-        <RelativeLayout
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="45dp"
-            android:layout_marginBottom="45dp"
-            android:id="@+id/cplan"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+    <RelativeLayout
+        android:id="@+id/cplan"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="45dp"
 
-            android:background="@drawable/circle_green"
-            android:elevation="7dp">
+        android:background="@drawable/circle_green"
+        android:elevation="7dp">
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/calendar" />
-
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/calendar" />
 
 
     </RelativeLayout>

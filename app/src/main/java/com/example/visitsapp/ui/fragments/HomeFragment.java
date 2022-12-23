@@ -44,6 +44,8 @@ import com.example.visitsapp.model.responce.TodayPlans;
 import com.example.visitsapp.ui.MainActivity;
 import com.example.visitsapp.ui.activities.Login;
 import com.example.visitsapp.ui.adapter.TodaysPlanAdapter;
+import com.example.visitsapp.ui.dialoguefragmens.CreateEventDialogue2;
+import com.example.visitsapp.utils.OnItemClickListener;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -211,6 +213,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private void setAdapter(ArrayList<TodayPlans> plans) {
         TodaysPlanAdapter todaysPlanAdapter = new TodaysPlanAdapter(context, plans);
         recyclerView.setAdapter(todaysPlanAdapter);
+
+        todaysPlanAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PlansData plansData = new PlansData();
+                plansData.planned_on = plans.get(position).planned_on;
+                plansData.event = plans.get(position).event;
+                plansData.id = plans.get(position).id;
+                plansData.time = plans.get(position).time;
+                plansData.purpose_child = plans.get(position).purposechild;
+                plansData.area = plans.get(position).area;
+                plansData.region = plans.get(position).region;
+                plansData.event_purpose = plans.get(position).event_purpose;
+                plansData.status = plans.get(position).status;
+
+
+                CreateEventDialogue2 dialog = new CreateEventDialogue2(context,  plansData);
+                dialog.show(context.getSupportFragmentManager(), "MyDialogFragment");
+            }
+        });
+
+
     }
 
     private void getDashBoardData() {
@@ -321,7 +345,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
             case R.id.leaves:
-                context.getLeaves();
+                context.getUnExecutedEvents();
                 context.bottomNavigationView.setVisibility(View.GONE);
                 context.llcplan.setVisibility(View.GONE);
                 break;

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.visitsapp.R;
 import com.example.visitsapp.model.responce.TodayPlans;
 import com.example.visitsapp.ui.MainActivity;
+import com.example.visitsapp.utils.OnItemClickListener;
 import com.repsly.library.timelineview.LineType;
 import com.repsly.library.timelineview.TimelineView;
 
@@ -27,6 +28,7 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
 
     private MainActivity context;
     private ArrayList<TodayPlans> plans;
+    private OnItemClickListener mItemClickListener;
 
     public TodaysPlanAdapter(MainActivity context, ArrayList<TodayPlans> plans) {
         this.context = context;
@@ -50,12 +52,19 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         try {
-            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
-                    format(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").
-                            parse(plans.get(position).planned_on)));
+            holder.tvTime.setText(new SimpleDateFormat("HH:mm").
+                    format(new SimpleDateFormat("hh:mm:ss").
+                            parse(plans.get(position).time)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemClickListener.onItemClick(view, position);
+            }
+        });
 //        holder.tvTime.setText(plans.get(position).planned_on);
 
         holder.tvPurpose.setText(plans.get(position).event_purpose);
@@ -73,6 +82,7 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvEvent, tvPurpose, tvTime;
+        private CardView cardView;
 
 
         ViewHolder(View view) {
@@ -82,7 +92,14 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
             tvPurpose = view.findViewById(R.id.eventPurpose);
             tvTime = view.findViewById(R.id.time);
 
+            cardView = view.findViewById(R.id.card);
+
         }
     }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
+
 
 }

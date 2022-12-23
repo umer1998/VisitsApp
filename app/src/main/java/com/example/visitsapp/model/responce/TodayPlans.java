@@ -10,12 +10,24 @@ public class TodayPlans {
     @SerializedName("event_purpose")
     public String event_purpose;
 
-    @SerializedName("plan")
-    public String plan;
+    @SerializedName("purpose_child")
+    public String purposechild;
 
-    @SerializedName("description")
-    public String description;
+    @SerializedName("id")
+    public int id;
 
     @SerializedName("planned_on")
     public String planned_on;
+
+    @SerializedName("time")
+    public String time;
+
+    @SerializedName("area")
+    public String area;
+
+    @SerializedName("region")
+    public String region;
+
+    @SerializedName("status")
+    public String status;
 }

@@ -1,5 +1,6 @@
 package com.example.visitsapp.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -72,6 +73,7 @@ public class QuestionaireAdapter extends RecyclerView.Adapter<QuestionaireAdapte
         return vh;
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
@@ -94,9 +96,10 @@ public class QuestionaireAdapter extends RecyclerView.Adapter<QuestionaireAdapte
             radioButton1.setLayoutParams(parameters);
             radioButton1.setText(feedbackQuestionnaires.get(position).mcqs.get(i));
             radioButton1.setId(i);
+
             radioButton1.setButtonTintList(colorStateList);
-            radioButton1.setTextSize(20f);
-            radioButton1.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
+            radioButton1.setTextSize(20);
+//            radioButton1.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
             radioGroup.addView(radioButton1);
 
 
@@ -106,11 +109,13 @@ public class QuestionaireAdapter extends RecyclerView.Adapter<QuestionaireAdapte
         TextView tvtext = new TextView(context);
         tvtext.setText(String.valueOf(position+1) + ". " + feedbackQuestionnaires.get(position).question);
         tvtext.setTextSize(20f);
+        tvtext.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
+//        tvtext.setTextAlignment(View.TEXT_DIRECTION_ANY_RTL);
         LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         par.setMargins(30, 25, 30, 25);
         tvtext.setLayoutParams(par);
-        tvtext.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
-        tvtext.setTypeface(tvtext.getTypeface(), Typeface.BOLD);
+//        tvtext.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
+        tvtext.setTypeface(tvtext.getTypeface(), Typeface.NORMAL);
         tvtext.setTextColor(Color.parseColor("#000000"));
         holder.linearLayout.addView(tvtext);
 

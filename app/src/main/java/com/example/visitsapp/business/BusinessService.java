@@ -2,6 +2,7 @@ package com.example.visitsapp.business;
 
 import com.example.visitsapp.model.ResponceObject;
 import com.example.visitsapp.model.configuration.ConfigurationResponse;
+import com.example.visitsapp.model.request.CreateEventFeedback;
 import com.example.visitsapp.model.request.CreatePlanRequest;
 import com.example.visitsapp.model.request.ForgotPasswordRequest;
 import com.example.visitsapp.model.request.LoginRequest;
@@ -91,8 +92,8 @@ public interface BusinessService {
     Call<ResponceObject<ArrayList<PlansData>>> unApprovedEvent();
 
 
-    @GET(AppConstantsUtils.CREATE_EVENT_FEEDBACK)
-    Call<ResponceObject<ArrayList<PlansData>>> createEventFeedback();
+    @POST(AppConstantsUtils.CREATE_EVENT_FEEDBACK)
+    Call<ResponceObject<String>> createEventFeedback(@Body CreateEventFeedback createEventFeedback);
 
 
     @GET(AppConstantsUtils.GET_UNEXECUTED_EVENTS)

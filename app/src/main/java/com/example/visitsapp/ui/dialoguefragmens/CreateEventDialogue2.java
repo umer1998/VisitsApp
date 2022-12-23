@@ -2,6 +2,8 @@ package com.example.visitsapp.ui.dialoguefragmens;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -80,6 +82,9 @@ public class CreateEventDialogue2 extends DialogFragment {
     private LinearLayout llafterchange, llchangeevent;
     private RelativeLayout rlContinue;
 
+    private LinearLayout llocation1, llregion1, llarea1, llbranch1;
+    private TextView tveventspinner1, tveventPurpose1, tvlocationSpinner1, tvregionspinner1,areaspinner1, tvbranchspinner1;
+
 
     public CreateEventDialogue2(MainActivity context, PlansData plansData) {
         this.context = context;
@@ -117,6 +122,14 @@ public class CreateEventDialogue2 extends DialogFragment {
                 regionSpinner.setEnabled(true);
                 areaSpinner.setEnabled(true);
                 branchSpinner.setEnabled(true);
+
+                eventSpinner.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+                eventPurpose.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+                locationSpinner.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+                regionSpinner.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+                areaSpinner.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+                branchSpinner.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44000000")));
+
 
                 llafterchange.setVisibility(View.VISIBLE);
                 llchangeevent.setVisibility(View.GONE);

@@ -54,6 +54,270 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
 
         </RelativeLayout>
 
+<!--        <LinearLayout-->
+<!--            android:background="@drawable/white_bottom"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Event Type"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/eventspinner1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Event Purpose"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/eventPurpose1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/lllocation1"-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Location"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/locationSpinner1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/llregion1"-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Region"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/regionspinner1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/llarea1"-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Area"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/areaspinner1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/llbranch1"-->
+<!--                android:layout_marginStart="@dimen/dp_15"-->
+<!--                android:layout_marginEnd="@dimen/dp_15"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="@dimen/dp_20">-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Branch"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="16sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:id="@+id/branchspinner1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    android:backgroundTint="@color/disabled_color"-->
+<!--                    android:drawSelectorOnTop="true"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:layout_marginEnd="@dimen/dp_25"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/Light_Grey"-->
+<!--                    android:layout_marginStart="12dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+
+
+
+
+<!--        </LinearLayout>-->
+
+
+
+
+
+
+
+
+<!--        &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
         <LinearLayout
             android:background="@drawable/white_bottom"
             android:layout_width="match_parent"
@@ -84,7 +348,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 
@@ -124,7 +388,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 
@@ -165,7 +429,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 
@@ -206,7 +470,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 
@@ -247,7 +511,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 
@@ -289,7 +553,7 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:backgroundTint="@color/disabled_color"
+                    android:backgroundTint="@color/white"
                     android:drawSelectorOnTop="true"
                     />
 

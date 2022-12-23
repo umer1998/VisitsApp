@@ -27,6 +27,7 @@ import com.example.visitsapp.ui.adapter.ExecutedEventsAdapter;
 import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
 import com.example.visitsapp.ui.fragments.BaseFragment;
 import com.example.visitsapp.utils.alert.AlertUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
@@ -56,7 +57,9 @@ public class ExecutionCompletedEvents extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_execution_completed_events, container, false);
 
-
+        BottomNavigationView bottomNavigationView = context.bottomNavigationView;
+        bottomNavigationView.setVisibility(View.GONE);
+        context.llcplan.setVisibility(View.GONE);
 
 
 

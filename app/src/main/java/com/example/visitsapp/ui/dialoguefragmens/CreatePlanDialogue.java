@@ -55,6 +55,8 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
     private ConfigurationResponse configurationResponse;
     private CreatePlanRequest createPlanRequest = new CreatePlanRequest();
 
+    private LinearLayout llDateTime;
+
     private RelativeLayout rlCancel, rlSchedule;
     private TextView tvDate;
 
@@ -74,6 +76,8 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
         View view = inflater.inflate(R.layout.fragment_create_plan_dialogue, container, false);
 
         configurationResponse = SharedPrefrences.getInstance().getConfig();
+
+        llDateTime = view.findViewById(R.id.datetime);
 
         llArea = view.findViewById(R.id.llarea);
         llBranch = view.findViewById(R.id.llbranch);
@@ -108,7 +112,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
         setEventSpinner(configurationResponse.events);
 
         tvDate = view.findViewById(R.id.date);
-        tvDate.setOnClickListener(new View.OnClickListener() {
+        llDateTime.setOnClickListener(new View.OnClickListener() {
 
             Long time = new Date().getTime();
             Date date = new Date(time - time % (24 * 60 * 60 * 1000));
@@ -333,7 +337,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
             return;
 
         } else if(createPlanRequest.getPlanned_on() == null ||
-                createPlanRequest.getPlanned_on().isEmpty()){
+                createPlanRequest.getPlanned_on().isEmpty() ){
 
             tvDate.setError("Please select date and time");
 

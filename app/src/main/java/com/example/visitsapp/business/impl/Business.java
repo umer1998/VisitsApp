@@ -8,6 +8,7 @@ import com.example.visitsapp.business.PostFeedBackResponce;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.ResponceObject;
 import com.example.visitsapp.model.configuration.ConfigurationResponse;
+import com.example.visitsapp.model.request.CreateEventFeedback;
 import com.example.visitsapp.model.request.CreatePlanRequest;
 import com.example.visitsapp.model.request.ForgotPasswordRequest;
 import com.example.visitsapp.model.request.LoginRequest;
@@ -603,15 +604,15 @@ public class Business {
 
 
 
-    public void createFeedback(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+    public void createFeedback(CreateEventFeedback createEventFeedback, final ResponseCallBack<String> responseCallBack) {
 
+        String json = new Gson().toJson(createEventFeedback);
+        Call<ResponceObject<String>> call = businessService.createEventFeedback(createEventFeedback);
 
-        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.createEventFeedback();
-
-        call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
+        call.enqueue(new Callback<ResponceObject<String>>() {
             @Override
-            public void onResponse(Call<ResponceObject<ArrayList<PlansData>>> call,
-                                   Response<ResponceObject<ArrayList<PlansData>>> response) {
+            public void onResponse(Call<ResponceObject<String>> call,
+                                   Response<ResponceObject<String>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null
                             && response.body().getResponsecode() == 200) {
@@ -625,7 +626,7 @@ public class Business {
                 }
             }
             @Override
-            public void onFailure(Call<ResponceObject<ArrayList<PlansData>>> call, Throwable t) {
+            public void onFailure(Call<ResponceObject<String>> call, Throwable t) {
                 responseCallBack.onFailure(t.getMessage());
             }
         });

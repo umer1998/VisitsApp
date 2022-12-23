@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-tools:context=".ui.fragments.UnExecutedEvent">
+tools:context=".ui.fragments.drawerfrag.UnExecutedEvent">
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -19,7 +19,7 @@ tools:context=".ui.fragments.UnExecutedEvent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="UnExecuted Event"
+        android:text="Unexecuted Event"
         android:textColor="@color/Black"
         android:textSize="22sp"
         android:textStyle="normal" />

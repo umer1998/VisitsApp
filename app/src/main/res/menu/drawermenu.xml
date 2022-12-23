@@ -28,12 +28,12 @@
             android:title="Leaves"/>
         <item android:id="@+id/unapprove"
             android:icon="@drawable/leave_icon"
-            android:title="UnApproved Events"/>
+            android:title="Unapproved Events"/>
 
 
         <item android:id="@+id/unExecuted"
             android:icon="@drawable/leave_icon"
-            android:title="UnExecuted Events"/>
+            android:title="Unexecuted Events"/>
     </group>
 
 

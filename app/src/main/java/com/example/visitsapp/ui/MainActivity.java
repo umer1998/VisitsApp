@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.PostFeedBackResponce;
@@ -30,19 +31,19 @@ import com.example.visitsapp.model.request.PostFeedBackRequest;
 import com.example.visitsapp.model.request.ReplaceEventRequest;
 import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.GetReportingTeamResponce;
+import com.example.visitsapp.model.responce.LoginResponce;
 import com.example.visitsapp.ui.activities.Login;
 import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
-import com.example.visitsapp.ui.fragments.ApprovalListingFrag;
+import com.example.visitsapp.ui.fragments.approvefrag.ApprovalListingFrag;
 import com.example.visitsapp.ui.fragments.BaseFragment;
-import com.example.visitsapp.ui.fragments.CalenderViewFrag;
-import com.example.visitsapp.ui.fragments.UnApprovedEvent;
-import com.example.visitsapp.ui.fragments.UnExecutedEvent;
-import com.example.visitsapp.ui.fragments.executedevent.CurrentExecutedFrag;
-import com.example.visitsapp.ui.fragments.ExecutionListingFrag;
+import com.example.visitsapp.ui.fragments.pending.CalenderViewFrag;
+import com.example.visitsapp.ui.fragments.drawerfrag.UnApprovedEvent;
+import com.example.visitsapp.ui.fragments.drawerfrag.UnExecutedEvent;
+import com.example.visitsapp.ui.fragments.executionfrags.ExecutionListingFrag;
 import com.example.visitsapp.ui.fragments.HomeFragment;
-import com.example.visitsapp.ui.fragments.QuestionairePostFeedFrag;
-import com.example.visitsapp.ui.fragments.QuestionaireReplaceEventFragment;
-import com.example.visitsapp.ui.fragments.ReportingTeamFragment;
+import com.example.visitsapp.ui.fragments.executionfrags.QuestionairePostFeedFrag;
+import com.example.visitsapp.ui.fragments.executionfrags.QuestionaireReplaceEventFragment;
+import com.example.visitsapp.ui.fragments.approvefrag.ReportingTeamFragment;
 import com.example.visitsapp.ui.fragments.executedevent.ExecutedEventsFragment;
 import com.example.visitsapp.ui.fragments.executedevent.ExecutionCompletedEvents;
 import com.example.visitsapp.ui.fragments.leaves.LeavesFrag;
@@ -95,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.execution:
                         executionFrag();
-                        bottomNavigationView.setVisibility(View.VISIBLE);
-                        llcplan.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                        llcplan.setVisibility(View.GONE);
                         break;
 
                     case R.id.approval:
@@ -145,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.execution:
                         drawer.closeDrawer(Gravity.LEFT);
                         executionFrag();
-                        bottomNavigationView.setVisibility(View.VISIBLE);
-                        llcplan.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                        llcplan.setVisibility(View.GONE);
                         break;
 
                     case R.id.approval:
@@ -412,6 +413,17 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialog = AlertUtils.showLoader(this);
 
         dialog.show();
+        if(SharedPrefrences.getInstance().getloginResponse() != null){
+            LoginResponce loginResponce = SharedPrefrences.getInstance().getloginResponse();
+            if(loginResponce.designation != null && !loginResponce.designation.isEmpty() &&
+                    loginResponce.fullname != null && !loginResponce.fullname.isEmpty()){
+                TextView tvname = navigationView.getHeaderView(0).findViewById(R.id.name);
+                tvname.setText(loginResponce.fullname);
+                TextView tvDesignation = navigationView.getHeaderView(0).findViewById(R.id.designation);
+                tvDesignation.setText(loginResponce.designation);
+            }
+        }
+
         profileImage = navigationView.getHeaderView(0).findViewById(R.id.profileimage);
         if(SharedPrefrences.getInstance().getProfileImage() != null){
             Picasso.get()
