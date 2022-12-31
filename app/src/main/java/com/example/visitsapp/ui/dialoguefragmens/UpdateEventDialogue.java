@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -50,6 +51,10 @@ public class UpdateEventDialogue extends DialogFragment {
     private UpdateEventRequest updateEventRequest = new UpdateEventRequest();
     private int eventPosition, purposePosition, locationPosition, branchPosition, regionPosition, areaPosition;
 
+    private LinearLayout llotherlocation,llotherpurpse;
+    private EditText edPurpose, edLocation;
+
+
     String date = "";
 
     private RelativeLayout rlCancel, rlSchedule;
@@ -73,6 +78,13 @@ public class UpdateEventDialogue extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_update_event_dialogue, container, false);
         this.getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         configurationResponse = SharedPrefrences.getInstance().getConfig();
+
+        llotherlocation = view.findViewById(R.id.llotherlocation);
+        llotherpurpse = view.findViewById(R.id.llotherpurpose);
+
+        edLocation = view.findViewById(R.id.otherlocation);
+        edPurpose = view.findViewById(R.id.otherpurpose);
+
 
         llArea = view.findViewById(R.id.llarea);
         llBranch = view.findViewById(R.id.llbranch);
@@ -151,6 +163,7 @@ public class UpdateEventDialogue extends DialogFragment {
                     llRegion.setVisibility(View.GONE);
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     llLocation.setVisibility(View.GONE);
                     updateEventRequest.setPurpose_child_id("0");
                 } else if(events.get(i).event_name_code.equals("meeting")){
@@ -158,7 +171,8 @@ public class UpdateEventDialogue extends DialogFragment {
                     llRegion.setVisibility(View.GONE);
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
-                    llLocation.setVisibility(View.VISIBLE);
+                    llotherlocation.setVisibility(View.VISIBLE);
+                    llLocation.setVisibility(View.GONE);
                     setLocationPurpose();
                 } else if(events.get(i).event_name_code.equals("field_visit")){
 
@@ -166,6 +180,7 @@ public class UpdateEventDialogue extends DialogFragment {
                     llArea.setVisibility(View.VISIBLE);
                     llBranch.setVisibility(View.VISIBLE);
                     llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     setRegionSpinner();
                 }
 
@@ -198,7 +213,15 @@ public class UpdateEventDialogue extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 purposePosition = i;
-                updateEventRequest.setPurpose_id(purposes.get(i).purpose_code);
+                if(purposes.get(i).purpose_code.equalsIgnoreCase("other_leave")
+                        || purposes.get(i).purpose_code.equalsIgnoreCase("other_meeting")){
+                    llotherpurpse.setVisibility(View.VISIBLE);
+                    updateEventRequest.setPurpose_id(purposes.get(i).purpose_code);
+                } else {
+                    llotherpurpse.setVisibility(View.GONE);
+                    updateEventRequest.setPurpose_id(purposes.get(i).purpose_code);
+                }
+
             }
 
             @Override
@@ -229,7 +252,15 @@ public class UpdateEventDialogue extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locationPosition = i;
-                updateEventRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+
+                if(meetingPlaces.get(i).code.equalsIgnoreCase("other")){
+                    updateEventRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                    llotherlocation.setVisibility(View.VISIBLE);
+                } else {
+                    llotherlocation.setVisibility(View.GONE);
+                    updateEventRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                }
+
             }
 
             @Override
@@ -351,7 +382,7 @@ public class UpdateEventDialogue extends DialogFragment {
 
             return;
 
-        } else if(updateEventRequest.getPurpose_child_id() == null ||
+        }  else if(updateEventRequest.getPurpose_child_id() == null ||
                 updateEventRequest.getPurpose_child_id().isEmpty()){
 
             if(updateEventRequest.getEvent_id().equals("leave")
@@ -359,8 +390,10 @@ public class UpdateEventDialogue extends DialogFragment {
 
             } else if(updateEventRequest.getEvent_id().equals("meeting")) {
 
-                TextView tvText = (TextView) locationSpinner.getSelectedView();
-                tvText.setError("Please select location !");
+
+
+//                TextView tvText = (TextView) locationSpinner.getSelectedView();
+//                tvText.setError("Please select location !");
             } else if(updateEventRequest.getEvent_id().equals("field_visit")){
 
                 if(region.equals("")){
@@ -386,6 +419,22 @@ public class UpdateEventDialogue extends DialogFragment {
             tvText.setError("Please select event purpose");
 
             return;
+        }
+
+        if(updateEventRequest.getPurpose_id().equalsIgnoreCase("other_meeting")
+                || updateEventRequest.getPurpose_id().equalsIgnoreCase("other_leave")){
+            if(edPurpose.getText().toString().isEmpty() || edPurpose.getText().toString().equalsIgnoreCase("")){
+                edPurpose.setError("Please enter purpose.");
+                return;
+            }
+            updateEventRequest.setPurpose_id(edPurpose.getText().toString());
+        }
+        if(updateEventRequest.getEvent_id().equalsIgnoreCase("meeting")){
+            if(edLocation.getText().toString().isEmpty() || edLocation.getText().toString().equals("")){
+                edLocation.setError("Please enter location");
+                return;
+            }
+            updateEventRequest.setPurpose_child_id(edLocation.getText().toString());
         }
         final AlertDialog dialog = AlertUtils.showLoader(context);
 

@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     android:layout_height="match_parent"
     tools:context=".ui.activities.Login">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
     <ImageView
-        android:layout_width="140dp"
-        android:layout_height="180dp"
-        android:src="@drawable/loginicon"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="55dp"/>
+        android:src="@drawable/loginicon"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="21sp"
+        android:textSize="40sp"
         android:text="Sign In"
+        android:fontFamily="@font/heavy"
         android:layout_marginStart="@dimen/dp_15"
-        android:textStyle="bold"
         android:textColor="@color/Black"/>
 
 
@@ -29,20 +37,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:fontFamily="@font/regular"
+
         android:text="Please Sign in to Continue"
         android:layout_marginStart="@dimen/dp_15"
         android:textStyle="normal"
-        android:textColor="@color/LightGrey"/>
+        android:textColor="@color/textcolor"/>
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_25"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_15"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:orientation="vertical"
+        android:elevation="10dp"
         android:background="@drawable/round_gray_cornor">
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,14 +63,15 @@
             android:textSize="16sp"
             android:layout_marginTop="7dp"
             android:text="Email"
+            android:fontFamily="@font/semibold"
             android:layout_marginStart="@dimen/dp_15"
             android:textStyle="normal"
-            android:textColor="@color/Black"/>
+            android:textColor="@color/textcolor"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="12dp">
 
             <EditText
                 android:id="@+id/email"
@@ -68,20 +82,50 @@
                 android:background="@color/Transparent"
                 android:hint="Enter Email"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="15dp" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_30"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:src="@drawable/lock"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp_15"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/semibold"
+            android:text=" Password"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"/>
+
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/passll"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dp_15"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_15"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:orientation="vertical"
         android:background="@drawable/round_gray_cornor">
 
@@ -91,14 +135,15 @@
             android:textSize="16sp"
             android:layout_marginTop="7dp"
             android:text="Password"
+            android:fontFamily="@font/semibold"
             android:layout_marginStart="@dimen/dp_15"
             android:textStyle="normal"
-            android:textColor="@color/Black"/>
+            android:textColor="@color/textcolor"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="12dp">
 
             <EditText
                 android:id="@+id/password"
@@ -108,8 +153,10 @@
                 android:layout_marginEnd="@dimen/dp_15"
                 android:background="@color/Transparent"
                 android:hint="Enter Password"
-                android:textColor="@color/LightGrey"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/Black"
                 android:inputType="textPassword"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="15dp" />
 
         </RelativeLayout>
@@ -128,11 +175,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="LOGIN"
             android:layout_centerInParent="true"
-            android:textStyle="normal"
-            android:textColor="@color/white"/>
+            android:text="LOGIN"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
 
     </RelativeLayout>
@@ -142,13 +190,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:fontFamily="@font/semibold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_15"
         android:text="Forgot Password ?"
         android:textStyle="normal"
-        android:textColor="@color/appgreen"/>
+        android:textColor="@color/Black"/>
+
+    </LinearLayout>
 
 
-
-
-</LinearLayout>
+</ScrollView>

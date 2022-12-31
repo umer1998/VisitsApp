@@ -15,10 +15,10 @@
             android:layout_height="match_parent">
 
             <FrameLayout
-                android:layout_above="@+id/bottomNavigationView"
                 android:id="@+id/main_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomNavigationView" />
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -67,7 +67,7 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/calendar" />
+                        android:src="@drawable/create" />
 
                 </RelativeLayout>
 

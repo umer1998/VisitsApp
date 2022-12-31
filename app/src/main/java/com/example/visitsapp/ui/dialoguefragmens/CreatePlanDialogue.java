@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -55,6 +56,9 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
     private ConfigurationResponse configurationResponse;
     private CreatePlanRequest createPlanRequest = new CreatePlanRequest();
 
+    private LinearLayout llotherlocation,llotherpurpse;
+    private EditText edPurpose, edLocation;
+
     private LinearLayout llDateTime;
 
     private RelativeLayout rlCancel, rlSchedule;
@@ -78,6 +82,12 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
         configurationResponse = SharedPrefrences.getInstance().getConfig();
 
         llDateTime = view.findViewById(R.id.datetime);
+
+        llotherlocation = view.findViewById(R.id.llotherlocation);
+        llotherpurpse = view.findViewById(R.id.llotherpurpose);
+
+        edLocation = view.findViewById(R.id.otherlocation);
+        edPurpose = view.findViewById(R.id.otherpurpose);
 
         llArea = view.findViewById(R.id.llarea);
         llBranch = view.findViewById(R.id.llbranch);
@@ -157,13 +167,15 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
                     llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     createPlanRequest.setPurpose_child_id("0");
                 } else if(events.get(i).event_name_code.equals("meeting")){
 
                     llRegion.setVisibility(View.GONE);
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
-                    llLocation.setVisibility(View.VISIBLE);
+                    llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.VISIBLE);
                     setLocationPurpose();
                 } else if(events.get(i).event_name_code.equals("field_visit")){
 
@@ -171,6 +183,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
                     llArea.setVisibility(View.VISIBLE);
                     llBranch.setVisibility(View.VISIBLE);
                     llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     setRegionSpinner();
                 }
 
@@ -200,7 +213,15 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+
+                if(purposes.get(i).purpose_code.equalsIgnoreCase("other_leave")
+                    || purposes.get(i).purpose_code.equalsIgnoreCase("other_meeting")){
+                    llotherpurpse.setVisibility(View.VISIBLE);
+                    createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+                } else {
+                    llotherpurpse.setVisibility(View.GONE);
+                    createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+                }
             }
 
             @Override
@@ -220,6 +241,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
             list.add(meetingPlaces.get(i).name);
         }
 
+
         ArrayAdapter<String> eventSpinnerAdapter = new ArrayAdapter<>(context, R.layout.spinner_item, list);
         eventSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(eventSpinnerAdapter);
@@ -227,7 +249,14 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+
+                if(meetingPlaces.get(i).code.equalsIgnoreCase("other")){
+                    createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                    llotherlocation.setVisibility(View.VISIBLE);
+                } else {
+                    llotherlocation.setVisibility(View.GONE);
+                    createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                }
             }
 
             @Override
@@ -328,7 +357,13 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
     }
 
     private void cretaePlan() {
-        if(createPlanRequest.getEvent_id() == null ||
+        if(createPlanRequest.getPlanned_on() == null ||
+                createPlanRequest.getPlanned_on().isEmpty() ){
+
+            tvDate.setError("Please select date and time");
+
+            return;
+        }  if(createPlanRequest.getEvent_id() == null ||
                 createPlanRequest.getEvent_id().isEmpty()){
 
             TextView tvText = (TextView) eventSpinner.getSelectedView();
@@ -336,13 +371,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
 
             return;
 
-        } else if(createPlanRequest.getPlanned_on() == null ||
-                createPlanRequest.getPlanned_on().isEmpty() ){
-
-            tvDate.setError("Please select date and time");
-
-            return;
-        } else if(createPlanRequest.getPurpose_child_id() == null ||
+        }  else if(createPlanRequest.getPurpose_child_id() == null ||
                 createPlanRequest.getPurpose_child_id().isEmpty()){
 
             if(createPlanRequest.getEvent_id().equals("leave")
@@ -350,8 +379,10 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
 
             } else if(createPlanRequest.getEvent_id().equals("meeting")) {
 
-                TextView tvText = (TextView) locationSpinner.getSelectedView();
-                tvText.setError("Please select location !");
+//
+//
+//                TextView tvText = (TextView) locationSpinner.getSelectedView();
+//                tvText.setError("Please select location !");
             } else if(createPlanRequest.getEvent_id().equals("field_visit")){
 
                 if(region.equals("")){
@@ -378,8 +409,25 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
 
             return;
         }
-        final AlertDialog dialog = AlertUtils.showLoader(context);
 
+        if(createPlanRequest.getPurpose_id().equalsIgnoreCase("other_meeting")
+                || createPlanRequest.getPurpose_id().equalsIgnoreCase("other_leave")){
+            if(edPurpose.getText().toString().isEmpty() || edPurpose.getText().toString().equalsIgnoreCase("")){
+                edPurpose.setError("Please enter purpose.");
+                return;
+            }
+            createPlanRequest.setPurpose_id(edPurpose.getText().toString());
+        }
+        if(createPlanRequest.getEvent_id().equalsIgnoreCase("meeting")){
+            if(edLocation.getText().toString().isEmpty() || edLocation.getText().toString().equals("")){
+                edLocation.setError("Please enter location");
+                return;
+            }
+            createPlanRequest.setPurpose_child_id(edLocation.getText().toString());
+        }
+
+
+        final AlertDialog dialog = AlertUtils.showLoader(context);
         if (dialog != null) {
             dialog.show();
         }

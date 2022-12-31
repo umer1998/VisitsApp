@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ public class Login extends AppCompatActivity {
     private RelativeLayout rlLogin;
     private EditText edPassword, edEmail;
     private TextView tvForgotPass;
+    private LinearLayout llpass, llpassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,16 @@ public class Login extends AppCompatActivity {
 
         edEmail = findViewById(R.id.email);
         edPassword = findViewById(R.id.password);
+
+        llpassword = findViewById(R.id.passll);
+        llpass = findViewById(R.id.pass);
+        llpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                llpassword.setVisibility(View.VISIBLE);
+                llpass.setVisibility(View.GONE);
+            }
+        });
 
         tvForgotPass = findViewById(R.id.forgot);
         tvForgotPass.setOnClickListener(new View.OnClickListener() {

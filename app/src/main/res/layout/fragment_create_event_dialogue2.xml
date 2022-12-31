@@ -405,6 +405,92 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
 
             <LinearLayout
                 android:visibility="gone"
+                android:id="@+id/llotherpurpose"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <TextView
+                    android:layout_marginTop="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Purpose"
+                    android:textColor="@color/appgreen"
+                    android:layout_marginStart="12dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:layout_marginStart="12dp"
+                    android:id="@+id/otherpurpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:background="@color/Transparent"
+                    android:hint="Enter purpose"
+                    android:backgroundTint="@color/Black"
+                    android:drawSelectorOnTop="true"
+                    />
+
+                <View
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/dp_25"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Light_Grey"
+                    android:layout_marginStart="12dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llotherlocation"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <TextView
+                    android:layout_marginTop="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/appgreen"
+                    android:layout_marginStart="12dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:layout_marginStart="12dp"
+                    android:id="@+id/otherlocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:background="@color/Transparent"
+                    android:hint="Enter location"
+                    android:backgroundTint="@color/Black"
+                    android:drawSelectorOnTop="true"
+                    />
+
+                <View
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/dp_25"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Light_Grey"
+                    android:layout_marginStart="12dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/lllocation"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginEnd="@dimen/dp_15"
