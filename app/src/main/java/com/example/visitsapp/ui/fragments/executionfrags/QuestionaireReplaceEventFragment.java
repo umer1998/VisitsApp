@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
 import com.example.visitsapp.model.request.ChangedPlan;
@@ -129,36 +130,46 @@ public class QuestionaireReplaceEventFragment extends BaseFragment {
         changedPlansList.add(changedPlan);
         request.changedPlan = changedPlansList;
 
+        if(isNetworkAvailable()) {
+            final AlertDialog dialog = AlertUtils.showLoader(context);
+            if (dialog != null) {
+                dialog.show();
+            }
+            Business serviceImp = new Business();
+            serviceImp.createFeedback(request, new ResponseCallBack<String>() {
+                @Override
+                public void onSuccess(String body) {
 
-        final AlertDialog dialog = AlertUtils.showLoader(context);
-        if (dialog != null) {
-            dialog.show();
+
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+
+                    AlertUtils.showAlert(context, "Feedback submitted successfully.");
+                    context.executedCompletedEvent();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+
+                    AlertUtils.showAlert(context, message);
+
+
+                }
+            });
+        } else {
+            myDbAdapter dbHelper = new myDbAdapter(context);
+            for(int i = 0; i< quesAnswers.size(); i++){
+                dbHelper.insertQuestionaire(id, quesAnswers.get(i).getAnswer(), String.valueOf(quesAnswers.get(i).getId()));
+            }
+            dbHelper.insertCreateFeedback(createPlanRequest.getPlanned_on(),
+                    createPlanRequest.getEvent_id(),
+                    createPlanRequest.getPurpose_id(),
+                    createPlanRequest.getPurpose_child_id());
         }
-        Business serviceImp = new Business() ;
-        serviceImp.createFeedback(request, new ResponseCallBack<String>() {
-            @Override
-            public void onSuccess(String body) {
-
-
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                AlertUtils.showAlert(context, "Feedback submitted successfully.");
-                context.executedCompletedEvent();
-            }
-
-            @Override
-            public void onFailure(String message) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                AlertUtils.showAlert(context, message);
-
-
-            }
-        });
     }
 
     private void replaceEventAndPost() {
@@ -191,7 +202,7 @@ public class QuestionaireReplaceEventFragment extends BaseFragment {
 
 //        request.changedPlan.add(changedPlan);
 
-        if(isNetworkAvailable()){
+//        if(isNetworkAvailable()){
             final AlertDialog dialog = AlertUtils.showLoader(context);
             if (dialog != null) {
                 dialog.show();
@@ -221,44 +232,45 @@ public class QuestionaireReplaceEventFragment extends BaseFragment {
 
                 }
             });
-        } else {
-            ReplaceEventRequest replaceEventRequest = new ReplaceEventRequest();
-            if(SharedPrefrences.getInstance().getReplaceEventFeedBack() != null &&
-                    SharedPrefrences.getInstance().getReplaceEventFeedBack().changedPlan.size() > 0){
-
-                replaceEventRequest = SharedPrefrences.getInstance().getReplaceEventFeedBack();
-                replaceEventRequest.changedPlan.add(changedPlan);
-                SharedPrefrences.getInstance().setReplaceEventFeedBack(replaceEventRequest);
-                ArrayList<PlansData> arrayList = new ArrayList<>();
-                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
-                PlansData removeDataObj = new PlansData();
-                for(PlansData data: arrayList){
-                    if(data.id == changedPlan.plannerEventId){
-                        removeDataObj = data;
-                    }
-                }
-                arrayList.remove(removeDataObj);
-                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
-
-            } else {
-
-                ArrayList<ChangedPlan> changedPlanArrayList1 = new ArrayList<>();
-                changedPlanArrayList1.add(changedPlan);
-                replaceEventRequest.changedPlan = changedPlanArrayList1;
-                SharedPrefrences.getInstance().setReplaceEventFeedBack(replaceEventRequest);
-                ArrayList<PlansData> arrayList = new ArrayList<>();
-                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
-                PlansData removeDataObj = new PlansData();
-                for(PlansData data: arrayList){
-                    if(data.id == changedPlan.plannerEventId){
-                        removeDataObj = data;
-                    }
-                }
-                arrayList.remove(removeDataObj);
-                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
-
-            }
-        }
+//        }
+//        else {
+//            ReplaceEventRequest replaceEventRequest = new ReplaceEventRequest();
+//            if(SharedPrefrences.getInstance().getReplaceEventFeedBack() != null &&
+//                    SharedPrefrences.getInstance().getReplaceEventFeedBack().changedPlan.size() > 0){
+//
+//                replaceEventRequest = SharedPrefrences.getInstance().getReplaceEventFeedBack();
+//                replaceEventRequest.changedPlan.add(changedPlan);
+//                SharedPrefrences.getInstance().setReplaceEventFeedBack(replaceEventRequest);
+//                ArrayList<PlansData> arrayList = new ArrayList<>();
+//                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
+//                PlansData removeDataObj = new PlansData();
+//                for(PlansData data: arrayList){
+//                    if(data.id == changedPlan.plannerEventId){
+//                        removeDataObj = data;
+//                    }
+//                }
+//                arrayList.remove(removeDataObj);
+//                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
+//
+//            } else {
+//
+//                ArrayList<ChangedPlan> changedPlanArrayList1 = new ArrayList<>();
+//                changedPlanArrayList1.add(changedPlan);
+//                replaceEventRequest.changedPlan = changedPlanArrayList1;
+//                SharedPrefrences.getInstance().setReplaceEventFeedBack(replaceEventRequest);
+//                ArrayList<PlansData> arrayList = new ArrayList<>();
+//                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
+//                PlansData removeDataObj = new PlansData();
+//                for(PlansData data: arrayList){
+//                    if(data.id == changedPlan.plannerEventId){
+//                        removeDataObj = data;
+//                    }
+//                }
+//                arrayList.remove(removeDataObj);
+//                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
+//
+//            }
+//        }
 
 
     }
@@ -266,6 +278,7 @@ public class QuestionaireReplaceEventFragment extends BaseFragment {
 
 
     private void setApadter() {
+        recyclerView.setItemViewCacheSize(feedbackQuestionnaires.size());
         QuestionaireAdapter questionaireAdapter = new QuestionaireAdapter(context, feedbackQuestionnaires);
         recyclerView.setAdapter(questionaireAdapter);
 

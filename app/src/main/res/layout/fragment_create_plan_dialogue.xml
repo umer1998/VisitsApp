@@ -432,8 +432,8 @@
                     <RelativeLayout
                         android:id="@+id/cancel"
                         android:layout_marginEnd="8dp"
-                        android:layout_width="120dp"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_width="140dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/cancel">
 
                         <TextView
@@ -444,8 +444,8 @@
                             android:layout_marginStart="12dp"
                             android:text="Cancel"
                             android:textColor="@color/Black"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
+                            android:textSize="16sp"
+                            android:fontFamily="@font/semibold"/>
 
 
 
@@ -454,20 +454,20 @@
                     <RelativeLayout
                         android:id="@+id/schedule"
                         android:layout_marginStart="8dp"
-                        android:layout_width="120dp"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_width="140dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/schedule">
 
                         <TextView
-                            android:layout_centerInParent="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Schedule"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
+                            android:layout_centerInParent="true"
                             android:layout_marginStart="12dp"
-                            android:textSize="17sp"
-                            android:layout_gravity="center_vertical"/>
+                            android:textAlignment="center"
+                            android:text="Submit for Approval"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/semibold"/>
 
 
 

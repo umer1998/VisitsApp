@@ -25,15 +25,14 @@ tools:context=".ui.dialoguefragmens.CreatePlanInExecutionDialogue">
             android:layout_height="60dp">
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Event"
-                android:textColor="@color/Black"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="23dp"
-                android:textSize="22sp"
-                android:layout_centerVertical="true"/>
+                android:text="Event Execution"
+                android:textColor="@color/Black"
+                android:textSize="22sp" />
 
 
 

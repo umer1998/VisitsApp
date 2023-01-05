@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.PostFeedBackResponce;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
 import com.example.visitsapp.model.request.ChangedPlan;
@@ -63,6 +64,8 @@ public class QuestionairePostFeedFrag extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_questionaire_post_feed, container, false);
 
+        context.bottomNavigationView.setVisibility(View.GONE);
+        context.llcplan.setVisibility(View.GONE);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -146,55 +149,64 @@ public class QuestionairePostFeedFrag extends BaseFragment {
 
                 }
             });
-        } else {
-            PostFeedBackRequest postFeedBackRequest1 = new PostFeedBackRequest();
-            if(SharedPrefrences.getInstance().getPostFeedBack() != null &&
-                  SharedPrefrences.getInstance().getPostFeedBack().feedbacks.size() > 0){
-
-                postFeedBackRequest1 = SharedPrefrences.getInstance().getPostFeedBack();
-                postFeedBackRequest1.feedbacks.add(feedback);
-                SharedPrefrences.getInstance().setPostFeedBack(postFeedBackRequest1);
-
-                ArrayList<PlansData> arrayList = new ArrayList<>();
-                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
-                PlansData removeDataObj = new PlansData();
-                for(PlansData data: arrayList){
-                    if(data.id == feedback.planner_event_id){
-                        removeDataObj = data;
-                    }
-                }
-                arrayList.remove(removeDataObj);
-                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
-
-            } else {
-
-
-                ArrayList<Feedback> feedbackArrayList1 = new ArrayList<>();
-                feedbackArrayList1.add(feedback);
-                postFeedBackRequest1.feedbacks = feedbackArrayList1;
-                SharedPrefrences.getInstance().setPostFeedBack(postFeedBackRequest1);
-
-                ArrayList<PlansData> arrayList = new ArrayList<>();
-                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
-                PlansData removeDataObj = new PlansData();
-                for(PlansData data: arrayList){
-                    if(data.id == feedback.planner_event_id){
-                        removeDataObj = data;
-                    }
-                }
-                arrayList.remove(removeDataObj);
-                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
-
-
-
+        }
+        else {
+            myDbAdapter dbHelper = new myDbAdapter(context);
+            for(int i = 0; i< quesAnswers.size(); i++){
+                dbHelper.insertQuestionaire(id, quesAnswers.get(i).getAnswer(), String.valueOf(quesAnswers.get(i).getId()));
             }
+            dbHelper.insertQuesPostFeedback(id);
 
         }
+//            PostFeedBackRequest postFeedBackRequest1 = new PostFeedBackRequest();
+//            if(SharedPrefrences.getInstance().getPostFeedBack() != null &&
+//                  SharedPrefrences.getInstance().getPostFeedBack().feedbacks.size() > 0){
+//
+//                postFeedBackRequest1 = SharedPrefrences.getInstance().getPostFeedBack();
+//                postFeedBackRequest1.feedbacks.add(feedback);
+//                SharedPrefrences.getInstance().setPostFeedBack(postFeedBackRequest1);
+//
+//                ArrayList<PlansData> arrayList = new ArrayList<>();
+//                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
+//                PlansData removeDataObj = new PlansData();
+//                for(PlansData data: arrayList){
+//                    if(data.id == feedback.planner_event_id){
+//                        removeDataObj = data;
+//                    }
+//                }
+//                arrayList.remove(removeDataObj);
+//                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
+//
+//            } else {
+//
+//
+//                ArrayList<Feedback> feedbackArrayList1 = new ArrayList<>();
+//                feedbackArrayList1.add(feedback);
+//                postFeedBackRequest1.feedbacks = feedbackArrayList1;
+//                SharedPrefrences.getInstance().setPostFeedBack(postFeedBackRequest1);
+//
+//                ArrayList<PlansData> arrayList = new ArrayList<>();
+//                arrayList = SharedPrefrences.getInstance().getExecutedEvent();
+//                PlansData removeDataObj = new PlansData();
+//                for(PlansData data: arrayList){
+//                    if(data.id == feedback.planner_event_id){
+//                        removeDataObj = data;
+//                    }
+//                }
+//                arrayList.remove(removeDataObj);
+//                SharedPrefrences.getInstance().setExecutedEvent(arrayList);
+//
+//
+//
+//            }
+//
+//        }
 
     }
 
     private void setApadter(ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires) {
 
+        recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(feedbackQuestionnaires.size());
         QuestionaireAdapter questionaireAdapter = new QuestionaireAdapter(context, feedbackQuestionnaires);
         recyclerView.setAdapter(questionaireAdapter);

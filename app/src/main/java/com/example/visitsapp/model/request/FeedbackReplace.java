@@ -7,4 +7,7 @@ import java.util.ArrayList;
 public class FeedbackReplace {
     @SerializedName("questionaire")
     public ArrayList<QuesAnswer> questionaire;
+
+    @SerializedName("multiinput")
+    public ArrayList<Multiinput> multiinput;
 }

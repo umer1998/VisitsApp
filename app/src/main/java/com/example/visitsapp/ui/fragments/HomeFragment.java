@@ -1,6 +1,7 @@
 package com.example.visitsapp.ui.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +40,7 @@ import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.request.PostFeedBackRequest;
 import com.example.visitsapp.model.request.ReplaceEventRequest;
 import com.example.visitsapp.model.responce.DashboardResponce;
+import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.LoginResponce;
 import com.example.visitsapp.model.responce.PlansData;
 import com.example.visitsapp.model.responce.TodayPlans;
@@ -61,13 +64,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private MainActivity context;
     private  LinearLayout llcplan;
     private NavigationView navigationView;
-    private TextView tvPendingCount, tvPlannedCount, tvLeavesCount,
-                tvExecutedCount, tvName, tvDesignation;
+
+
+    private RelativeLayout rlPendingforapproval, rlLeaves, rlPendingforExecution, rlVisitExecute, rlVisitNotExecute;
+
+    private TextView tvPlanned, tvPendingforapproval, tvLeaves, tvPendingforExecution, tvVisitExecute, tvVisitNotExecute, yvName, tvDesgniation;
     private RecyclerView recyclerView;
     private LoginResponce loginResponce;
     private CircleImageView profileImage;
 
-    private RelativeLayout rlplanned, rlExecuted, rlPending, rlLeaves;
+    private RelativeLayout rlDrawer;
+
+
+
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -99,37 +108,67 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        rlExecuted = view.findViewById(R.id.executed);
-        rlExecuted.setOnClickListener(this);
-        rlplanned = view.findViewById(R.id.planned);
-        rlplanned.setOnClickListener(this);
-        rlLeaves = view.findViewById(R.id.leaves);
+
+        yvName = view.findViewById(R.id.name);
+        tvDesgniation = view.findViewById(R.id.designation);
+
+        LoginResponce responce = SharedPrefrences.getInstance().getloginResponse();
+        yvName.setText(responce.fullname);
+        tvDesgniation.setText(responce.designation);
+
+        rlLeaves = view.findViewById(R.id.rlLeaves);
         rlLeaves.setOnClickListener(this);
-        rlPending = view.findViewById(R.id.pending);
-        rlPending.setOnClickListener(this);
-        cardOdrawer = view.findViewById(R.id.odrawer);
+
+        rlPendingforapproval = view.findViewById(R.id.rlPendingforapproval);
+        rlPendingforapproval.setOnClickListener(this);
+
+        rlPendingforExecution = view.findViewById(R.id.rlPendingforExecution);
+        rlPendingforExecution.setOnClickListener(this);
+
+        rlVisitExecute = view.findViewById(R.id.rlVisitExecute);
+        rlVisitExecute.setOnClickListener(this);
+
+        rlVisitNotExecute = view.findViewById(R.id.rlVisitNotExecute);
+        rlVisitNotExecute.setOnClickListener(this);
+
+        rlDrawer = view.findViewById(R.id.drawer);
+        rlDrawer.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View view) {
+                DrawerLayout navDrawer = context.drawer;
+                // If the navigation drawer is not open then open it, if its already open then close it.
+                if(!navDrawer.isDrawerOpen(Gravity.START)){
+                    navDrawer.openDrawer(Gravity.START);
+                } else {
+                    navDrawer.closeDrawer(Gravity.END);
+                }
+            }
+
+        });
+
+        tvLeaves = view.findViewById(R.id.tvLeaves);
+        tvPendingforapproval = view.findViewById(R.id.tvPendingforapproval);
+        tvPlanned = view.findViewById(R.id.planned);
+        tvPendingforExecution = view.findViewById(R.id.tvPendingforExecution);
+        tvVisitExecute = view.findViewById(R.id.tvVisitExecute);
+        tvVisitNotExecute = view.findViewById(R.id.tvVisitNotExecute);
+
         swipeRefreshLayout = view.findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getExecutionEvent();
                 getDashBoardData();
+                context.bottomNavigationView.setVisibility(View.VISIBLE);
+                context.llcplan.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
 
-        cardOdrawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.drawer.openDrawer(Gravity.LEFT);
-            }
-        });
+
         loginResponce = SharedPrefrences.getInstance().getloginResponse();
 
-        tvExecutedCount = view.findViewById(R.id.executedCount);
-        tvLeavesCount = view.findViewById(R.id.leavesCount);
-        tvPendingCount = view.findViewById(R.id.pendingcount);
-        tvPlannedCount = view.findViewById(R.id.plannedCount);
 
 
         profileImage = view.findViewById(R.id.profile_image);
@@ -141,11 +180,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
         });
 
-        tvName = view.findViewById(R.id.name);
-        tvName.setText(loginResponce.fullname);
 
-        tvDesignation = view.findViewById(R.id.designation);
-        tvDesignation.setText(loginResponce.designation);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
@@ -211,6 +246,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void setAdapter(ArrayList<TodayPlans> plans) {
+//
         TodaysPlanAdapter todaysPlanAdapter = new TodaysPlanAdapter(context, plans);
         recyclerView.setAdapter(todaysPlanAdapter);
 
@@ -231,6 +267,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
                 CreateEventDialogue2 dialog = new CreateEventDialogue2(context,  plansData);
                 dialog.show(context.getSupportFragmentManager(), "MyDialogFragment");
+
             }
         });
 
@@ -252,11 +289,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onSuccess(DashboardResponce body) {
 
 
+                tvPendingforapproval.setText(String.valueOf(body.event_summary.pending_approval));
+                tvLeaves.setText(String.valueOf(body.event_summary.leaves));
+                tvPendingforExecution.setText(String.valueOf(body.event_summary.pending_executed));
+                tvVisitExecute.setText(String.valueOf(body.event_summary.visits_executed));
+                tvVisitNotExecute.setText(String.valueOf(body.event_summary.unexecuted));
 
-                tvExecutedCount.setText(String.valueOf(body.event_summary.visits_executed));
-                tvPendingCount.setText(String.valueOf(body.event_summary.visit_pending));
-                tvPlannedCount.setText(String.valueOf(body.event_summary.visit_planned));
-                tvLeavesCount.setText(String.valueOf(body.event_summary.unexecuted));
+                tvPlanned.setText(String.valueOf(body.event_summary.pending_approval + body.event_summary.pending_executed+
+                        body.event_summary.leaves + body.event_summary.unexecuted + body.event_summary.visits_executed));
+
+
                 setAdapter(body.plans);
                 if (dialog != null) {
                     dialog.dismiss();
@@ -331,30 +373,71 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.executed:
-                context.executedCompletedEvent();
-                context.bottomNavigationView.setVisibility(View.VISIBLE);
-                context.llcplan.setVisibility(View.VISIBLE);
+            case R.id.rlLeaves:
+                getLeaves();
                 break;
 
-            case R.id.planned:
+            case R.id.rlPendingforapproval:
                 context.calenderViewFrag();
-                context.bottomNavigationView.setVisibility(View.GONE);
-                context.llcplan.setVisibility(View.GONE);
                 break;
 
-
-            case R.id.leaves:
-                context.getUnExecutedEvents();
-                context.bottomNavigationView.setVisibility(View.GONE);
-                context.llcplan.setVisibility(View.GONE);
-                break;
-
-            case R.id.pending:
+            case R.id.rlPendingforExecution:
                 context.executionFrag();
-                context.bottomNavigationView.setVisibility(View.VISIBLE);
-                context.llcplan.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.rlVisitExecute:
+                context.executedCompletedEvent();
+                break;
+
+            case R.id.rlVisitNotExecute:
+                context.getUnExecutedEvents();
                 break;
         }
+    }
+    public void getLeaves() {
+        final AlertDialog dialog = AlertUtils.showLoader(context);
+
+        if (dialog != null) {
+            dialog.show();
+        }
+
+
+
+
+        Business serviceImp = new Business() ;
+        serviceImp.getLeaves( new ResponseCallBack<ArrayList<GetLeavesResponce>>() {
+            @Override
+            public void onSuccess(ArrayList<GetLeavesResponce> body) {
+
+
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+
+                ArrayList<GetLeavesResponce> pendingLeaves = new ArrayList<>();
+                ArrayList<GetLeavesResponce> approveLeaves = new ArrayList<>();
+
+                for(int i =0 ; i< body.size(); i++){
+                    if(body.get(i).status.equalsIgnoreCase("pending")){
+                        pendingLeaves.add(body.get(i));
+                    } else {
+                        approveLeaves.add(body.get(i));
+                    }
+                }
+                context.leavesFrag(pendingLeaves, approveLeaves);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+
+                AlertUtils.showAlert(context, message);
+
+
+            }
+        });
     }
 }

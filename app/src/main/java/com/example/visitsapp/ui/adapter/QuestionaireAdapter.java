@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,6 +23,8 @@ import com.example.visitsapp.R;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
 import com.example.visitsapp.ui.MainActivity;
 import com.example.visitsapp.utils.OnRadioButtonClickListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -78,60 +81,101 @@ public class QuestionaireAdapter extends RecyclerView.Adapter<QuestionaireAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
 
-        ColorStateList colorStateList = setcolor();
-        holder.linearLayout.removeAllViews();
-        RadioGroup radioGroup = new RadioGroup(context);
-        radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.setMargins(0, -50, 0, 25);
-        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        radioGroup.setLayoutParams(params);
-        radioGroup.setGravity(Gravity.RIGHT);
+        if(feedbackQuestionnaires.get(position).type.equalsIgnoreCase("inputfield")){
+            holder.linearLayout.removeAllViews();
+            LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            par.setMargins(30, 25, 30, 0);
+            EditText editText = new EditText(context);
+            TextView textView = new TextView(context);
+            textView.setLayoutParams(par);
+            LinearLayout.LayoutParams par1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            par1.setMargins(30, -20, 30, 0);
+            editText.setLayoutParams(par1);
 
-        for (int i = 0; i < feedbackQuestionnaires.get(position).mcqs.size(); i++) {
+            textView.setTextSize(20f);
+            textView.setTextColor(Color.parseColor("#000000"));
+            editText.setTextSize(20f);
+            editText.setFocusable(true);
+            editText.setTextColor(Color.parseColor("#000000"));
+            editText.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
 
-            RadioButton radioButton1 = new RadioButton(context);
-            RelativeLayout.LayoutParams parameters = new RelativeLayout.LayoutParams(190, 90);
-            parameters.setMargins(30, 0, 30, 0);
-            radioButton1.setLayoutParams(parameters);
-            radioButton1.setText(feedbackQuestionnaires.get(position).mcqs.get(i));
-            radioButton1.setId(i);
+            textView.setTypeface(textView.getTypeface(), Typeface.NORMAL);
+            editText.setTypeface(editText.getTypeface(), Typeface.NORMAL);
+            textView.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
+            holder.linearLayout.addView(textView);
+            holder.linearLayout.addView(editText);
 
-            radioButton1.setButtonTintList(colorStateList);
-            radioButton1.setTextSize(20);
+            textView.setText(String.valueOf(position + 1) + ". " +feedbackQuestionnaires.get(position).question);
+//
+//            editText.setBackgroundColor(Color.parseColor("#00000000"));
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(b){
+
+                    } else {
+                        onRadioButtonClickListener.OnRadioItemClickListener(feedbackQuestionnaires.get(position).id, editText.getText().toString());
+
+                    }
+                }
+            });
+
+        } else {
+
+
+            ColorStateList colorStateList = setcolor();
+            holder.linearLayout.removeAllViews();
+            RadioGroup radioGroup = new RadioGroup(context);
+            radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(0, -50, 0, 25);
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            radioGroup.setLayoutParams(params);
+            radioGroup.setGravity(Gravity.RIGHT);
+
+            for (int i = 0; i < feedbackQuestionnaires.get(position).mcqs.size(); i++) {
+
+                RadioButton radioButton1 = new RadioButton(context);
+                RelativeLayout.LayoutParams parameters = new RelativeLayout.LayoutParams(190, 90);
+                parameters.setMargins(30, 0, 30, 0);
+                radioButton1.setLayoutParams(parameters);
+                radioButton1.setText(feedbackQuestionnaires.get(position).mcqs.get(i));
+                radioButton1.setId(i);
+
+                radioButton1.setButtonTintList(colorStateList);
+                radioButton1.setTextSize(20);
 //            radioButton1.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
-            radioGroup.addView(radioButton1);
+                radioGroup.addView(radioButton1);
 
-
-
-        }
-
-        TextView tvtext = new TextView(context);
-        tvtext.setText(String.valueOf(position+1) + ". " + feedbackQuestionnaires.get(position).question);
-        tvtext.setTextSize(20f);
-        tvtext.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
-//        tvtext.setTextAlignment(View.TEXT_DIRECTION_ANY_RTL);
-        LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        par.setMargins(30, 25, 30, 25);
-        tvtext.setLayoutParams(par);
-//        tvtext.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
-        tvtext.setTypeface(tvtext.getTypeface(), Typeface.NORMAL);
-        tvtext.setTextColor(Color.parseColor("#000000"));
-        holder.linearLayout.addView(tvtext);
-
-        holder.linearLayout.addView(radioGroup);
-
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton radioButton = radioGroup.findViewById(i);
-                onRadioButtonClickListener.OnRadioItemClickListener(feedbackQuestionnaires.get(position).id, radioButton.getText().toString());
 
             }
-        });
+
+            TextView tvtext = new TextView(context);
+            tvtext.setText(String.valueOf(position + 1) + ". " + feedbackQuestionnaires.get(position).question);
+            tvtext.setTextSize(20f);
+            tvtext.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
+//        tvtext.setTextAlignment(View.TEXT_DIRECTION_ANY_RTL);
+            LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            par.setMargins(30, 25, 30, 25);
+            tvtext.setLayoutParams(par);
+//        tvtext.setTypeface(ResourcesCompat.getFont(context, R.font.urdu));
+            tvtext.setTypeface(tvtext.getTypeface(), Typeface.NORMAL);
+            tvtext.setTextColor(Color.parseColor("#000000"));
+            holder.linearLayout.addView(tvtext);
+
+            holder.linearLayout.addView(radioGroup);
 
 
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    RadioButton radioButton = radioGroup.findViewById(i);
+                    onRadioButtonClickListener.OnRadioItemClickListener(feedbackQuestionnaires.get(position).id, radioButton.getText().toString());
+
+                }
+            });
+
+        }
 
     }
 

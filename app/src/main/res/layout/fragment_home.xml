@@ -4,361 +4,807 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.fragments.HomeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
+        android:fillViewport="true"
         android:background="@drawable/bg"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_marginTop="@dimen/dp_10"
+        <LinearLayout
+            android:layout_gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/odrawer"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginStart="@dimen/dp_15"
-                android:layout_width="35dp"
-                app:cardCornerRadius="4dp"
-                android:layout_height="35dp">
-                <RelativeLayout
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="@drawable/head">
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="@dimen/dp_15"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/drawer"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="40dp"
+                        android:background="@drawable/nav_bg"
+                        android:layout_height="40dp">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/navicon" />
+
+                    </RelativeLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/profile_image"
+                        android:layout_width="80dp"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/profile"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp" />
+
+
+                    <LinearLayout
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profile_image"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="7dp"
+                            android:text="Muhammad Zubair"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/white"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:id="@+id/designation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/name"
+                            android:layout_centerHorizontal="true"
+                            android:text="Area Manager"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/regular"/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/home_round_white"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_marginTop="-45dp">
+
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Visit Planned"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/textcolor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/planned"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="100"
+                        android:fontFamily="@font/bold"
+                        android:textColor="@color/Black"
+                        android:textSize="30sp"/>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:src="@drawable/n_planned"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/rlPendingforapproval"
+                    android:layout_marginEnd="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+
+
+                    <RelativeLayout
+                        android:layout_marginTop="@dimen/dp_25"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:background="@drawable/card_bg"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvPendingforapproval"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_image"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="@dimen/dp_15"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/semibold"
+                                android:text="0"
+                                android:textColor="@color/Black"
+                                android:textSize="30sp" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_image"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="@dimen/dp_15"
+                                android:layout_marginTop="6dp"
+                                android:text="Pending for Approval"
+                                android:textColor="@color/textcolor"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/menu" />
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:src="@drawable/p_approval" />
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/rlLeaves"
+                    android:layout_marginStart="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
 
-            </androidx.cardview.widget.CardView>
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerHorizontal="true"
+                    <RelativeLayout
+                        android:id="@+id/rlleaves"
+                        android:layout_marginTop="@dimen/dp_25"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:background="@drawable/card_bg"
+                            android:orientation="vertical">
+
+
+                            <TextView
+
+                                android:id="@+id/tvLeaves"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_image"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="@dimen/dp_15"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/semibold"
+                                android:text="0"
+                                android:textColor="@color/Black"
+                                android:textSize="30sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_image"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="@dimen/dp_15"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/regular"
+                                android:text="Total Leaves"
+                                android:textColor="@color/textcolor"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:src="@drawable/n_leave" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlPendingforExecution"
+                android:background="@drawable/home_white_round"
                 android:layout_marginTop="@dimen/dp_20"
-                android:src="@drawable/profile"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_image"
-                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginTop="7dp"
-                android:text="Anees"
-                android:textColor="@color/Black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/designation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/dp_15"
-                android:text="DM"
-                android:textColor="@color/appgreen"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_15"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <RelativeLayout
-                android:id="@+id/planned"
-                android:layout_marginEnd="7dp"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="135dp">
-
-
-
-                <RelativeLayout
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:layout_width="match_parent"
-                    android:layout_height="135dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/card_bg"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/plannedCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/regular"
-                            android:text="0"
-                            android:textColor="@color/Black"
-                            android:textSize="30sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="1dp"
-                            android:text="Visits Planned"
-                            android:textColor="@color/appgreen"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_height="60dp">
 
                 <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:id="@+id/i1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/p_execut"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:src="@drawable/planned" />
+                    android:layout_marginEnd="@dimen/dp_10"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/i1"
+                    android:fontFamily="@font/regular"
+                    android:text="Pending for Execution"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvPendingforExecution"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:fontFamily="@font/semibold"
+                    android:text="0"
+                    android:textColor="@color/Black"
+                    android:textSize="30sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginStart="7dp"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="135dp">
+                android:id="@+id/rlVisitExecute"
+                android:background="@drawable/home_white_round"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_height="60dp">
 
-
-                <RelativeLayout
-                    android:id="@+id/executed"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:layout_width="match_parent"
-                    android:layout_height="135dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/card_bg"
-                        android:orientation="vertical">
-
-
-                        <TextView
-
-                            android:id="@+id/executedCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="30dp"
-                            android:text="0"
-                            android:textColor="@color/Black"
-                            android:textSize="30sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="1dp"
-                            android:text="Visits Executed"
-                            android:textColor="@color/appgreen"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
 
                 <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:id="@+id/i2"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/v_executed"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:src="@drawable/executed_icon" />
+                    android:layout_marginEnd="@dimen/dp_10"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/i2"
+                    android:fontFamily="@font/regular"
+                    android:text="Visits Executed"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvVisitExecute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:fontFamily="@font/semibold"
+                    android:text="0"
+                    android:textColor="@color/Black"
+                    android:textSize="30sp" />
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlVisitNotExecute"
+                android:background="@drawable/home_white_round"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/i3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/v_cross"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"/>
+
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/i3"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/regular"
+                    android:text="Visits Not Executed"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvVisitNotExecute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:fontFamily="@font/semibold"
+                    android:text="0"
+                    android:textColor="@color/Black"
+                    android:textSize="30sp" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Todays Plan"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/dp_15"
+                android:textColor="@color/Black"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+
+
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_15"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <RelativeLayout
-                android:layout_marginEnd="7dp"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="135dp">
+    </ScrollView>
 
 
-
-                <RelativeLayout
-                    android:id="@+id/pending"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:layout_width="match_parent"
-                    android:layout_height="135dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/card_bg"
-                        android:orientation="vertical">
-
-
-                        <TextView
-
-                            android:id="@+id/pendingcount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="30dp"
-                            android:text="0"
-                            android:textColor="@color/Black"
-                            android:textSize="30sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="1dp"
-                            android:text="Visits Pending"
-                            android:textColor="@color/appgreen"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:src="@drawable/pending" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_marginStart="7dp"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="135dp">
-
-
-                <RelativeLayout
-                    android:id="@+id/leaves"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:layout_width="match_parent"
-                    android:layout_height="135dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/card_bg"
-                        android:orientation="vertical">
-
-
-                        <TextView
-
-                            android:id="@+id/leavesCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="30dp"
-                            android:text="0"
-                            android:textColor="@color/Black"
-                            android:textSize="30sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/dp_15"
-                            android:layout_marginTop="1dp"
-                            android:text="Unexecuted"
-                            android:textColor="@color/appgreen"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:src="@drawable/casual" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Todays Plan"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/dp_15"
-            android:textColor="@color/Black"/>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerView"/>
-
-    </LinearLayout>
 
 
 
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:background="@drawable/bg"-->
+<!--android:orientation="vertical">-->
+
+<!--<RelativeLayout-->
+<!--    android:layout_marginTop="@dimen/dp_10"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/odrawer"-->
+<!--        android:layout_marginTop="@dimen/dp_10"-->
+<!--        android:layout_marginStart="@dimen/dp_15"-->
+<!--        android:layout_width="35dp"-->
+<!--        app:cardCornerRadius="4dp"-->
+<!--        android:layout_height="35dp">-->
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="14dp"-->
+<!--                android:layout_height="14dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:src="@drawable/menu" />-->
+
+<!--        </RelativeLayout>-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+<!--    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/profile_image"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="@dimen/dp_20"-->
+<!--        android:src="@drawable/profile"-->
+<!--        app:civ_border_color="@color/white"-->
+<!--        app:civ_border_width="2dp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/profile_image"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="@dimen/dp_15"-->
+<!--        android:layout_marginTop="7dp"-->
+<!--        android:text="Anees"-->
+<!--        android:textColor="@color/Black"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/designation"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/name"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="@dimen/dp_15"-->
+<!--        android:text="DM"-->
+<!--        android:textColor="@color/appgreen"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold" />-->
+
+<!--</RelativeLayout>-->
+
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginStart="@dimen/dp_15"-->
+<!--    android:layout_marginEnd="@dimen/dp_15"-->
+<!--    android:layout_marginTop="@dimen/dp_15"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:weightSum="2">-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/planned"-->
+<!--        android:layout_marginEnd="7dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="135dp">-->
+
+
+
+<!--        <RelativeLayout-->
+<!--            android:layout_marginTop="@dimen/dp_25"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="135dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="125dp"-->
+<!--                android:background="@drawable/card_bg"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/plannedCount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:fontFamily="@font/regular"-->
+<!--                    android:text="0"-->
+<!--                    android:textColor="@color/Black"-->
+<!--                    android:textSize="30sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--                <TextView-->
+
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:text="Visits Planned"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="45dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginStart="@dimen/dp_10"-->
+<!--            android:src="@drawable/planned" />-->
+
+<!--    </RelativeLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_marginStart="7dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="135dp">-->
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/executed"-->
+<!--            android:layout_marginTop="@dimen/dp_25"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="135dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="125dp"-->
+<!--                android:background="@drawable/card_bg"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <TextView-->
+
+<!--                    android:id="@+id/executedCount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:text="0"-->
+<!--                    android:textColor="@color/Black"-->
+<!--                    android:textSize="30sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--                <TextView-->
+
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:text="Visits Executed"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="45dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginStart="@dimen/dp_10"-->
+<!--            android:src="@drawable/executed_icon" />-->
+
+<!--    </RelativeLayout>-->
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginStart="@dimen/dp_15"-->
+<!--    android:layout_marginEnd="@dimen/dp_15"-->
+<!--    android:layout_marginTop="@dimen/dp_15"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:weightSum="2">-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_marginEnd="7dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="135dp">-->
+
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/pending"-->
+<!--            android:layout_marginTop="@dimen/dp_25"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="135dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="125dp"-->
+<!--                android:background="@drawable/card_bg"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <TextView-->
+
+<!--                    android:id="@+id/pendingcount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:text="0"-->
+<!--                    android:textColor="@color/Black"-->
+<!--                    android:textSize="30sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--                <TextView-->
+
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:text="Visits Pending"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="45dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginStart="@dimen/dp_10"-->
+<!--            android:src="@drawable/pending" />-->
+
+<!--    </RelativeLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_marginStart="7dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="135dp">-->
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/leaves"-->
+<!--            android:layout_marginTop="@dimen/dp_25"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="135dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="125dp"-->
+<!--                android:background="@drawable/card_bg"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <TextView-->
+
+<!--                    android:id="@+id/leavesCount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:text="0"-->
+<!--                    android:textColor="@color/Black"-->
+<!--                    android:textSize="30sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--                <TextView-->
+
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/profile_image"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginStart="@dimen/dp_15"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:text="Unexecuted"-->
+<!--                    android:textColor="@color/appgreen"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="45dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginStart="@dimen/dp_10"-->
+<!--            android:src="@drawable/casual" />-->
+
+<!--    </RelativeLayout>-->
+
+<!--</LinearLayout>-->
+
+<!--<TextView-->
+<!--    android:layout_marginBottom="@dimen/dp_15"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="15dp"-->
+<!--    android:text="Todays Plan"-->
+<!--    android:textSize="21sp"-->
+<!--    android:textStyle="bold"-->
+<!--    android:layout_marginStart="@dimen/dp_15"-->
+<!--    android:textColor="@color/Black"/>-->
+
+
+<!--<androidx.recyclerview.widget.RecyclerView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:id="@+id/recyclerView"/>-->
+
+<!--</LinearLayout>-->

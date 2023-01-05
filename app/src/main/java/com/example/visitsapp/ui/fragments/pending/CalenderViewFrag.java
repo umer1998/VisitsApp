@@ -35,6 +35,7 @@ import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
 import com.example.visitsapp.ui.fragments.BaseFragment;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.lang.reflect.Array;
@@ -57,10 +58,10 @@ public class CalenderViewFrag extends BaseFragment {
     private RelativeLayout rlcplan;
     private TextView tvmonthtext;
 
-    private NavigationView navigationView;
+    private BottomNavigationView navigationView;
 
 
-    public CalenderViewFrag(MainActivity context, LinearLayout llcplan, NavigationView navigationView) {
+    public CalenderViewFrag(MainActivity context, LinearLayout llcplan, BottomNavigationView navigationView) {
         this.context = context;
         this.llcplan = llcplan;
         this.navigationView = navigationView;

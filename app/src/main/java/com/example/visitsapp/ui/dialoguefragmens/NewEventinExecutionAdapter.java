@@ -2,8 +2,11 @@ package com.example.visitsapp.ui.dialoguefragmens;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -24,6 +28,7 @@ import android.widget.TimePicker;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.Area;
 import com.example.visitsapp.model.configuration.Branch;
@@ -65,6 +70,9 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
     private ArrayList<FeedbackQuestionnaire> feedbackQuestionnaire = new ArrayList<>();
     private LinearLayout llDateTime;
 
+    private LinearLayout llotherlocation,llotherpurpse;
+    private EditText edPurpose, edLocation;
+
     private RelativeLayout rlCancel, rlSchedule;
     private TextView tvDate;
 
@@ -88,6 +96,13 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
         configurationResponse = SharedPrefrences.getInstance().getConfig();
 
         llDateTime = view.findViewById(R.id.datetime);
+
+        llotherlocation = view.findViewById(R.id.llotherlocation);
+        llotherpurpse = view.findViewById(R.id.llotherpurpose);
+
+        edLocation = view.findViewById(R.id.otherlocation);
+        edPurpose = view.findViewById(R.id.otherpurpose);
+
 
         llArea = view.findViewById(R.id.llarea);
         llBranch = view.findViewById(R.id.llbranch);
@@ -154,13 +169,15 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
                     llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     createPlanRequest.setPurpose_child_id("0");
                 } else if(events.get(i).event_name_code.equals("meeting")){
 
                     llRegion.setVisibility(View.GONE);
                     llArea.setVisibility(View.GONE);
                     llBranch.setVisibility(View.GONE);
-                    llLocation.setVisibility(View.VISIBLE);
+                    llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.VISIBLE);
                     setLocationPurpose();
                 } else if(events.get(i).event_name_code.equals("field_visit")){
 
@@ -168,6 +185,7 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
                     llArea.setVisibility(View.VISIBLE);
                     llBranch.setVisibility(View.VISIBLE);
                     llLocation.setVisibility(View.GONE);
+                    llotherlocation.setVisibility(View.GONE);
                     setRegionSpinner();
                 }
 
@@ -197,7 +215,15 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+
+                if(purposes.get(i).purpose_code.equalsIgnoreCase("other_leave")
+                        || purposes.get(i).purpose_code.equalsIgnoreCase("other_meeting")){
+                    llotherpurpse.setVisibility(View.VISIBLE);
+                    createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+                } else {
+                    llotherpurpse.setVisibility(View.GONE);
+                    createPlanRequest.setPurpose_id(purposes.get(i).purpose_code);
+                }
             }
 
             @Override
@@ -224,7 +250,15 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                if(meetingPlaces.get(i).code.equalsIgnoreCase("other")){
+                    createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+                    llotherlocation.setVisibility(View.VISIBLE);
+                } else {
+                    llotherlocation.setVisibility(View.GONE);
+                    createPlanRequest.setPurpose_child_id(meetingPlaces.get(i).code);
+
+                }
+
             }
 
             @Override
@@ -325,7 +359,7 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
     }
 
     private void cretaePlan() {
-        if(createPlanRequest.getEvent_id() == null ||
+       if(createPlanRequest.getEvent_id() == null ||
                 createPlanRequest.getEvent_id().isEmpty()){
 
             TextView tvText = (TextView) eventSpinner.getSelectedView();
@@ -341,8 +375,10 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
 
             } else if(createPlanRequest.getEvent_id().equals("meeting")) {
 
-                TextView tvText = (TextView) locationSpinner.getSelectedView();
-                tvText.setError("Please select location !");
+//
+//
+//                TextView tvText = (TextView) locationSpinner.getSelectedView();
+//                tvText.setError("Please select location !");
             } else if(createPlanRequest.getEvent_id().equals("field_visit")){
 
                 if(region.equals("")){
@@ -369,6 +405,23 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
 
             return;
         }
+
+        if(createPlanRequest.getPurpose_id().equalsIgnoreCase("other_meeting")
+                || createPlanRequest.getPurpose_id().equalsIgnoreCase("other_leave")){
+            if(edPurpose.getText().toString().isEmpty() || edPurpose.getText().toString().equalsIgnoreCase("")){
+                edPurpose.setError("Please enter purpose.");
+                return;
+            }
+            createPlanRequest.setPurpose_id(edPurpose.getText().toString());
+        }
+        if(createPlanRequest.getEvent_id().equalsIgnoreCase("meeting")){
+            if(edLocation.getText().toString().isEmpty() || edLocation.getText().toString().equals("")){
+                edLocation.setError("Please enter location");
+                return;
+            }
+            createPlanRequest.setPurpose_child_id(edLocation.getText().toString());
+        }
+
 //        final AlertDialog dialog = AlertUtils.showLoader(context);
 
 //        if (dialog != null) {
@@ -476,50 +529,75 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
         ArrayList<CreateChangedPlan> changedPlanArrayList = new ArrayList<>();
         changedPlanArrayList.add(changedPlan);
         replaceEventRequest1.changedPlan = changedPlanArrayList;
+        if (isNetworkAvailable()) {
+            final AlertDialog dialog = AlertUtils.showLoader(context);
+            if (dialog != null) {
+                dialog.show();
+            }
+            Business serviceImp = new Business();
+            serviceImp.createFeedback(replaceEventRequest1, new ResponseCallBack<String>() {
+                @Override
+                public void onSuccess(String body) {
 
-        final AlertDialog dialog = AlertUtils.showLoader(context);
-        if (dialog != null) {
-            dialog.show();
+
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                    NewEventinExecutionAdapter.this.getDialog().dismiss();
+                    AlertUtils.showAlert(context, "Feedback submitted successfully.");
+                    context.executedCompletedEvent();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+
+                    AlertUtils.showAlert(context, message);
+
+
+                }
+            });
+        } else {
+            myDbAdapter dbHelper = new myDbAdapter(context);
+            dbHelper.insertCreateFeedback(replaceEventRequest1.changedPlan.get(0).new_event.getPlanned_on(),
+                    replaceEventRequest1.changedPlan.get(0).new_event.getEvent_id(),
+                    replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_id(),
+                    replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_child_id());
+
+            NewEventinExecutionAdapter.this.getDialog().dismiss();
+            context.homeFrag();
         }
-        Business serviceImp = new Business() ;
-        serviceImp.createFeedback(replaceEventRequest1, new ResponseCallBack<String>() {
-            @Override
-            public void onSuccess(String body) {
-
-
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                AlertUtils.showAlert(context, "Feedback submitted successfully.");
-                context.executedCompletedEvent();
-            }
-
-            @Override
-            public void onFailure(String message) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-
-                AlertUtils.showAlert(context, message);
-
-
-            }
-        });
     }
 
     private void getQuestionaire2() {
+        boolean feedbackreturn =false;
         for(Events events: configurationResponse.events){
             if(events.event_name_code.equalsIgnoreCase(createPlanRequest.getEvent_id())){
                 for(Purpose purpose: events.purposes){
                     if(purpose.purpose_code.equalsIgnoreCase(createPlanRequest.getPurpose_id())){
                         feedbackQuestionnaire = purpose.feedback_questionnaire;
-                        context.getQuestionaireForm(feedbackQuestionnaire, context, -1, createPlanRequest);
-                        NewEventinExecutionAdapter.this.getDialog().dismiss();
+                        if(purpose.feedback_questionnaire.size()> 0){
+                            feedbackreturn = true;
+                        }
                     }
                 }
             }
 
         }
+        if(feedbackreturn){
+            context.getQuestionaireForm(feedbackQuestionnaire, context, -1, createPlanRequest);
+            NewEventinExecutionAdapter.this.getDialog().dismiss();
+        } else {
+            replaceEventAndPost(-1);
+        }
+
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

@@ -68,6 +68,12 @@ public class ExecuteDialogue extends DialogFragment {
 
 
         configurationResponse = SharedPrefrences.getInstance().getConfig();
+//        if(configurationResponse == null ||
+//                configurationResponse.events == null){
+//            context.getConfig();
+//        } else {
+//            setEventSpinner(configurationResponse.events);
+//        }
         rlcross = view.findViewById(R.id.cross);
         rlcross.setOnClickListener(new View.OnClickListener() {
             @Override

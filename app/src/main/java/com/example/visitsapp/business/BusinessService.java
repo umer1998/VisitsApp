@@ -99,5 +99,8 @@ public interface BusinessService {
     @GET(AppConstantsUtils.GET_UNEXECUTED_EVENTS)
     Call<ResponceObject<ArrayList<PlansData>>> unExecutedEvent();
 
+    @GET(AppConstantsUtils.REJECTED_EVENT)
+    Call<ResponceObject<ArrayList<PlansData>>> getRejectedEvent();
+
 
 }

@@ -25,6 +25,7 @@ public class AppConstantsUtils {
     public static final String GET_UNEXECUTED_EVENTS = "getUnexecutedEvents";
 
     public static final String UNAPPROVED_EVENT = "unapprovedEvents";
+    public static final String REJECTED_EVENT = "getRejectedEvents";
     public static final String CREATE_EVENT_FEEDBACK = "createEventFeedback";
 
 

@@ -67,8 +67,9 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
         });
 //        holder.tvTime.setText(plans.get(position).planned_on);
 
-        holder.tvPurpose.setText(plans.get(position).event_purpose);
+        holder.tvPurpose.setText(plans.get(position).purposechild);
         holder.tvEvent.setText(plans.get(position).event);
+        holder.tvpurpose.setText(plans.get(position).event_purpose);
 
     }
 
@@ -81,8 +82,9 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvEvent, tvPurpose, tvTime;
+        private TextView tvEvent, tvPurpose, tvTime, tvpurpose;
         private CardView cardView;
+
 
 
         ViewHolder(View view) {
@@ -91,7 +93,7 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
             tvEvent = view.findViewById(R.id.eventType);
             tvPurpose = view.findViewById(R.id.eventPurpose);
             tvTime = view.findViewById(R.id.time);
-
+            tvpurpose = view.findViewById(R.id.eventpurpose);
             cardView = view.findViewById(R.id.card);
 
         }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/bg"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp_15"
     android:id="@+id/swipe"
     tools:context=".ui.fragments.leaves.ApproveLeavesFrag">
 

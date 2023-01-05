@@ -11,4 +11,9 @@ public class Feedback {
 
     @SerializedName("questionaire")
     public ArrayList<QuesAnswer> questionaire;
+
+    @SerializedName("multiinput")
+    public ArrayList<Multiinput> multiinput;
+
+
 }

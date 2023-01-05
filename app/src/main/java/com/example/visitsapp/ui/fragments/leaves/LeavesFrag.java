@@ -58,6 +58,9 @@ public class LeavesFrag extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaves, container, false);
 
+        context.bottomNavigationView.setVisibility(View.GONE);
+        context.llcplan.setVisibility(View.GONE);
+
         viewPager = view.findViewById(R.id.viewpager);
         tabLayout = view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Pending \nLeaves"));

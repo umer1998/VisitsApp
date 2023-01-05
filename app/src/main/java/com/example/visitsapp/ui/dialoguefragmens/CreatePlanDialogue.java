@@ -441,6 +441,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
                     dialog.dismiss();
                 }
                 AlertUtils.showAlert(context, "Event created successfully.");
+                context.clearBackStack();
                 context.homeFrag();
                 CreatePlanDialogue.this.dismiss();
             }

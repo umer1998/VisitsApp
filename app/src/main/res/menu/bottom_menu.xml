@@ -12,7 +12,7 @@
 
         <item android:id="@+id/plan"
             android:icon="@drawable/plans"
-            android:title="Plans"/>
+            android:title="Events"/>
 
         <item
             android:title=""
@@ -21,11 +21,11 @@
 
         <item android:id="@+id/execution"
             android:icon="@drawable/executed"
-            android:title="Executed"/>
+            android:title="Execute"/>
 
         <item android:id="@+id/approval"
             android:icon="@drawable/approval"
-            android:title="Approval"/>
+            android:title="Approvals"/>
     </group>
 
 

@@ -50,6 +50,7 @@ public class SharedPrefrences {
 
     public void clearPreference() {
         try {
+
             preferences.edit().clear().commit();
         } catch (Exception e) {
             e.printStackTrace();

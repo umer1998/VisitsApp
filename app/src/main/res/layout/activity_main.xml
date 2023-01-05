@@ -23,15 +23,15 @@
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
-                app:elevation="@dimen/dp_10"
-                android:elevation="@dimen/dp_10"
                 android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
                 android:layout_height="60dp"
-                app:labelVisibilityMode="unlabeled"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/nav_round"
+                android:elevation="@dimen/dp_10"
+                app:elevation="@dimen/dp_10"
                 app:itemIconSize="@dimen/dp_20"
                 app:itemIconTint="@drawable/nav_color"
-                android:background="@drawable/nav_round"
+                app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_menu" />
 
 
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Create Plan"
+                    android:text="Create Event"
                     android:textColor="@color/Black"
                     android:textSize="17sp"
                     android:textStyle="normal" />
@@ -93,8 +93,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
+        app:itemIconSize="30dp"
         app:headerLayout="@layout/nav_header_main"
-        app:itemIconTint="@color/LightGrey"
         app:itemTextAppearance="@style/menu_text_style"
         app:menu="@menu/drawermenu"/>
 

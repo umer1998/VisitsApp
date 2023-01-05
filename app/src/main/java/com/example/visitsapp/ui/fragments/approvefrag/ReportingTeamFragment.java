@@ -40,9 +40,12 @@ public class ReportingTeamFragment extends BaseFragment {
     private MainActivity context;
     private LinearLayout llcplan;
 
+    private ArrayList<GetReportingTeamResponce> reportingTeamResponces = new ArrayList<>();
 
-    public ReportingTeamFragment(MainActivity context ) {
+
+    public ReportingTeamFragment(MainActivity context, ArrayList<GetReportingTeamResponce> reportingTeamResponces ) {
         this.context = context;
+        this.reportingTeamResponces = reportingTeamResponces;
     }
 
 

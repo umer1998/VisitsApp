@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialogue_bg"
+    tools:context=".ui.feedback.AddMemeberDialgoue">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:background="@color/Transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Transparent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/dialogue_top">
+
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="23dp"
+                    android:text="فرد کی تفصیل"
+                    android:textColor="@color/Black"
+                    android:textSize="22sp" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/t"
+                android:background="@drawable/white_bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:fontFamily="@font/urdu"
+                    android:text="نام"
+                    android:textColor="@color/textcolor"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:fontFamily="@font/urdu"
+                    android:text="عہدہ"
+                    android:textColor="@color/textcolor"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/eventspinner"
+
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:backgroundTint="@color/white"
+                    android:drawSelectorOnTop="true"
+                    />
+
+                <View
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Light_Grey"
+                    android:layout_marginStart="@dimen/dp_20"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_25"
+                    android:orientation="horizontal">
+
+
+                    <RelativeLayout
+                        android:id="@+id/contin"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/dp_50"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/schedule">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="12dp"
+                            android:text="Continue"
+                            android:textColor="@color/white"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cross"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/cross">
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+

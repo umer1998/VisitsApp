@@ -570,6 +570,34 @@ public class Business {
         });
     }
 
+    public void getRejectedEvent(final ResponseCallBack<ArrayList<PlansData>> responseCallBack) {
+
+
+        Call<ResponceObject<ArrayList<PlansData>>> call = businessService.getRejectedEvent();
+
+        call.enqueue(new Callback<ResponceObject<ArrayList<PlansData>>>() {
+            @Override
+            public void onResponse(Call<ResponceObject<ArrayList<PlansData>>> call,
+                                   Response<ResponceObject<ArrayList<PlansData>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null
+                            && response.body().getResponsecode() == 200) {
+                        responseCallBack.onSuccess(response.body().getData());
+                    } else if (response.body() != null
+                            && response.body().getMessage() != null) {
+                        responseCallBack.onFailure(response.body().getMessage());
+                    }
+                } else {
+                    responseCallBack.onFailure(response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponceObject<ArrayList<PlansData>>> call, Throwable t) {
+                responseCallBack.onFailure(t.getMessage());
+            }
+        });
+    }
+
 
 
 

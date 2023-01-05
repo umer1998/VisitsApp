@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
@@ -45,11 +46,16 @@ public class ApprovalListingFrag extends BaseFragment {
     private RecyclerView recyclerView;
     private MainActivity context;
     private GetReportingTeamResponce getReportingTeamResponce;
-    private LinearLayout  llApprove;
+    private LinearLayout  llApprove, llReject;
     ArrayList<Integer> list = new ArrayList<Integer>();
     private ApproveEventRequest approveEventRequest = new ApproveEventRequest();
     private LinearLayout llcplan;
     private NavigationView navigationView;
+    PendingApprovalAdapter pendingApprovalAdapter;
+    private TextView selectAll, tvNoRecord;
+    ArrayList<GetPendingApproval> getPendingApprovalArrayList = new ArrayList<>();
+    private boolean isSelectAll = false;
+    private LinearLayout llAppRej;
 
     public ApprovalListingFrag(MainActivity context, GetReportingTeamResponce getReportingTeamResponce) {
         this.context = context;
@@ -66,16 +72,59 @@ public class ApprovalListingFrag extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_approval_listing, container, false);
 
+        tvNoRecord = view.findViewById(R.id.noRecord);
+
+        llAppRej = view.findViewById(R.id.apprej);
+        selectAll = view.findViewById(R.id.selectall);
+        selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isSelectAll){
+                    selectAll.setText("Select All");
+                    isSelectAll = false;
+                    pendingApprovalAdapter = null;
+                    approveEventRequest= null;
+                    setApdapter(getPendingApprovalArrayList, false);
+                } else {
+                    selectAll.setText("UnSelect All");
+                    approveEventRequest = null;
+                    setApdapter(getPendingApprovalArrayList, true);
+                    isSelectAll = true;
+                }
+            }
+        });
         BottomNavigationView navigationView = getActivity().findViewById(R.id.bottomNavigationView);
         navigationView.setVisibility(View.GONE);
         LinearLayout llcplan = getActivity().findViewById(R.id.cplan);
         llcplan.setVisibility(View.GONE);
 
+        llReject = view.findViewById(R.id.reject);
+        llReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(approveEventRequest != null &&
+                        approveEventRequest.ids != null &&
+                        approveEventRequest.ids.size()> 0){
+                    approveEventRequest.event_status = "2";
+                    approveEvent(approveEventRequest);
+                } else {
+                    AlertUtils.showAlert(context, "Please select event for rejection");
+                }
+            }
+        });
+
         llApprove = view.findViewById(R.id.approve);
         llApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                approveEvent(approveEventRequest);
+                if(approveEventRequest != null &&
+                        approveEventRequest.ids != null &&
+                        approveEventRequest.ids.size()> 0){
+                    approveEvent(approveEventRequest);
+                } else {
+                    AlertUtils.showAlert(context, "Please select event for approval");
+                }
+
             }
         });
 
@@ -126,22 +175,23 @@ public class ApprovalListingFrag extends BaseFragment {
         });
     }
 
-    private void setApdapter(ArrayList<GetPendingApproval> body) {
+    private void setApdapter(ArrayList<GetPendingApproval> body, boolean isSelectAll) {
+        approveEventRequest = new ApproveEventRequest();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i = 0; i< body.size(); i++){
             list.add(body.get(i).id);
         }
         recyclerView.setItemViewCacheSize(body.size());
-        PendingApprovalAdapter pendingApprovalAdapter = new PendingApprovalAdapter(context, body, list);
+        pendingApprovalAdapter = new PendingApprovalAdapter(context, body, list, isSelectAll);
         recyclerView.setAdapter(pendingApprovalAdapter);
 
         pendingApprovalAdapter.setOnItemClickListener(new OnApproveListClick() {
             @Override
             public void onItemClick(View view, ArrayList<Integer> list) {
                 if(list.size() > 0){
-                    llApprove.setVisibility(View.VISIBLE);
+
                 } else{
-                    llApprove.setVisibility(View.GONE);
+
                 }
                 ArrayList<EventIds> eventIds = new ArrayList<>();
                 for(int i =0; i< list.size();i++){
@@ -171,7 +221,17 @@ public class ApprovalListingFrag extends BaseFragment {
             @Override
             public void onSuccess(ArrayList<GetPendingApproval> body) {
 
-                setApdapter(body);
+                if(body.size() > 0){
+                    llAppRej.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    tvNoRecord.setVisibility(View.GONE);
+                } else {
+                    llAppRej.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    tvNoRecord.setVisibility(View.VISIBLE);
+                }
+                getPendingApprovalArrayList = body;
+                setApdapter(getPendingApprovalArrayList, false);
 
                 if (dialog != null) {
                     dialog.dismiss();

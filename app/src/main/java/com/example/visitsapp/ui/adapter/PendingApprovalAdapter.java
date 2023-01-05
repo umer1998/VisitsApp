@@ -31,14 +31,16 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
     private MainActivity context;
     private OnApproveListClick mItemClickListener;
     private ArrayList<GetPendingApproval> body = new ArrayList<GetPendingApproval>();
-
+    private boolean isSelectAll;
     ArrayList<Integer> list = new ArrayList<>();
 
 
-    public PendingApprovalAdapter(MainActivity context, ArrayList<GetPendingApproval> body, ArrayList<Integer> list) {
+    public PendingApprovalAdapter(MainActivity context, ArrayList<GetPendingApproval> body, ArrayList<Integer> list, boolean isSelectAll) {
         this.context = context;
         this.body = body;
+        this.isSelectAll = isSelectAll;
 
+       list.removeAll(list);
 
     }
 
@@ -59,31 +61,56 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(list.contains(body.get(holder.getAdapterPosition()).id)){
-                    list.remove(list.indexOf(body.get(holder.getAdapterPosition()).id));
-                    holder.cardView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                } else {
-                    list.add(body.get(holder.getAdapterPosition()).id);
-                    holder.cardView.setBackgroundColor(Color.parseColor("#3EAA92"));
-                }
-                mItemClickListener.onItemClick(view, list);
+        if(isSelectAll){
+            list.add(body.get(holder.getAdapterPosition()).id);
+            holder.cardView.setBackgroundColor(Color.parseColor("#3EAA92"));
+            try {
+                holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+            mItemClickListener.onItemClick(null, list);
 
-        try {
+            holder.tvEvent.setText(body.get(position).event);
+            holder.tvPurpose.setText(body.get(position).event_purpose);
+        } else {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(list.contains(body.get(holder.getAdapterPosition()).id)){
+                        list.remove(list.indexOf(body.get(holder.getAdapterPosition()).id));
+                        holder.cardView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    } else {
+                        list.add(body.get(holder.getAdapterPosition()).id);
+                        holder.cardView.setBackgroundColor(Color.parseColor("#3EAA92"));
+                    }
+                    mItemClickListener.onItemClick(view, list);
+                }
+            });
 
-            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+
+                holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            holder.tvEvent.setText(body.get(position).event);
+            holder.tvPurpose.setText(body.get(position).event_purpose);
+
+            holder.tvPurposeChild.setText(body.get(position).purpose_child);
+
+            try {
+                holder.tvDate.setText(new SimpleDateFormat("dd MMMM yyy").format(
+                        new SimpleDateFormat("dd-MM-yyyy").parse(body.get(position).planned_on)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
 
 
-        holder.tvEvent.setText(body.get(position).event);
-        holder.tvPurpose.setText(body.get(position).event_purpose);
 
     }
 
@@ -96,15 +123,18 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-       private TextView tvTime, tvPurpose, tvEvent;
+       private TextView tvTime, tvPurpose, tvEvent, tvPurposeChild, tvDate;
        private RelativeLayout cardView;
 
         ViewHolder(View view) {
             super(view);
 
             tvEvent = view.findViewById(R.id.eventType);
-            tvPurpose = view.findViewById(R.id.eventPurpose);
+            tvPurpose = view.findViewById(R.id.eventpurpose);
             tvTime = view.findViewById(R.id.time);
+
+            tvDate = view.findViewById(R.id.date);
+            tvPurposeChild = view.findViewById(R.id.eventPurpose);
 
             cardView = view.findViewById(R.id.card);
 

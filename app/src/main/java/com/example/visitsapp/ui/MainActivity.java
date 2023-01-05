@@ -24,11 +24,17 @@ import android.widget.TextView;
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.PostFeedBackResponce;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.DBHelper;
+import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
+import com.example.visitsapp.model.configuration.ConfigurationResponse;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
+import com.example.visitsapp.model.request.ChangedPlan;
+import com.example.visitsapp.model.request.CreateEventFeedback;
 import com.example.visitsapp.model.request.CreatePlanRequest;
 import com.example.visitsapp.model.request.PostFeedBackRequest;
 import com.example.visitsapp.model.request.ReplaceEventRequest;
+import com.example.visitsapp.model.responce.ApproveEventRequest;
 import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.GetReportingTeamResponce;
 import com.example.visitsapp.model.responce.LoginResponce;
@@ -36,6 +42,9 @@ import com.example.visitsapp.ui.activities.Login;
 import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
 import com.example.visitsapp.ui.fragments.approvefrag.ApprovalListingFrag;
 import com.example.visitsapp.ui.fragments.BaseFragment;
+import com.example.visitsapp.ui.fragments.approvefrag.ApprovalPendigEvents;
+import com.example.visitsapp.ui.fragments.forms.DisbursementFrag;
+import com.example.visitsapp.ui.fragments.forms.LACFeedbackForm;
 import com.example.visitsapp.ui.fragments.pending.CalenderViewFrag;
 import com.example.visitsapp.ui.fragments.drawerfrag.UnApprovedEvent;
 import com.example.visitsapp.ui.fragments.drawerfrag.UnExecutedEvent;
@@ -47,6 +56,7 @@ import com.example.visitsapp.ui.fragments.approvefrag.ReportingTeamFragment;
 import com.example.visitsapp.ui.fragments.executedevent.ExecutedEventsFragment;
 import com.example.visitsapp.ui.fragments.executedevent.ExecutionCompletedEvents;
 import com.example.visitsapp.ui.fragments.leaves.LeavesFrag;
+import com.example.visitsapp.ui.fragments.rejected.RejectedEvents;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout llcplan;
     public CircleImageView profileImage;
 
+    private myDbAdapter dbHelper;
+
     private String imageUrl= null;
 
 
@@ -74,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         syncOfflineData();
+
+
+        getConfig();
+
+
 
         llcplan = findViewById(R.id.cplan);
 
@@ -125,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -178,8 +196,17 @@ public class MainActivity extends AppCompatActivity {
                         llcplan.setVisibility(View.VISIBLE);
                         break;
 
+                    case R.id.rejected:
+                        drawer.closeDrawer(Gravity.LEFT);
+                        rejectedEvent();
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        llcplan.setVisibility(View.VISIBLE);
+                        break;
+
+
                     case R.id.logout:
                         drawer.closeDrawer(Gravity.LEFT);
+                        SharedPrefrences.getInstance().setConfig(null);
                         SharedPrefrences.getInstance().clearPreference();
                         startActivity(new Intent(MainActivity.this,
                                 Login.class));
@@ -228,17 +255,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getRepotingTeam() {
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if (!(fragment instanceof ReportingTeamFragment)) {
+        if (!(fragment instanceof ApprovalPendigEvents)) {
 
 
-            ReportingTeamFragment recfrag = new ReportingTeamFragment(this);
+            ApprovalPendigEvents recfrag = new ApprovalPendigEvents(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
                     .commit();
         }
+//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+//
+//        if (!(fragment instanceof ReportingTeamFragment)) {
+//
+//
+//            ReportingTeamFragment recfrag = new ReportingTeamFragment(this);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_container, recfrag)
+//                    .addToBackStack("")
+//                    .commit();
+//        }
     }
 
     public void getUnApprovedEvents() {
@@ -289,27 +328,46 @@ public class MainActivity extends AppCompatActivity {
     public void getQuestionaireForm(ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires, MainActivity context, int id, CreatePlanRequest createPlanRequest) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if (!(fragment instanceof QuestionaireReplaceEventFragment)) {
+        if (!(fragment instanceof DisbursementFrag)) {
 
-            QuestionaireReplaceEventFragment recfrag = new QuestionaireReplaceEventFragment(context, feedbackQuestionnaires, id, createPlanRequest);
+            DisbursementFrag recfrag = new DisbursementFrag(context, feedbackQuestionnaires, id, createPlanRequest);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
                     .commit();
         }
+//        if (!(fragment instanceof QuestionaireReplaceEventFragment)) {
+//
+//            QuestionaireReplaceEventFragment recfrag = new QuestionaireReplaceEventFragment(context, feedbackQuestionnaires, id, createPlanRequest);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_container, recfrag)
+//                    .addToBackStack("")
+//                    .commit();
+//        }
     }
 
     public void getQuestionairePostFeed(ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires, MainActivity context, int id) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if (!(fragment instanceof QuestionairePostFeedFrag)) {
+        if (!(fragment instanceof LACFeedbackForm)) {
 
-            QuestionairePostFeedFrag recfrag = new QuestionairePostFeedFrag(context, feedbackQuestionnaires, id);
+            LACFeedbackForm recfrag = new LACFeedbackForm(context, feedbackQuestionnaires, id);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
                     .commit();
         }
+
+//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+//
+//        if (!(fragment instanceof QuestionairePostFeedFrag)) {
+//
+//            QuestionairePostFeedFrag recfrag = new QuestionairePostFeedFrag(context, feedbackQuestionnaires, id);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_container, recfrag)
+//                    .addToBackStack("")
+//                    .commit();
+//        }
     }
 
 
@@ -332,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!(fragment instanceof CalenderViewFrag)) {
 
-            CalenderViewFrag recfrag = new CalenderViewFrag(this, llcplan, navigationView);
+            CalenderViewFrag recfrag = new CalenderViewFrag(this, llcplan, bottomNavigationView);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
@@ -340,6 +398,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void rejectedEvent() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof RejectedEvents)) {
+
+            RejectedEvents recfrag = new RejectedEvents(this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
 
 
     public void executionFrag() {
@@ -434,18 +504,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void syncOfflineData(){
-        if(SharedPrefrences.getInstance().getReplaceEventFeedBack()!= null){
-            ReplaceEventRequest replaceEventRequest = SharedPrefrences.getInstance().getReplaceEventFeedBack();
-            if(replaceEventRequest.changedPlan.size() > 0 && isNetworkAvailable()){
-                replaceEventandFeedBack(replaceEventRequest);
-            }
-        }
-        if(SharedPrefrences.getInstance().getPostFeedBack() != null){
-            PostFeedBackRequest postFeedBackRequest = SharedPrefrences.getInstance().getPostFeedBack();
-            if(postFeedBackRequest.feedbacks.size() >0 && isNetworkAvailable()){
-                postFeedback(postFeedBackRequest);
-            }
-        }
+        dbHelper = new myDbAdapter(this);
+        ArrayList<CreateEventFeedback> arrayList = new ArrayList<>();
+        arrayList = dbHelper.getCreateFeedback();
+//
+//        ReplaceEventRequest request = new ReplaceEventRequest();
+//        request = dbHelper.getQuesReplaceFeedback();
+//
+//        PostFeedBackRequest postFeedBackRequest = new PostFeedBackRequest();
+//        postFeedBackRequest = dbHelper.getQuesPostFeedback();
+
+        String s = "d";
+
+
+
+//        if(SharedPrefrences.getInstance().getReplaceEventFeedBack()!= null){
+//            ReplaceEventRequest replaceEventRequest = SharedPrefrences.getInstance().getReplaceEventFeedBack();
+//            if(replaceEventRequest.changedPlan.size() > 0 && isNetworkAvailable()){
+//                replaceEventandFeedBack(replaceEventRequest);
+//            }
+//        }
+//        if(SharedPrefrences.getInstance().getPostFeedBack() != null){
+//            PostFeedBackRequest postFeedBackRequest = SharedPrefrences.getInstance().getPostFeedBack();
+//            if(postFeedBackRequest.feedbacks.size() >0 && isNetworkAvailable()){
+//                postFeedback(postFeedBackRequest);
+//            }
+//        }
     }
 
     private void postFeedback(PostFeedBackRequest postFeedBackRequest){
@@ -565,6 +649,43 @@ public class MainActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
 
+                AlertUtils.showAlert(MainActivity.this, message);
+
+
+            }
+        });
+    }
+
+
+    public void getConfig() {
+
+        final AlertDialog dialog = AlertUtils.showLoader(MainActivity.this);
+
+        if (dialog != null) {
+            dialog.show();
+        }
+
+
+        Business serviceImp = new Business() ;
+        serviceImp.getConfiguration( new ResponseCallBack<ConfigurationResponse>() {
+            @Override
+            public void onSuccess(ConfigurationResponse body) {
+
+                SharedPrefrences.getInstance().setConfig(body);
+                if(body.user_image != null && !body.user_image.equals("")){
+
+                    SharedPrefrences.getInstance().setProfileImage(body.user_image);
+
+                }
+                dialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+                dialog.dismiss();
                 AlertUtils.showAlert(MainActivity.this, message);
 
 

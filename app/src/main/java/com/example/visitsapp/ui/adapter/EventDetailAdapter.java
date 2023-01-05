@@ -75,8 +75,9 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
                 holder.cardView.setVisibility(View.GONE);
                 holder.leaveCard.setVisibility(View.GONE);
                 holder.eventnooCard.setVisibility(View.GONE);
-
+                holder.tvunpurpose.setText(mapDateForPlannings.get(position).event_purpose);
                 holder.tvNEventType.setText(mapDateForPlannings.get(position).event);
+                holder.noEventCard.setCardBackgroundColor(Color.parseColor("#fff46e6d"));
                 try {
                     holder.tvNTime.setText(new SimpleDateFormat("HH:mm a").
                             format(new SimpleDateFormat("hh:mm:ss").
@@ -84,7 +85,7 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                holder.tvNLocation.setText(mapDateForPlannings.get(position).event_purpose);
+                holder.tvNLocation.setText(mapDateForPlannings.get(position).purpose_child);
             }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +146,7 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
                 }
 
                 holder.tvEventType.setText(mapDateForPlannings.get(position).event);
+                holder.tvappurpose.setText(mapDateForPlannings.get(position).event_purpose);
                 try {
                     holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
                             format(new SimpleDateFormat("hh:mm:ss").
@@ -152,7 +154,7 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                holder.tvLocation.setText(mapDateForPlannings.get(position).event_purpose);
+                holder.tvLocation.setText(mapDateForPlannings.get(position).purpose_child);
             }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -215,8 +217,12 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
         TextView tvNEventType, tvNLocation, tvNTime;
         private ImageView ivLocation;
 
+        private TextView  tvappurpose, tvunpurpose;
+
         ViewHolder(View view) {
             super(view);
+            tvunpurpose = view.findViewById(R.id.unpurpose);
+            tvappurpose = view.findViewById(R.id.appurpose);
             timelineView = (TimelineView) view.findViewById(R.id.timeline);
             tvEventType = view.findViewById(R.id.eventType);
             tvTime = view.findViewById(R.id.time);
