@@ -17,7 +17,6 @@ import com.example.visitsapp.business.impl.Business;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.responce.PlansData;
 import com.example.visitsapp.ui.MainActivity;
-import com.example.visitsapp.ui.adapter.ExecutionAdapter;
 import com.example.visitsapp.ui.adapter.UnApprovedEventsAdapter;
 import com.example.visitsapp.ui.adapter.UnexecutedEventAdapter;
 import com.example.visitsapp.ui.dialoguefragmens.CreateEventDialogue2;

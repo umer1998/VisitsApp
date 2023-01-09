@@ -62,11 +62,13 @@ public class ReplaceEventMainAdapter extends RecyclerView.Adapter<ReplaceEventMa
             holder.submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(answersmap.size() != feedbackQuestionnaires.size()-1){
-                        AlertUtils.showAlert(context, "Please answer all questions!");
-                    } else {
+                    if(answersmap.size() == feedbackQuestionnaires.size()-1
+                    || answersmap.size()== feedbackQuestionnaires.size()){
 
                         onRadioButtonClickListener.onMapListener(answersmap, multiinput);
+                    } else {
+
+                        AlertUtils.showAlert(context, "Please answer all questions!");
                     }
 //
                 }
@@ -79,6 +81,18 @@ public class ReplaceEventMainAdapter extends RecyclerView.Adapter<ReplaceEventMa
                 holder.recyclerView.setHasFixedSize(true);
                 holder.recyclerView.setAdapter(todaysPlanAdapter);
                 todaysPlanAdapter.setOnRadioButtonClickListener(new OnRadioButtonClickListener() {
+                    @Override
+                    public void OnRadioItemClickListener(int id, String value) {
+                        answersmap.put(id, value);
+                    }
+                });
+
+            } else if(feedbackQuestionnaires.get(position).type.equalsIgnoreCase("textarea" )){
+
+                TextAreaAdapter editPlanAdapter = new TextAreaAdapter(context, feedbackQuestionnaires.get(position));
+                holder.recyclerView.setAdapter(editPlanAdapter);
+                holder.recyclerView.setHasFixedSize(true);
+                editPlanAdapter.setOnRadioButtonClickListener(new OnRadioButtonClickListener() {
                     @Override
                     public void OnRadioItemClickListener(int id, String value) {
                         answersmap.put(id, value);
@@ -101,7 +115,7 @@ public class ReplaceEventMainAdapter extends RecyclerView.Adapter<ReplaceEventMa
 
 
             } else if(feedbackQuestionnaires.get(position).type.equalsIgnoreCase("multiinput")){
-                MemberAdapter todaysPlanAdapter = new MemberAdapter(context, feedbackQuestionnaires.get(position).id);
+                MemberAdapter todaysPlanAdapter = new MemberAdapter(context, feedbackQuestionnaires.get(position));
                 holder.recyclerView.setAdapter(todaysPlanAdapter);
 
                 todaysPlanAdapter.setOnItemClickListener(new ArrayListListener() {

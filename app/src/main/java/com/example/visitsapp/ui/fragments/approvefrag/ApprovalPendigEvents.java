@@ -66,7 +66,7 @@ public class ApprovalPendigEvents extends BaseFragment {
         tabLayout = view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("My Events"));
         tabLayout.addTab(tabLayout.newTab().setText("Team Events"));
-        addTabs();
+
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -93,8 +93,8 @@ public class ApprovalPendigEvents extends BaseFragment {
 
     private void addTabs() {
 
-        viewPagerAdapter.addFrag(new SelfPendingApprovalEvent(context, seltPendApproveList),"Pending");
-        viewPagerAdapter.addFrag(new ReportingTeamFragment(context, reportingTeamResponces), "Approved");
+        viewPagerAdapter.addFrag(new SelfPendingApprovalEvent(context, seltPendApproveList),"My Events");
+        viewPagerAdapter.addFrag(new ReportingTeamFragment(context, reportingTeamResponces), "Team Events");
 
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -143,13 +143,13 @@ public class ApprovalPendigEvents extends BaseFragment {
 
 
         Business serviceImp = new Business() ;
-        serviceImp.getRejectedEvent( new ResponseCallBack<ArrayList<PlansData>>() {
+        serviceImp.getPendingApproval( new ResponseCallBack<ArrayList<PlansData>>() {
             @Override
             public void onSuccess(ArrayList<PlansData> body) {
 
                seltPendApproveList = body;
 
-
+                addTabs();
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -162,7 +162,7 @@ public class ApprovalPendigEvents extends BaseFragment {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-
+                addTabs();
                 AlertUtils.showAlert(context, message);
 
 

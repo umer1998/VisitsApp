@@ -59,6 +59,7 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
             e.printStackTrace();
         }
 
+        holder.tvchild.setText(body.get(position).purpose_child);
         holder.tvPurpose.setText(body.get(position).event_purpose);
         holder.tvEvent.setText(body.get(position).event);
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +82,7 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
 
 
         RelativeLayout card;
-        private TextView tvEvent, tvPurpose, tvTime;
+        private TextView tvEvent, tvPurpose, tvTime, tvchild;
 
         ViewHolder(View view) {
             super(view);
@@ -90,6 +91,8 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
             tvEvent = view.findViewById(R.id.eventType);
             tvPurpose = view.findViewById(R.id.eventPurpose);
             tvTime = view.findViewById(R.id.time);
+
+            tvchild = view.findViewById(R.id.child);
 
         }
     }

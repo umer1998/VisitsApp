@@ -1,44 +1,33 @@
 package com.example.visitsapp.ui.fragments.approvefrag;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
 import com.example.visitsapp.delegate.ResponseCallBack;
-import com.example.visitsapp.model.request.LoginRequest;
 import com.example.visitsapp.model.responce.ApproveEventRequest;
 import com.example.visitsapp.model.responce.ApproveEventResponce;
 import com.example.visitsapp.model.responce.EventIds;
 import com.example.visitsapp.model.responce.GetPendingApproval;
 import com.example.visitsapp.model.responce.GetReportingTeamResponce;
-import com.example.visitsapp.model.responce.LoginResponce;
 import com.example.visitsapp.ui.MainActivity;
-import com.example.visitsapp.ui.activities.Login;
 import com.example.visitsapp.ui.adapter.PendingApprovalAdapter;
 import com.example.visitsapp.ui.fragments.BaseFragment;
 import com.example.visitsapp.utils.OnApproveListClick;
-import com.example.visitsapp.utils.OnItemClickListener;
-import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class ApprovalListingFrag extends BaseFragment {
@@ -93,6 +82,8 @@ public class ApprovalListingFrag extends BaseFragment {
                 }
             }
         });
+        getPendingApproval();
+
         BottomNavigationView navigationView = getActivity().findViewById(R.id.bottomNavigationView);
         navigationView.setVisibility(View.GONE);
         LinearLayout llcplan = getActivity().findViewById(R.id.cplan);
@@ -132,7 +123,7 @@ public class ApprovalListingFrag extends BaseFragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
 
-        getPendingApproval();
+
         return view;
     }
 

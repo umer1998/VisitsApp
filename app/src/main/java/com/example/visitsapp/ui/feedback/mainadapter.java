@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
+import com.example.visitsapp.model.request.Multiinput;
+import com.example.visitsapp.model.request.Question;
 import com.example.visitsapp.ui.MainActivity;
+import com.example.visitsapp.utils.ArrayListListener;
 import com.example.visitsapp.utils.OnMapListener;
 import com.example.visitsapp.utils.OnRadioButtonClickListener;
 import com.example.visitsapp.utils.alert.AlertUtils;
@@ -28,7 +31,7 @@ public class mainadapter extends RecyclerView.Adapter<mainadapter.ViewHolder> {
     private OnMapListener onRadioButtonClickListener;
     private ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires;
     HashMap<Integer, String> answersmap = new HashMap<Integer, String>();
-
+    Multiinput multiinput = new Multiinput();
     public mainadapter(MainActivity context, ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires) {
         this.context = context;
         this.feedbackQuestionnaires = feedbackQuestionnaires;
@@ -57,11 +60,12 @@ public class mainadapter extends RecyclerView.Adapter<mainadapter.ViewHolder> {
             holder.submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(answersmap.size() != feedbackQuestionnaires.size()){
-                        AlertUtils.showAlert(context, "Please answer all questions!");
+                    if(answersmap.size() == feedbackQuestionnaires.size()-1
+                            || answersmap.size()== feedbackQuestionnaires.size()){
+                        onRadioButtonClickListener.onMapListener(answersmap, multiinput);
                     } else {
+                        AlertUtils.showAlert(context, "Please answer all questions!");
 
-                        onRadioButtonClickListener.onMapListener(answersmap, null);
                     }
 
                 }
@@ -92,7 +96,34 @@ public class mainadapter extends RecyclerView.Adapter<mainadapter.ViewHolder> {
                     }
                 });
 
-            } else {
+            } else if(feedbackQuestionnaires.get(position).type.equalsIgnoreCase("textarea" )){
+
+                TextAreaAdapter editPlanAdapter = new TextAreaAdapter(context, feedbackQuestionnaires.get(position));
+                holder.recyclerView.setAdapter(editPlanAdapter);
+                holder.recyclerView.setHasFixedSize(true);
+                editPlanAdapter.setOnRadioButtonClickListener(new OnRadioButtonClickListener() {
+                    @Override
+                    public void OnRadioItemClickListener(int id, String value) {
+                        answersmap.put(id, value);
+                    }
+                });
+
+            }
+            else if(feedbackQuestionnaires.get(position).type.equalsIgnoreCase("multiinput" )){
+
+                MemberAdapter todaysPlanAdapter = new MemberAdapter(context, feedbackQuestionnaires.get(position));
+                holder.recyclerView.setAdapter(todaysPlanAdapter);
+
+                todaysPlanAdapter.setOnItemClickListener(new ArrayListListener() {
+                    @Override
+                    public void onItemClick(int id, ArrayList<Question> list) {
+                        multiinput.id = id;
+                        multiinput.questions = list;
+                    }
+                });
+
+            }
+            else {
 
             }
         }

@@ -1,5 +1,7 @@
 package com.example.visitsapp.ui.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -65,10 +68,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private  LinearLayout llcplan;
     private NavigationView navigationView;
 
+    int resultcode = 1;
 
     private RelativeLayout rlPendingforapproval, rlLeaves, rlPendingforExecution, rlVisitExecute, rlVisitNotExecute;
 
-    private TextView tvPlanned, tvPendingforapproval, tvLeaves, tvPendingforExecution, tvVisitExecute, tvVisitNotExecute, yvName, tvDesgniation;
+    private TextView tvPlanned,tvBranch, tvPendingforapproval, tvLeaves, tvPendingforExecution, tvVisitExecute, tvVisitNotExecute, yvName, tvDesgniation;
     private RecyclerView recyclerView;
     private LoginResponce loginResponce;
     private CircleImageView profileImage;
@@ -111,10 +115,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         yvName = view.findViewById(R.id.name);
         tvDesgniation = view.findViewById(R.id.designation);
+        tvBranch = view.findViewById(R.id.branch);
 
         LoginResponce responce = SharedPrefrences.getInstance().getloginResponse();
         yvName.setText(responce.fullname);
         tvDesgniation.setText(responce.designation);
+        if(responce.location != null){
+            tvBranch.setText(", "+responce.location);
+        }
+
 
         rlLeaves = view.findViewById(R.id.rlLeaves);
         rlLeaves.setOnClickListener(this);
@@ -207,7 +216,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void pickImage() {
-
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto , 1);
     }
 
     private void requestExternalPermission() {
@@ -223,6 +234,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
 
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case 0:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    profileImage.setImageURI(selectedImage);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    profileImage.setImageURI(selectedImage);
+                }
+                break;
+        }
+    }
 
     private void requestCameraPermission() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
@@ -231,6 +260,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean checkCameraPermission() {
         if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+
+
             return true;
         } else {
             return false;

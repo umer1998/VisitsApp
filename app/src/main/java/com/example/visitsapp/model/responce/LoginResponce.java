@@ -9,6 +9,9 @@ public class LoginResponce {
     @SerializedName("designation")
     public String designation;
 
+    @SerializedName("location")
+    public String location;
+
     @SerializedName("token")
     public String token;
 }

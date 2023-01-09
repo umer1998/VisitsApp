@@ -11,7 +11,6 @@ public class AppConstantsUtils {
     public static final String EXECUTED_PLAN = "executedPlans";
     public static final String DAY_PLANNER = "dayPlanner";
     public static final String GET_REPORTING_TEAM = "getReportingTeam";
-    public static final String GET_PENDING_APPROVAL = "getPendingApproval";
 
     public static final String POST_FEEDBACK = "postFeedback";
     public static final String REPLACEEVENTANDPOST = "replaceEventPlusFeedback";
@@ -26,6 +25,10 @@ public class AppConstantsUtils {
 
     public static final String UNAPPROVED_EVENT = "unapprovedEvents";
     public static final String REJECTED_EVENT = "getRejectedEvents";
+    public static final String GET_PENDING_APPROVAL = "getPendingApproval";
+    public static final String GET_PENDING_EVENTS_APPROVAL = "getPendingEventsApproval";
+
+
     public static final String CREATE_EVENT_FEEDBACK = "createEventFeedback";
 
 

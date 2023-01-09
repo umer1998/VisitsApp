@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
                 SharedPrefrences.getInstance().setIsLogin(true);
                 SharedPrefrences.getInstance().setAccessToken(body.token);
                 SharedPrefrences.getInstance().setloginResponse(body);
-//                getConfig();
+                getConfig();
                 if (dialog != null) {
                     dialog.dismiss();
                 }

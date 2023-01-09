@@ -102,5 +102,8 @@ public interface BusinessService {
     @GET(AppConstantsUtils.REJECTED_EVENT)
     Call<ResponceObject<ArrayList<PlansData>>> getRejectedEvent();
 
+    @GET(AppConstantsUtils.GET_PENDING_EVENTS_APPROVAL)
+    Call<ResponceObject<ArrayList<PlansData>>> getPendingApproval();
+
 
 }

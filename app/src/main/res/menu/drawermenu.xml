@@ -37,7 +37,7 @@
             android:title="Unexecuted Events"/>
 
         <item android:id="@+id/rejected"
-            android:icon="@drawable/leave_icon"
+            android:icon="@drawable/v_cross"
             android:title="Rejected Events"/>
 
 

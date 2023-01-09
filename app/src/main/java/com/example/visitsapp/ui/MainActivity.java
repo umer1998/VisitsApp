@@ -88,7 +88,14 @@ public class MainActivity extends AppCompatActivity {
         syncOfflineData();
 
 
-        getConfig();
+        if(SharedPrefrences.getInstance().getConfig() == null){
+            getConfig();
+        } else {
+            ConfigurationResponse config = SharedPrefrences.getInstance().getConfig();
+            if(config.events == null){
+                getConfig();
+            }
+        }
 
 
 

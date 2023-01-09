@@ -33,7 +33,7 @@
         <entry key="..\:/visitapp/app/src/main/res/layout/activity_login.xml" value="0.2738225629791895" />
         <entry key="..\:/visitapp/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/visitapp/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
-        <entry key="..\:/visitapp/app/src/main/res/layout/adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/visitapp/app/src/main/res/layout/adapter_layout.xml" value="0.45230263157894735" />
         <entry key="..\:/visitapp/app/src/main/res/layout/add_member_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/approval_pending_event.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/card_items.xml" value="0.13020833333333334" />
@@ -44,7 +44,7 @@
         <entry key="..\:/visitapp/app/src/main/res/layout/dialog_title_text_layout.xml" value="0.3894899536321484" />
         <entry key="..\:/visitapp/app/src/main/res/layout/dialog_title_text_layout_yes_no.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/edittext_adapter.xml" value="0.25416666666666665" />
-        <entry key="..\:/visitapp/app/src/main/res/layout/edittext_adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/visitapp/app/src/main/res/layout/edittext_adapter_layout.xml" value="0.5245579567779961" />
         <entry key="..\:/visitapp/app/src/main/res/layout/event_detail_adapter.xml" value="0.264" />
         <entry key="..\:/visitapp/app/src/main/res/layout/executed_adapter.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/execution_adapter.xml" value="0.25416666666666665" />
@@ -88,7 +88,10 @@
         <entry key="..\:/visitapp/app/src/main/res/layout/radio_group.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/reporting_team_card.xml" value="0.4" />
         <entry key="..\:/visitapp/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/visitapp/app/src/main/res/layout/textarea_adapter_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/layout/todays_plan_layout.xml" value="0.4528301886792453" />
+        <entry key="..\:/visitapp/app/src/main/res/layout/un_exe_adapter.xml" value="0.25416666666666665" />
+        <entry key="..\:/visitapp/app/src/main/res/layout/un_execution_adapter.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/menu/bottom_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/menu/donor_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/visitapp/app/src/main/res/menu/drawerMenu.xml" value="0.25416666666666665" />

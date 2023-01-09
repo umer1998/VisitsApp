@@ -106,7 +106,7 @@ public class UpdateEventDialogue extends DialogFragment {
         rlCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.homeFrag();
+
                 UpdateEventDialogue.this.getDialog().dismiss();
             }
         });

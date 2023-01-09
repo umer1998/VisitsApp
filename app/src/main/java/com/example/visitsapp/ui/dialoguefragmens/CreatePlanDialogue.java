@@ -481,8 +481,8 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
 
             date = new SimpleDateFormat("yy-MM-dd").format(new Date(i, i1,i2));
             Calendar mcurrentTime = Calendar.getInstance();
-            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = mcurrentTime.get(Calendar.MINUTE);
+            int hour = 9;
+            int minute = 0;
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(context, CreatePlanDialogue.this, hour, minute, false);
 

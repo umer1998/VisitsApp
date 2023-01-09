@@ -82,7 +82,7 @@ public class LACFeedbackForm extends BaseFragment {
         todaysPlanAdapter.setOnRadioButtonClickListener(new OnMapListener() {
             @Override
             public void onMapListener(HashMap<Integer, String> hashMap, Multiinput multiinput) {
-                postFeedBack(hashMap);
+                postFeedBack(hashMap, multiinput);
             }
 
         });
@@ -90,12 +90,13 @@ public class LACFeedbackForm extends BaseFragment {
 
     }
 
-    private void postFeedBack(HashMap<Integer, String> hashMap) {
+    private void postFeedBack(HashMap<Integer, String> hashMap, Multiinput multiinput) {
 
 
         ArrayList<Feedback> feedbacks = new ArrayList<>();
         PostFeedBackRequest postFeedBackRequest = new PostFeedBackRequest();
         ArrayList<QuesAnswer> quesAnswers = new ArrayList<>();
+
 
         for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
             QuesAnswer quesAnswer = new QuesAnswer();
@@ -108,6 +109,10 @@ public class LACFeedbackForm extends BaseFragment {
         Feedback feedback = new Feedback();
         feedback.planner_event_id = id;
         feedback.questionaire = quesAnswers;
+
+        ArrayList<Multiinput> list = new ArrayList<>();
+        list.add(multiinput);
+        feedback.multiinput = list;
         ArrayList<Multiinput> multiinputs = new ArrayList<>();
         feedback.multiinput = multiinputs;
 

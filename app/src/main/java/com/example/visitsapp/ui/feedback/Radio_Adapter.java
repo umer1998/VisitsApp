@@ -1,10 +1,12 @@
 package com.example.visitsapp.ui.feedback;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ public class Radio_Adapter extends RecyclerView.Adapter<Radio_Adapter.ViewHolder
 
         return R.layout.adapter_layout;
 
+
     }
 
     @Override
@@ -57,6 +60,12 @@ public class Radio_Adapter extends RecyclerView.Adapter<Radio_Adapter.ViewHolder
             @Override
             public void onClick(View view) {
 
+                View vieww = context.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
 //                holder.rlNo.setBackgroundColor(Color.parseColor("#FFFFFF"));
 //                holder.rlyes.setBackgroundColor(Color.parseColor("#96c949"));
                 holder.ivYEs.setImageResource(R.drawable.select);
@@ -75,7 +84,11 @@ public class Radio_Adapter extends RecyclerView.Adapter<Radio_Adapter.ViewHolder
         holder.rlNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
+// View vieww = context.getCurrentFocus();
+//                if (view != null) {
+//                    InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//                }
 //                holder.rlNo.setBackgroundColor(Color.parseColor("#ef5350"));
 //                holder.rlyes.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
@@ -111,6 +124,8 @@ public class Radio_Adapter extends RecyclerView.Adapter<Radio_Adapter.ViewHolder
 
         ViewHolder(View view) {
             super(view);
+
+
 
             tvNo = view.findViewById(R.id.tvno);
             tvYes = view.findViewById(R.id.tvyes);

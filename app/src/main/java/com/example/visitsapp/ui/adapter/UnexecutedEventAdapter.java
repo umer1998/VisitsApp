@@ -34,7 +34,7 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
     @Override
     public int getItemViewType(int position) {
 
-        return R.layout.execution_adapter;
+        return R.layout.un_execution_adapter;
 
     }
 
@@ -58,10 +58,12 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
 
         holder.tvPurpose.setText(body.get(position).event_purpose);
         holder.tvEvent.setText(body.get(position).event);
+        holder.tvpurposechild.setText(body.get(position).purpose_child);
+        holder.tvdate.setText(body.get(position).planned_on);
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
+//                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
             }
         });
 
@@ -78,15 +80,18 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
 
 
         RelativeLayout card;
-        private TextView tvEvent, tvPurpose, tvTime;
+        private TextView tvEvent, tvPurpose, tvTime, tvdate, tvpurposechild;
 
         ViewHolder(View view) {
             super(view);
 
             card =  view.findViewById(R.id.card);
             tvEvent = view.findViewById(R.id.eventType);
-            tvPurpose = view.findViewById(R.id.eventPurpose);
+            tvPurpose = view.findViewById(R.id.eventpurpose);
             tvTime = view.findViewById(R.id.time);
+
+            tvdate = view.findViewById(R.id.date);
+            tvpurposechild = view.findViewById(R.id.eventPurpose);
 
         }
     }
