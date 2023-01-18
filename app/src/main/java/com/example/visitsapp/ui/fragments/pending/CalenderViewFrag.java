@@ -265,6 +265,8 @@ public class CalenderViewFrag extends BaseFragment {
 //            dateList.add(planningDateObject);
 //        }
 
+        recyclerView.setItemViewCacheSize(dateList.size());
+        recyclerView.setHasFixedSize(true);
         TimelineAdapter adapter = new TimelineAdapter(context, dateList, datePlan);
         recyclerView.setAdapter(adapter);
     }

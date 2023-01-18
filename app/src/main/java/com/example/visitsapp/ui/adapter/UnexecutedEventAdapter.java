@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,15 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(body.get(position).event.equalsIgnoreCase("leave")
+                || body.get(position).event.equalsIgnoreCase("Office work")){
+            holder.llLayout.setVisibility(View.GONE);
+        } else {
+            holder.llLayout.setVisibility(View.VISIBLE);
+
+        }
+
+
         try {
             holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
                     format(new SimpleDateFormat("hh:mm:ss").
@@ -80,6 +90,7 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
 
 
         RelativeLayout card;
+        private LinearLayout llLayout;
         private TextView tvEvent, tvPurpose, tvTime, tvdate, tvpurposechild;
 
         ViewHolder(View view) {
@@ -89,7 +100,7 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
             tvEvent = view.findViewById(R.id.eventType);
             tvPurpose = view.findViewById(R.id.eventpurpose);
             tvTime = view.findViewById(R.id.time);
-
+            llLayout = view.findViewById(R.id.lllocation);
             tvdate = view.findViewById(R.id.date);
             tvpurposechild = view.findViewById(R.id.eventPurpose);
 

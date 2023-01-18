@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout llcplan;
     public CircleImageView profileImage;
 
-    private myDbAdapter dbHelper;
 
     private String imageUrl= null;
 
@@ -511,9 +510,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void syncOfflineData(){
-        dbHelper = new myDbAdapter(this);
+
         ArrayList<CreateEventFeedback> arrayList = new ArrayList<>();
-        arrayList = dbHelper.getCreateFeedback();
+        arrayList = DBHelper.getInstance().getCreateFeedback();
 //
 //        ReplaceEventRequest request = new ReplaceEventRequest();
 //        request = dbHelper.getQuesReplaceFeedback();

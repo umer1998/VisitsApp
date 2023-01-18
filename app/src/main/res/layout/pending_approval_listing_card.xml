@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/card"
     android:layout_marginBottom="@dimen/dp_10"
-    android:background="@color/white"
+    android:background="@color/trancparent_white"
     android:layout_height="80dp">
 
     <RelativeLayout
@@ -23,22 +23,23 @@
                 android:id="@+id/eventType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Disbursement"
                 android:fontFamily="@font/regular"
+                android:text="Disbursement"
                 android:textColor="@color/Black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/eventpurpose"
-                android:fontFamily="@font/semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:fontFamily="@font/semibold"
                 android:text="Disbursement"
                 android:textColor="@color/Black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/lllocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -74,10 +75,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_gravity="end"
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginEnd="10dp"
                 android:text="12:00 pm"
                 android:textColor="@color/appgreen" />
@@ -91,7 +92,6 @@
                 android:textColor="@color/appgreen" />
 
         </LinearLayout>
-
 
 
     </RelativeLayout>

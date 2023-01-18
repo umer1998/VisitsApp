@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -56,6 +57,15 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(mapDateForPlannings.get(position).event.equalsIgnoreCase("leave") ||
+                mapDateForPlannings.get(position).event.equalsIgnoreCase("Office Work")){
+            holder.llpendlocation.setVisibility(View.GONE);
+            holder.llapprovelocation.setVisibility(View.GONE);
+        } else {
+            holder.llpendlocation.setVisibility(View.VISIBLE);
+            holder.llapprovelocation.setVisibility(View.VISIBLE);
+        }
+
         if(mapDateForPlannings.get(position).status.equalsIgnoreCase("pending")){
 
             if(mapDateForPlannings.get(position).event.equalsIgnoreCase("leave")){
@@ -79,8 +89,8 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
                 holder.tvNEventType.setText(mapDateForPlannings.get(position).event);
                 holder.noEventCard.setCardBackgroundColor(Color.parseColor("#fff46e6d"));
                 try {
-                    holder.tvNTime.setText(new SimpleDateFormat("HH:mm a").
-                            format(new SimpleDateFormat("hh:mm:ss").
+                    holder.tvNTime.setText(new SimpleDateFormat("KK:mm a").
+                            format(new SimpleDateFormat("KK:mm:ss").
                                     parse(mapDateForPlannings.get(position).time)));
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -216,6 +226,7 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
         TextView tvSEventType, tvSLocation, tvSTime, tvLeavePurpose, tvLeaveType;
         TextView tvNEventType, tvNLocation, tvNTime;
         private ImageView ivLocation;
+        private LinearLayout llpendlocation, llapprovelocation;
 
         private TextView  tvappurpose, tvunpurpose;
 
@@ -228,7 +239,8 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
             tvTime = view.findViewById(R.id.time);
             tvLocation = view.findViewById(R.id.location);
             cardView = view.findViewById(R.id.card);
-
+            llapprovelocation = view.findViewById(R.id.approvelocation);
+            llpendlocation = view.findViewById(R.id.pendinglocation);
             eventnooCard = view.findViewById(R.id.eventnoo);
 
             tvLeaveType = view.findViewById(R.id.leaveType);

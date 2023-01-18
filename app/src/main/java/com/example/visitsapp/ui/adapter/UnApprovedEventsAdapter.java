@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,14 @@ public class UnApprovedEventsAdapter extends RecyclerView.Adapter<UnApprovedEven
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(body.get(position).event.equalsIgnoreCase("leave")
+                || body.get(position).event.equalsIgnoreCase("Office work")){
+            holder.llLayout.setVisibility(View.GONE);
+        } else {
+            holder.llLayout.setVisibility(View.VISIBLE);
+
+        }
+
         try {
             holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
                     format(new SimpleDateFormat("hh:mm:ss").
@@ -56,6 +65,7 @@ public class UnApprovedEventsAdapter extends RecyclerView.Adapter<UnApprovedEven
             e.printStackTrace();
         }
 
+        holder.tvPurposeChild.setText(body.get(position).purpose_child);
         holder.tvPurpose.setText(body.get(position).event_purpose);
         holder.tvEvent.setText(body.get(position).event);
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +88,8 @@ public class UnApprovedEventsAdapter extends RecyclerView.Adapter<UnApprovedEven
 
 
         RelativeLayout card;
-        private TextView tvEvent, tvPurpose, tvTime;
+        private LinearLayout llLayout;
+        private TextView tvEvent, tvPurpose, tvTime, tvPurposeChild;
 
         ViewHolder(View view) {
             super(view);
@@ -87,6 +98,8 @@ public class UnApprovedEventsAdapter extends RecyclerView.Adapter<UnApprovedEven
             tvEvent = view.findViewById(R.id.eventType);
             tvPurpose = view.findViewById(R.id.eventPurpose);
             tvTime = view.findViewById(R.id.time);
+            llLayout = view.findViewById(R.id.lllocation);
+            tvPurposeChild = view.findViewById(R.id.child);
 
         }
     }

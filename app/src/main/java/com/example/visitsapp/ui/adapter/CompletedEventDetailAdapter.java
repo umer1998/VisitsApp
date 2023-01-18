@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,10 @@ import com.example.visitsapp.R;
 import com.example.visitsapp.model.responce.PlansData;
 import com.example.visitsapp.ui.MainActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.IllformedLocaleException;
 
 
 public class CompletedEventDetailAdapter extends RecyclerView.Adapter<CompletedEventDetailAdapter.ViewHolder> {
@@ -44,9 +48,28 @@ public class CompletedEventDetailAdapter extends RecyclerView.Adapter<CompletedE
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.tvTime.setText(list.get(position).time);
-        holder.tvLocation.setText(list.get(position).event_purpose);
+        if(list.get(position).event.equalsIgnoreCase("leave")
+        || list.get(position).event.equalsIgnoreCase("Office work")){
+            holder.lllcoation.setVisibility(View.GONE);
+        } else {
+            holder.lllcoation.setVisibility(View.VISIBLE);
+
+        }
+        try {
+            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
+                    format(new SimpleDateFormat("hh:mm:ss").
+                            parse(list.get(position).time)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.tvdate.setText(list.get(position).planned_on);
+        holder.tvLocation.setText(list.get(position).purpose_child);
         holder.tvEventType.setText(list.get(position).event);
+
+        holder.tvpurpose.setText(list.get(position).event_purpose);
+
+
 
     }
 
@@ -59,15 +82,19 @@ public class CompletedEventDetailAdapter extends RecyclerView.Adapter<CompletedE
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTime, tvLocation, tvEventType;
+        private TextView tvTime, tvLocation, tvEventType, tvpurpose, tvdate;
+        private LinearLayout lllcoation;
 
 
         ViewHolder(View view) {
             super(view);
 
+            tvdate = view.findViewById(R.id.date);
             tvEventType = view.findViewById(R.id.eventType);
             tvTime = view.findViewById(R.id.time);
             tvLocation = view.findViewById(R.id.location);
+            lllcoation = view.findViewById(R.id.lllocation);
+            tvpurpose = view.findViewById(R.id.eventPurpose);
 
         }
     }

@@ -1,5 +1,8 @@
 package com.example.visitsapp.ui.fragments.forms;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,10 +18,15 @@ import android.widget.RelativeLayout;
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.PostFeedBackResponce;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.DBHelper;
 import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
+import com.example.visitsapp.model.request.CreateChangedPlan;
+import com.example.visitsapp.model.request.CreateEventFeedback;
+import com.example.visitsapp.model.request.CreatePlanRequest;
 import com.example.visitsapp.model.request.Feedback;
+import com.example.visitsapp.model.request.FeedbackReplace;
 import com.example.visitsapp.model.request.Multiinput;
 import com.example.visitsapp.model.request.PostFeedBackRequest;
 import com.example.visitsapp.model.request.QuesAnswer;
@@ -32,6 +40,7 @@ import com.example.visitsapp.utils.alert.AlertUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class LACFeedbackForm extends BaseFragment {
@@ -43,10 +52,12 @@ public class LACFeedbackForm extends BaseFragment {
     private RelativeLayout rlSubmit;
     HashMap<Integer, String> answersmap = new HashMap<Integer, String>();
     private int id;
+    private CreatePlanRequest createPlanRequest;
 
     public LACFeedbackForm(MainActivity context, ArrayList<FeedbackQuestionnaire> feedbackQuestionnaires, int id) {
         this.context = context;
         this.feedbackQuestionnaires = feedbackQuestionnaires;
+
         this.id = id;
     }
 
@@ -82,13 +93,112 @@ public class LACFeedbackForm extends BaseFragment {
         todaysPlanAdapter.setOnRadioButtonClickListener(new OnMapListener() {
             @Override
             public void onMapListener(HashMap<Integer, String> hashMap, Multiinput multiinput) {
-                postFeedBack(hashMap, multiinput);
+                answersmap = hashMap;
+                if(id == -1){
+                    createEventandFeedback(multiinput);
+                } else {
+                    postFeedBack(hashMap, multiinput);
+                }
+
             }
 
         });
 
 
     }
+
+    private void createEventandFeedback(Multiinput multiinput) {
+
+
+        CreateEventFeedback request = new CreateEventFeedback();
+        ArrayList<CreateChangedPlan> changedPlansList = new ArrayList<>();
+        CreateChangedPlan changedPlan = new CreateChangedPlan();
+        changedPlan.new_event = createPlanRequest;
+
+        ArrayList<QuesAnswer> quesAnswers = new ArrayList<>();
+        ArrayList<FeedbackReplace> feedbacks = new ArrayList<>();
+        for (Map.Entry<Integer, String> entry : answersmap.entrySet()) {
+            QuesAnswer quesAnswer = new QuesAnswer();
+            quesAnswer.setAnswer(entry.getValue());
+            quesAnswer.setId(entry.getKey());
+
+            quesAnswers.add(quesAnswer);
+        }
+        FeedbackReplace feedbackReplace = new FeedbackReplace();
+        feedbackReplace.questionaire = quesAnswers;
+        if(multiinput.id == 0){
+            ArrayList<Multiinput> list = new ArrayList<>();
+            feedbackReplace.multiinput = list;
+        } else {
+            ArrayList<Multiinput> list = new ArrayList<>();
+            list.add(multiinput);
+            feedbackReplace.multiinput = list;
+        }
+
+        feedbacks.add(feedbackReplace);
+
+        changedPlan.feedbacks = feedbacks;
+        changedPlansList.add(changedPlan);
+        request.changedPlan = changedPlansList;
+
+        if(isNetworkAvailable()) {
+            final AlertDialog dialog = AlertUtils.showLoader(context);
+            if (dialog != null) {
+                dialog.show();
+            }
+            Business serviceImp = new Business();
+            serviceImp.createFeedback(request, new ResponseCallBack<String>() {
+                @Override
+                public void onSuccess(String body) {
+
+
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+
+                    AlertUtils.showAlert(context, "Feedback submitted successfully.");
+                    context.executedCompletedEvent();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+
+                    AlertUtils.showAlert(context, message);
+
+
+                }
+            });
+        } else {
+            int randomNum = ThreadLocalRandom.current().nextInt(123, 134756 + 1);
+            DBHelper.getInstance().insertCreateFeedback(randomNum,request.changedPlan.get(0).new_event.getPlanned_on(),
+                    request.changedPlan.get(0).new_event.getEvent_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_child_id());
+
+            for(int i=0;i < request.changedPlan.get(0).feedbacks.get(0).questionaire.size(); i++){
+
+                DBHelper.getInstance().insertQuestionaire(randomNum,
+                        request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getAnswer(),
+                        String.valueOf(request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getId()));
+
+
+            }
+
+
+            for(int i=0;i< request.changedPlan.get(0).feedbacks.get(0).multiinput.size(); i++){
+                DBHelper.getInstance().insertMultinputQuestions(randomNum,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(i).id,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).name,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).designation);
+            }
+
+            context.homeFrag();
+        }
+    }
+
 
     private void postFeedBack(HashMap<Integer, String> hashMap, Multiinput multiinput) {
 
@@ -119,7 +229,7 @@ public class LACFeedbackForm extends BaseFragment {
         feedbacks.add(feedback);
 
         postFeedBackRequest.feedbacks = feedbacks;
-//        if(isNetworkAvailable()){
+        if (isNetworkAvailable()) {
 
             final AlertDialog dialog = AlertUtils.showLoader(context);
 
@@ -127,7 +237,7 @@ public class LACFeedbackForm extends BaseFragment {
                 dialog.show();
             }
 
-            Business serviceImp = new Business() ;
+            Business serviceImp = new Business();
             serviceImp.postFeedBack(postFeedBackRequest, new ResponseCallBack<PostFeedBackResponce>() {
                 @Override
                 public void onSuccess(PostFeedBackResponce body) {
@@ -152,7 +262,34 @@ public class LACFeedbackForm extends BaseFragment {
 
                 }
             });
+        } else {
+            DBHelper.getInstance().insertQuesPostFeedback(postFeedBackRequest.feedbacks.get(0).planner_event_id);
+
+            for (int i = 0; i < postFeedBackRequest.feedbacks.get(0).questionaire.size(); i++) {
+                DBHelper.getInstance().insertQuestionaire(postFeedBackRequest.feedbacks.get(0).planner_event_id,
+                        postFeedBackRequest.feedbacks.get(0).questionaire.get(i).getAnswer(),
+                        String.valueOf(postFeedBackRequest.feedbacks.get(0).questionaire.get(i).getId()));
+            }
+
+            DBHelper.getInstance().insertMultinput( postFeedBackRequest.feedbacks.get(0).multiinput.get(0).id);
+
+            for(int i =0; i< postFeedBackRequest.feedbacks.get(0).multiinput.size(); i++){
+                DBHelper.getInstance().insertMultinputQuestions(postFeedBackRequest.feedbacks.get(0).planner_event_id,
+                        postFeedBackRequest.feedbacks.get(0).multiinput.get(0).id,
+                        postFeedBackRequest.feedbacks.get(0).multiinput.get(0).questions.get(i).name,
+                        postFeedBackRequest.feedbacks.get(0).multiinput.get(0).questions.get(i).designation);
+            }
+
+            context.homeFrag();
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     @Override
     public boolean onBackPressed() {

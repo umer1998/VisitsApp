@@ -54,6 +54,7 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/approvelocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -146,6 +147,7 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/pendinglocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -268,7 +270,7 @@
 <!--        android:id="@+id/eventnoo"/>-->
 
     <androidx.cardview.widget.CardView
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"

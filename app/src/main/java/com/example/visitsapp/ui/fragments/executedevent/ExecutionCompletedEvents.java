@@ -32,10 +32,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 
 public class ExecutionCompletedEvents extends BaseFragment {
@@ -112,12 +117,20 @@ public class ExecutionCompletedEvents extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAdapter(ArrayList<PlansData> body) {
 
-        HashMap<String, ArrayList<PlansData>> datePlanMap = new HashMap<String, ArrayList<PlansData>>();
+        Collections.sort(body, new Comparator<PlansData>() {
+            @Override
+            public int compare(PlansData plansData, PlansData t1) {
+                return plansData.planned_on.compareTo(t1.planned_on);
+            }
+        });
 
-        for(int i =0; i<body.size() ; i++){
+        HashMap<String, ArrayList<PlansData>> datePlanMap = new HashMap<String, ArrayList<PlansData>>();
+        HashMap<String, ArrayList<PlansData>> data = new HashMap<String, ArrayList<PlansData>>();
+
+        for(int i =0; i<body.size() ; i++) {
             ArrayList<PlansData> dataPlan = new ArrayList<>();
 
-            if(datePlanMap.get(body.get(i).planned_on) != null){
+            if (datePlanMap.get(body.get(i).planned_on) != null) {
                 dataPlan = datePlanMap.get(body.get(i).planned_on);
                 dataPlan.add(body.get(i));
                 datePlanMap.replace(body.get(i).planned_on, dataPlan);
@@ -125,7 +138,19 @@ public class ExecutionCompletedEvents extends BaseFragment {
                 dataPlan.add(body.get(i));
                 datePlanMap.put(body.get(i).planned_on, dataPlan);
             }
+        }
 
+            TreeMap<String, ArrayList<PlansData>> sorted = new TreeMap<>();
+
+            // Copy all data from hashMap into TreeMap
+            sorted.putAll(datePlanMap);
+
+            // Display the TreeMap which is naturally sorted
+//            for (Map.Entry<String, ArrayList<PlansData>> entry : sorted.entrySet()){
+//                data.put(entry.getKey(), entry.getValue());
+//            }
+//                System.out.println("Key = " + entry.getKey() +
+//                        ", Value = " + entry.getValue());
 
 //            if(datePlanMap != null && datePlanMap.size() > 0){
 //                for(Map.Entry<String, ArrayList<PlansData>> mapElement: datePlanMap.entrySet()){
@@ -151,9 +176,9 @@ public class ExecutionCompletedEvents extends BaseFragment {
 //                datePlanMap.put(body.get(i).planned_on, dataPlan);
 //            }
 
-        }
 
-        ExecutedEventsAdapter executedEventsAdapter = new ExecutedEventsAdapter(context, datePlanMap);
+
+        ExecutedEventsAdapter executedEventsAdapter = new ExecutedEventsAdapter(context, sorted);
         recyclerView.setAdapter(executedEventsAdapter);
     }
 
@@ -161,4 +186,8 @@ public class ExecutionCompletedEvents extends BaseFragment {
     public boolean onBackPressed() {
         return false;
     }
+
+
+
 }
+

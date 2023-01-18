@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,18 +62,22 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(body.get(position).event.equalsIgnoreCase("leave")
+                || body.get(position).event.equalsIgnoreCase("Office work")){
+            holder.llLayout.setVisibility(View.GONE);
+        } else {
+            holder.llLayout.setVisibility(View.VISIBLE);
+
+        }
+
+
         if(isSelectAll){
             list.add(body.get(holder.getAdapterPosition()).id);
             holder.cardView.setBackgroundColor(Color.parseColor("#3EAA92"));
-            try {
-                holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
             mItemClickListener.onItemClick(null, list);
 
-            holder.tvEvent.setText(body.get(position).event);
-            holder.tvPurpose.setText(body.get(position).event_purpose);
+
         } else {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,26 +93,26 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
                 }
             });
 
-            try {
 
-                holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        }
+        try {
+
+            holder.tvTime.setText(new SimpleDateFormat("HH:mm a").format(new SimpleDateFormat("hh:mm:ss").parse(body.get(position).time)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-            holder.tvEvent.setText(body.get(position).event);
-            holder.tvPurpose.setText(body.get(position).event_purpose);
+        holder.tvEvent.setText(body.get(position).event);
+        holder.tvPurpose.setText(body.get(position).event_purpose);
 
-            holder.tvPurposeChild.setText(body.get(position).purpose_child);
+        holder.tvPurposeChild.setText(body.get(position).purpose_child);
 
-            try {
-                holder.tvDate.setText(new SimpleDateFormat("dd MMMM yyy").format(
-                        new SimpleDateFormat("dd-MM-yyyy").parse(body.get(position).planned_on)));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            holder.tvDate.setText(new SimpleDateFormat("dd MMMM yyy").format(
+                    new SimpleDateFormat("dd-MM-yyyy").parse(body.get(position).planned_on)));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
 
@@ -125,6 +130,7 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
 
        private TextView tvTime, tvPurpose, tvEvent, tvPurposeChild, tvDate;
        private RelativeLayout cardView;
+       private LinearLayout llLayout;
 
         ViewHolder(View view) {
             super(view);
@@ -133,6 +139,7 @@ public class PendingApprovalAdapter extends RecyclerView.Adapter<PendingApproval
             tvPurpose = view.findViewById(R.id.eventpurpose);
             tvTime = view.findViewById(R.id.time);
 
+            llLayout = view.findViewById(R.id.lllocation);
             tvDate = view.findViewById(R.id.date);
             tvPurposeChild = view.findViewById(R.id.eventPurpose);
 

@@ -50,6 +50,8 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        holder.recyclerView.setItemViewCacheSize(datePlan.get(items.get(position).getDate()).size());
+        holder.recyclerView.setHasFixedSize(true);
 
         holder.timelineView.setLineType(getLineType(position));
         EventDetailAdapter eventDetailAdapter = new EventDetailAdapter(context,
@@ -96,20 +98,20 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
     }
 
     private LineType getLineType(int position) {
-        if (getItemCount() == 1) {
-            return LineType.ONLYONE;
-
-        } else {
-            if (position == 0) {
-                return LineType.BEGIN;
-
-            } else if (position == getItemCount() - 1) {
-                return LineType.END;
-
-            } else {
+//        if (getItemCount() == 1) {
+//            return LineType.ONLYONE;
+//
+//        } else {
+//            if (position == 0) {
+//                return LineType.BEGIN;
+//
+//            } else if (position == getItemCount() - 1) {
+//                return LineType.END;
+//
+//            } else {
                 return LineType.NORMAL;
-            }
-        }
+//            }
+//        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

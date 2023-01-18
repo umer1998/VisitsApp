@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
@@ -28,6 +29,7 @@ public class PendingLeavesFrag extends BaseFragment {
 
     private RecyclerView recyclerView;
     private MainActivity context;
+    private TextView tvNorecord;
     private ArrayList<GetLeavesResponce> plans = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -44,6 +46,7 @@ public class PendingLeavesFrag extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pending_leaves, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        tvNorecord = view.findViewById(R.id.norecord);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         swipeRefreshLayout = view.findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -59,8 +62,19 @@ public class PendingLeavesFrag extends BaseFragment {
     }
 
     private void setApdapter() {
-        LeavesAdapter leavesAdapter = new LeavesAdapter(context, plans);
-        recyclerView.setAdapter(leavesAdapter);
+
+        if(plans.size()> 0){
+            tvNorecord.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            LeavesAdapter leavesAdapter = new LeavesAdapter(context, plans);
+            recyclerView.setAdapter(leavesAdapter);
+
+
+        } else {
+            tvNorecord.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
 
 
     }

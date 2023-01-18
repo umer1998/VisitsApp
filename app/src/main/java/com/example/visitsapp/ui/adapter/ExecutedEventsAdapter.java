@@ -24,7 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.TreeMap;
 
 
 public class ExecutedEventsAdapter extends RecyclerView.Adapter<ExecutedEventsAdapter.ViewHolder> {
@@ -32,10 +32,10 @@ public class ExecutedEventsAdapter extends RecyclerView.Adapter<ExecutedEventsAd
 
 
     private MainActivity context;
-    private HashMap<String, ArrayList<PlansData>> datePlanMap ;
+    private TreeMap<String, ArrayList<PlansData>> datePlanMap ;
 
 
-    public ExecutedEventsAdapter(MainActivity context, HashMap<String, ArrayList<PlansData>> datePlanMap ) {
+    public ExecutedEventsAdapter(MainActivity context, TreeMap<String, ArrayList<PlansData>> datePlanMap ) {
         this.context = context;
         this.datePlanMap = datePlanMap;
     }
@@ -57,7 +57,9 @@ public class ExecutedEventsAdapter extends RecyclerView.Adapter<ExecutedEventsAd
 
         String key = (String) datePlanMap.keySet().toArray()[position];
 
+        holder.timelineView.setMarkerStrokeWidth(7);
         holder.timelineView.setLineType(getLineType(position));
+        holder.timelineView.setFillMarker(false);
         ArrayList<PlansData> list = datePlanMap.get(key);
         CompletedEventDetailAdapter completedEventDetailAdapter = new CompletedEventDetailAdapter(context, list);
         holder.recyclerView.setAdapter(completedEventDetailAdapter);
@@ -81,20 +83,17 @@ public class ExecutedEventsAdapter extends RecyclerView.Adapter<ExecutedEventsAd
     }
 
     private LineType getLineType(int position) {
-        if (getItemCount() == 1) {
-            return LineType.ONLYONE;
 
-        } else {
-            if (position == 0) {
-                return LineType.BEGIN;
-
-            } else if (position == getItemCount() - 1) {
-                return LineType.END;
-
-            } else {
+//            if (position == 0) {
                 return LineType.NORMAL;
-            }
-        }
+
+//            } else if (position == getItemCount() - 1) {
+//                return LineType.END;
+//
+//            } else {
+//                return LineType.NORMAL;
+//            }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

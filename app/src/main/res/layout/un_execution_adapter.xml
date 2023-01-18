@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/card"
     android:layout_marginBottom="@dimen/dp_10"
-    android:background="@color/white"
+    android:background="@color/trancparent_white"
     android:layout_height="80dp">
 
     <RelativeLayout
@@ -39,9 +39,9 @@
                 android:textSize="18sp" />
 
             <LinearLayout
+                android:id="@+id/lllocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
                 <ImageView

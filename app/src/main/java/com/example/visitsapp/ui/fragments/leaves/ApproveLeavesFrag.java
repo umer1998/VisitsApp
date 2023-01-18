@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
@@ -30,6 +31,7 @@ public class ApproveLeavesFrag extends BaseFragment {
 
     private RecyclerView recyclerView;
     private MainActivity context;
+    private TextView tvNorecord;
     private ArrayList<GetLeavesResponce> plans = new ArrayList<>();
 
     public ApproveLeavesFrag(MainActivity context, ArrayList<GetLeavesResponce> approveLeaves) {
@@ -44,7 +46,7 @@ public class ApproveLeavesFrag extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_approve_leaves, container, false);
 
-
+        tvNorecord = view.findViewById(R.id.norecord);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         setApdapter();
@@ -53,8 +55,17 @@ public class ApproveLeavesFrag extends BaseFragment {
     }
 
     private void setApdapter() {
-        LeavesAdapter leavesAdapter = new LeavesAdapter(context, plans);
-        recyclerView.setAdapter(leavesAdapter);
+
+        if(plans.size()> 0){
+            tvNorecord.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            LeavesAdapter leavesAdapter = new LeavesAdapter(context, plans);
+            recyclerView.setAdapter(leavesAdapter);
+
+        } else {
+            tvNorecord.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
 
 
     }

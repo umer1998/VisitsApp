@@ -7,7 +7,7 @@
     <androidx.cardview.widget.CardView
         android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -27,6 +27,7 @@
             android:paddingEnd="3dp">
 
             <LinearLayout
+                android:layout_marginBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -42,7 +43,18 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/eventPurpose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Akhuwat Head Office, Lahore"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
                 <LinearLayout
+                    android:id="@+id/lllocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -71,15 +83,35 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/time"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:text="12:00 pm"
-                android:textColor="@color/appgreen" />
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="12:00 pm"
+                    android:textColor="@color/appgreen" />
+
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="12:00 pm"
+                    android:textColor="@color/appgreen" />
+
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 

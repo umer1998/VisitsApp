@@ -29,6 +29,7 @@ import android.widget.TimePicker;
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.PostFeedBackResponce;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.DBHelper;
 import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.Area;
@@ -672,7 +673,7 @@ public class CreateEventDialogue2 extends DialogFragment {
             });
         }
         else {
-            dbHelper.insertQuesPostFeedback(id);
+//            dbHelper.insertQuesPostFeedback(id);
             CreateEventDialogue2.this.getDialog().dismiss();
         }
 //            PostFeedBackRequest postFeedBackRequest1 = new PostFeedBackRequest();
@@ -766,11 +767,15 @@ public class CreateEventDialogue2 extends DialogFragment {
             });
         } else {
 
-            dbHelper.insertQuesReplaceFeedback(replaceEventRequest1.changedPlan.get(0).plannerEventId,
+            DBHelper.getInstance().insertQuesReplaceFeedback(replaceEventRequest1.changedPlan.get(0).plannerEventId,
                     replaceEventRequest1.changedPlan.get(0).new_event.getPlanned_on(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getEvent_id(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_id(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_child_id());
+
+            CreateEventDialogue2.this.getDialog().dismiss();
+            context.homeFrag();
+
 
         }
 //        else {

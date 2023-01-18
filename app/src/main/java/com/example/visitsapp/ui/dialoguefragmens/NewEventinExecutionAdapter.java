@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.DBHelper;
 import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.Area;
@@ -57,6 +58,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class NewEventinExecutionAdapter extends DialogFragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
@@ -460,7 +462,6 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
                 || createPlanRequest.getEvent_id().equalsIgnoreCase("leave")){
             replaceEventAndPost(-1);
             context.homeFrag();
-            NewEventinExecutionAdapter.this.getDialog().dismiss();
         } else {
             getQuestionaire2();
         }
@@ -560,8 +561,8 @@ public class NewEventinExecutionAdapter extends DialogFragment implements DatePi
                 }
             });
         } else {
-            myDbAdapter dbHelper = new myDbAdapter(context);
-            dbHelper.insertCreateFeedback(replaceEventRequest1.changedPlan.get(0).new_event.getPlanned_on(),
+            int randomNum = ThreadLocalRandom.current().nextInt(123, 134756 + 1);
+            DBHelper.getInstance().insertCreateFeedback(randomNum,replaceEventRequest1.changedPlan.get(0).new_event.getPlanned_on(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getEvent_id(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_id(),
                     replaceEventRequest1.changedPlan.get(0).new_event.getPurpose_child_id());

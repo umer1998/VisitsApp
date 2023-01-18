@@ -1,5 +1,8 @@
 package com.example.visitsapp.ui.fragments.forms;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.example.visitsapp.R;
 import com.example.visitsapp.business.impl.Business;
+import com.example.visitsapp.db.DBHelper;
 import com.example.visitsapp.db.myDbAdapter;
 import com.example.visitsapp.delegate.ResponseCallBack;
 import com.example.visitsapp.model.configuration.FeedbackQuestionnaire;
@@ -26,6 +30,7 @@ import com.example.visitsapp.model.request.Multiinput;
 import com.example.visitsapp.model.request.QuesAnswer;
 import com.example.visitsapp.model.request.ReplaceEventRequest;
 import com.example.visitsapp.ui.MainActivity;
+import com.example.visitsapp.ui.dialoguefragmens.NewEventinExecutionAdapter;
 import com.example.visitsapp.ui.feedback.ReplaceEventMainAdapter;
 import com.example.visitsapp.ui.feedback.mainadapter;
 import com.example.visitsapp.ui.fragments.BaseFragment;
@@ -35,6 +40,7 @@ import com.example.visitsapp.utils.alert.AlertUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class DisbursementFrag extends BaseFragment {
@@ -131,7 +137,7 @@ public class DisbursementFrag extends BaseFragment {
         changedPlansList.add(changedPlan);
         request.changedPlan = changedPlansList;
 
-//        if(isNetworkAvailable()) {
+        if(isNetworkAvailable()) {
             final AlertDialog dialog = AlertUtils.showLoader(context);
             if (dialog != null) {
                 dialog.show();
@@ -161,16 +167,32 @@ public class DisbursementFrag extends BaseFragment {
 
                 }
             });
-//        } else {
-//            myDbAdapter dbHelper = new myDbAdapter(context);
-//            for(int i = 0; i< quesAnswers.size(); i++){
-//                dbHelper.insertQuestionaire(id, quesAnswers.get(i).getAnswer(), String.valueOf(quesAnswers.get(i).getId()));
-//            }
-//            dbHelper.insertCreateFeedback(createPlanRequest.getPlanned_on(),
-//                    createPlanRequest.getEvent_id(),
-//                    createPlanRequest.getPurpose_id(),
-//                    createPlanRequest.getPurpose_child_id());
-//        }
+        } else {
+            int randomNum = ThreadLocalRandom.current().nextInt(123, 134756 + 1);
+            DBHelper.getInstance().insertCreateFeedback(randomNum,request.changedPlan.get(0).new_event.getPlanned_on(),
+                    request.changedPlan.get(0).new_event.getEvent_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_child_id());
+
+            for(int i=0;i < request.changedPlan.get(0).feedbacks.get(0).questionaire.size(); i++){
+
+                DBHelper.getInstance().insertQuestionaire(randomNum,
+                        request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getAnswer(),
+                        String.valueOf(request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getId()));
+
+
+            }
+
+
+            for(int i=0;i< request.changedPlan.get(0).feedbacks.get(0).multiinput.size(); i++){
+                DBHelper.getInstance().insertMultinputQuestions(randomNum,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(i).id,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).name,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).designation);
+            }
+
+            context.homeFrag();
+        }
     }
 
     private void replaceEventAndPost(Multiinput multiinput) {
@@ -209,7 +231,7 @@ public class DisbursementFrag extends BaseFragment {
 
 //        request.changedPlan.add(changedPlan);
 
-//        if(isNetworkAvailable()){
+        if(isNetworkAvailable()){
         final AlertDialog dialog = AlertUtils.showLoader(context);
         if (dialog != null) {
             dialog.show();
@@ -239,8 +261,39 @@ public class DisbursementFrag extends BaseFragment {
 
             }
         });
-//        }
-//        else {
+        }
+        else {
+            DBHelper.getInstance().insertQuesReplaceFeedback(request.changedPlan.get(0).plannerEventId,
+                    request.changedPlan.get(0).new_event.getPlanned_on(),
+                    request.changedPlan.get(0).new_event.getEvent_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_id(),
+                    request.changedPlan.get(0).new_event.getPurpose_child_id());
+
+
+            for(int i=0;i < request.changedPlan.get(0).feedbacks.get(0).questionaire.size(); i++){
+
+                DBHelper.getInstance().insertQuestionaire(request.changedPlan.get(0).plannerEventId,
+                        request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getAnswer(),
+                        String.valueOf(request.changedPlan.get(0).feedbacks.get(0).questionaire.get(i).getId()));
+
+
+            }
+
+
+            for(int i=0;i< request.changedPlan.get(0).feedbacks.get(0).multiinput.size(); i++){
+                DBHelper.getInstance().insertMultinputQuestions(request.changedPlan.get(0).plannerEventId,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(i).id,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).name,
+                        request.changedPlan.get(0).feedbacks.get(0).multiinput.get(0).questions.get(i).designation);
+            }
+
+            context.homeFrag();
+        }
+
+
+
+
+
 //            ReplaceEventRequest replaceEventRequest = new ReplaceEventRequest();
 //            if(SharedPrefrences.getInstance().getReplaceEventFeedBack() != null &&
 //                    SharedPrefrences.getInstance().getReplaceEventFeedBack().changedPlan.size() > 0){
@@ -280,6 +333,13 @@ public class DisbursementFrag extends BaseFragment {
 //        }
 
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,14 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(body.get(position).event.equalsIgnoreCase("leave")
+                || body.get(position).event.equalsIgnoreCase("Office work")){
+            holder.linearLayout.setVisibility(View.GONE);
+        } else {
+            holder.linearLayout.setVisibility(View.VISIBLE);
+
+        }
+
         try {
             holder.tvTime.setText(new SimpleDateFormat("HH:mm a").
                     format(new SimpleDateFormat("hh:mm:ss").
@@ -58,6 +67,7 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        holder.tvDate.setText(body.get(position).planned_on);
 
         holder.tvchild.setText(body.get(position).purpose_child);
         holder.tvPurpose.setText(body.get(position).event_purpose);
@@ -81,8 +91,9 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
+        private LinearLayout linearLayout;
         RelativeLayout card;
-        private TextView tvEvent, tvPurpose, tvTime, tvchild;
+        private TextView tvEvent, tvPurpose, tvTime, tvchild, tvDate;
 
         ViewHolder(View view) {
             super(view);
@@ -91,8 +102,9 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
             tvEvent = view.findViewById(R.id.eventType);
             tvPurpose = view.findViewById(R.id.eventPurpose);
             tvTime = view.findViewById(R.id.time);
-
+            linearLayout = view.findViewById(R.id.lllocation);
             tvchild = view.findViewById(R.id.child);
+            tvDate = view.findViewById(R.id.date);
 
         }
     }
