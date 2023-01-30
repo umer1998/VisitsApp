@@ -38,7 +38,7 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
     @Override
     public int getItemViewType(int position) {
 
-        return R.layout.execution_adapter;
+        return R.layout.event_execution_adapter;
 
     }
 
@@ -69,6 +69,13 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
         }
         holder.tvDate.setText(body.get(position).planned_on);
 
+        holder.rlhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.getHistoryEvent(body.get(position).purpose_child);
+            }
+        });
+
         holder.tvchild.setText(body.get(position).purpose_child);
         holder.tvPurpose.setText(body.get(position).event_purpose);
         holder.tvEvent.setText(body.get(position).event);
@@ -92,7 +99,7 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
 
 
         private LinearLayout linearLayout;
-        RelativeLayout card;
+        RelativeLayout card, rlhistory;
         private TextView tvEvent, tvPurpose, tvTime, tvchild, tvDate;
 
         ViewHolder(View view) {
@@ -105,6 +112,8 @@ public class ExecutionAdapter extends RecyclerView.Adapter<ExecutionAdapter.View
             linearLayout = view.findViewById(R.id.lllocation);
             tvchild = view.findViewById(R.id.child);
             tvDate = view.findViewById(R.id.date);
+
+            rlhistory = view.findViewById(R.id.history);
 
         }
     }

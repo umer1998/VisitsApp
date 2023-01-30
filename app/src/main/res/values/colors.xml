@@ -179,6 +179,10 @@
     <color name="bg_color">#6155f4</color>
     <color name="pink_bg">#f2b578</color>
 
+    <color name="orange_round">#FF9C48</color>
+
+    <color name="orange_transparent">#FEEAD7</color>
+
     <color name="sunday_bg">#F0F2D6</color>
 
     <color name="grey_bg">#EEEEEE</color>

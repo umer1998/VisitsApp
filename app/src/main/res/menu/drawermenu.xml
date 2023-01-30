@@ -27,6 +27,10 @@
             android:icon="@drawable/leave_d"
             android:title="Leaves"/>
 
+        <item android:id="@+id/myteam"
+            android:icon="@drawable/home_d"
+            android:title="My Team"/>
+
         <item android:id="@+id/unapprove"
             android:icon="@drawable/unapprove_d"
             android:title="Unapproved Events"/>

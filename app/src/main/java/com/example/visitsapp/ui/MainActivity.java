@@ -39,12 +39,15 @@ import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.GetReportingTeamResponce;
 import com.example.visitsapp.model.responce.LoginResponce;
 import com.example.visitsapp.ui.activities.Login;
+import com.example.visitsapp.ui.adapter.HistoryAdapter;
 import com.example.visitsapp.ui.dialoguefragmens.CreatePlanDialogue;
 import com.example.visitsapp.ui.fragments.approvefrag.ApprovalListingFrag;
 import com.example.visitsapp.ui.fragments.BaseFragment;
 import com.example.visitsapp.ui.fragments.approvefrag.ApprovalPendigEvents;
 import com.example.visitsapp.ui.fragments.forms.DisbursementFrag;
 import com.example.visitsapp.ui.fragments.forms.LACFeedbackForm;
+import com.example.visitsapp.ui.fragments.myteam.MyTeamFragment;
+import com.example.visitsapp.ui.fragments.myteam.TeamMemberAllEvent;
 import com.example.visitsapp.ui.fragments.pending.CalenderViewFrag;
 import com.example.visitsapp.ui.fragments.drawerfrag.UnApprovedEvent;
 import com.example.visitsapp.ui.fragments.drawerfrag.UnExecutedEvent;
@@ -57,6 +60,8 @@ import com.example.visitsapp.ui.fragments.executedevent.ExecutedEventsFragment;
 import com.example.visitsapp.ui.fragments.executedevent.ExecutionCompletedEvents;
 import com.example.visitsapp.ui.fragments.leaves.LeavesFrag;
 import com.example.visitsapp.ui.fragments.rejected.RejectedEvents;
+import com.example.visitsapp.ui.fragments.viewhistory.FeedbackEventResponce;
+import com.example.visitsapp.ui.fragments.viewhistory.ViewHistoryFragment;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -202,6 +207,13 @@ public class MainActivity extends AppCompatActivity {
                         llcplan.setVisibility(View.VISIBLE);
                         break;
 
+                    case R.id.myteam:
+                        drawer.closeDrawer(Gravity.LEFT);
+                        myTeam();
+                        bottomNavigationView.setVisibility(View.GONE);
+                        llcplan.setVisibility(View.GONE);
+                        break;
+
                     case R.id.rejected:
                         drawer.closeDrawer(Gravity.LEFT);
                         rejectedEvent();
@@ -253,6 +265,19 @@ public class MainActivity extends AppCompatActivity {
         if (!(fragment instanceof LeavesFrag)) {
 
             LeavesFrag recfrag = new LeavesFrag(this, pendingLeaves, approveLeaves);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
+    public void myTeam() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof MyTeamFragment)) {
+
+            MyTeamFragment recfrag = new MyTeamFragment(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")
@@ -316,6 +341,36 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    public void getHistoryEvent(String location) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof ViewHistoryFragment)) {
+
+
+            ViewHistoryFragment recfrag = new ViewHistoryFragment(this, location);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
+
+    public void getFeedbackResponce(String id) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof FeedbackEventResponce)) {
+
+
+            FeedbackEventResponce recfrag = new FeedbackEventResponce(this, id);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
 
     public void getExecutedEvent() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
@@ -397,6 +452,19 @@ public class MainActivity extends AppCompatActivity {
         if (!(fragment instanceof CalenderViewFrag)) {
 
             CalenderViewFrag recfrag = new CalenderViewFrag(this, llcplan, bottomNavigationView);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, recfrag)
+                    .addToBackStack("")
+                    .commit();
+        }
+    }
+
+    public void teamMemberAllEvent(String id) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
+        if (!(fragment instanceof TeamMemberAllEvent)) {
+
+            TeamMemberAllEvent recfrag = new TeamMemberAllEvent(this, id, llcplan, bottomNavigationView);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, recfrag)
                     .addToBackStack("")

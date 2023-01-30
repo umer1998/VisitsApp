@@ -14,6 +14,7 @@ import com.example.visitsapp.model.responce.ApproveEventRequest;
 import com.example.visitsapp.model.responce.ApproveEventResponce;
 import com.example.visitsapp.model.responce.CreatePlanResponce;
 import com.example.visitsapp.model.responce.DashboardResponce;
+import com.example.visitsapp.model.responce.FeedbackResponce;
 import com.example.visitsapp.model.responce.ForgotPasswordResponce;
 import com.example.visitsapp.model.responce.GetLeavesResponce;
 import com.example.visitsapp.model.responce.GetPendingApproval;
@@ -21,6 +22,7 @@ import com.example.visitsapp.model.responce.GetReportingTeamResponce;
 import com.example.visitsapp.model.responce.LoginResponce;
 import com.example.visitsapp.model.responce.PlannerResponse;
 import com.example.visitsapp.model.responce.PlansData;
+import com.example.visitsapp.model.responce.ReportingTeam;
 import com.example.visitsapp.model.responce.UpdateEventResponce;
 import com.example.visitsapp.utils.AppConstantsUtils;
 
@@ -56,6 +58,10 @@ public interface BusinessService {
 
     @GET(AppConstantsUtils.DAY_PLANNER)
     Call<ResponceObject<List<PlansData>>> dayPlanner();
+
+
+    @GET(AppConstantsUtils.DAY_PLANNER)
+    Call<ResponceObject<List<PlansData>>> dayPlanner(@Query("user_id") String user_id);
 
     @GET(AppConstantsUtils.GET_REPORTING_TEAM)
     Call<ResponceObject<ArrayList<GetReportingTeamResponce>>> getReportingTeam();
@@ -104,6 +110,18 @@ public interface BusinessService {
 
     @GET(AppConstantsUtils.GET_PENDING_EVENTS_APPROVAL)
     Call<ResponceObject<ArrayList<PlansData>>> getPendingApproval();
+
+    @GET(AppConstantsUtils.HISTORY_EVENTS)
+    Call<ResponceObject<ArrayList<PlansData>>> getHistoryEvents(@Query("location") String location);
+
+
+    @GET(AppConstantsUtils.GET_FEEDBACK_HISTORY)
+    Call<ResponceObject<FeedbackResponce>> getFeedbackHistory(@Query("id") String id);
+
+
+    @GET(AppConstantsUtils.REPORTING_TEAM)
+    Call<ResponceObject<ArrayList<ReportingTeam>>> reportingTeam(@Query("date") String date);
+
 
 
 }

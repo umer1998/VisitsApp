@@ -1,4 +1,4 @@
-package com.example.visitsapp.ui.adapter;
+package com.example.visitsapp.ui.fragments.viewhistory;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -11,27 +11,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.visitsapp.R;
+import com.example.visitsapp.model.responce.PlansData;
 import com.example.visitsapp.model.responce.TodayPlans;
 import com.example.visitsapp.ui.MainActivity;
 import com.example.visitsapp.utils.OnItemClickListener;
-import com.repsly.library.timelineview.LineType;
-import com.repsly.library.timelineview.TimelineView;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.ViewHolder> {
+public class HistoryEventAdapter extends RecyclerView.Adapter<HistoryEventAdapter.ViewHolder> {
 
     private MainActivity context;
-    private ArrayList<TodayPlans> plans;
+    private ArrayList<PlansData> plans;
     private OnItemClickListener mItemClickListener;
 
-    public TodaysPlanAdapter(MainActivity context, ArrayList<TodayPlans> plans) {
+    public HistoryEventAdapter(MainActivity context, ArrayList<PlansData> plans) {
         this.context = context;
         this.plans = plans;
     }
@@ -39,49 +35,52 @@ public class TodaysPlanAdapter extends RecyclerView.Adapter<TodaysPlanAdapter.Vi
     @Override
     public int getItemViewType(int position) {
 
-        return R.layout.todays_plan_layout;
+        return R.layout.history_event_adapter;
 
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoryEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new ViewHolder(v);
+        return new HistoryEventAdapter.ViewHolder(v);
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(HistoryEventAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        if(plans.get(position).event.equalsIgnoreCase("Office Work") ||
-                plans.get(position).event.equalsIgnoreCase("Leave")){
-            holder.llLocation.setVisibility(View.GONE);
-        } else {
-            holder.llLocation.setVisibility(View.VISIBLE);
-        }
+        {
 
-
-        try {
-            holder.tvTime.setText(new SimpleDateFormat("HH:mm").
-                    format(new SimpleDateFormat("hh:mm:ss").
-                            parse(plans.get(position).time)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mItemClickListener.onItemClick(view, position);
+            if (plans.get(position).event.equalsIgnoreCase("Office Work") ||
+                    plans.get(position).event.equalsIgnoreCase("Leave")) {
+                holder.llLocation.setVisibility(View.GONE);
+            } else {
+                holder.llLocation.setVisibility(View.VISIBLE);
             }
-        });
+
+
+            try {
+                holder.tvTime.setText(new SimpleDateFormat("HH:mm").
+                        format(new SimpleDateFormat("hh:mm:ss").
+                                parse(plans.get(position).time)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mItemClickListener.onItemClick(view, position);
+                }
+            });
 //        holder.tvTime.setText(plans.get(position).planned_on);
 
-        holder.tvPurpose.setText(plans.get(position).event_purpose);
-        holder.tvEvent.setText(plans.get(position).event);
-        holder.tvpurpose.setText(plans.get(position).purposechild);
+            holder.tvPurpose.setText(plans.get(position).event_purpose);
+            holder.tvEvent.setText(plans.get(position).event);
+            holder.tvpurpose.setText(plans.get(position).purpose_child);
+        }
 
-    }
+        }
 
     @Override
     public int getItemCount() {

@@ -28,8 +28,13 @@ public class AppConstantsUtils {
     public static final String GET_PENDING_APPROVAL = "getPendingApproval";
     public static final String GET_PENDING_EVENTS_APPROVAL = "getPendingEventsApproval";
 
+    public static final String HISTORY_EVENTS = "getArchiveEvents";
+
+    public static final String GET_FEEDBACK_HISTORY = "getArchiveForms";
 
     public static final String CREATE_EVENT_FEEDBACK = "createEventFeedback";
+
+    public static final String REPORTING_TEAM = "getCooridinateEvents";
 
 
 

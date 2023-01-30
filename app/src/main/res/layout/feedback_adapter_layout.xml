@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_width="match_parent"
+        android:background="@drawable/radio_group_bg"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:fontFamily="@font/urdu"
+            android:gravity="right"
+            android:paddingTop="3dp"
+            android:paddingStart="3dp"
+            android:paddingBottom="9dp"
+            android:text="مینول ریڈنگ"
+            android:textColor="@color/Black"
+            android:textDirection="anyRtl"
+            android:textSize="@dimen/dp_18"
+            android:textStyle="bold" />
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlmain"
+        android:background="@drawable/radio_buttons_bg"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_gravity="end"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="-23dp">
+
+
+            <RelativeLayout
+                android:layout_width="119.98dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/tvyes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ہاں"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/urdu"
+                        android:textColor="@color/Black"
+                        android:textSize="16sp"
+                        android:gravity="right"
+                        android:textDirection="anyRtl"/>
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/yes"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@drawable/select"/>
+
+
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

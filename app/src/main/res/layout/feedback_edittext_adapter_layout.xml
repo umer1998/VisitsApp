@@ -32,6 +32,8 @@
 
         <EditText
             android:clickable="false"
+            android:focusable="false"
+            android:editable="false"
             android:id="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

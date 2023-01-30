@@ -61,6 +61,7 @@ public class mainadapter extends RecyclerView.Adapter<mainadapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     if(answersmap.size() == feedbackQuestionnaires.size()-1
+                            || answersmap.size()+1 == feedbackQuestionnaires.size()
                             || answersmap.size()== feedbackQuestionnaires.size()){
                         onRadioButtonClickListener.onMapListener(answersmap, multiinput);
                     } else {

@@ -70,12 +70,12 @@ public class UnexecutedEventAdapter extends RecyclerView.Adapter<UnexecutedEvent
         holder.tvEvent.setText(body.get(position).event);
         holder.tvpurposechild.setText(body.get(position).purpose_child);
         holder.tvdate.setText(body.get(position).planned_on);
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
-            }
-        });
+//        holder.card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
+//            }
+//        });
 
     }
 

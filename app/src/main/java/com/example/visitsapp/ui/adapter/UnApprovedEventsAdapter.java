@@ -68,12 +68,12 @@ public class UnApprovedEventsAdapter extends RecyclerView.Adapter<UnApprovedEven
         holder.tvPurposeChild.setText(body.get(position).purpose_child);
         holder.tvPurpose.setText(body.get(position).event_purpose);
         holder.tvEvent.setText(body.get(position).event);
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
-            }
-        });
+//        holder.card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                mItemClickListener.onItemClick(view, holder.getAdapterPosition());
+//            }
+//        });
 
     }
 

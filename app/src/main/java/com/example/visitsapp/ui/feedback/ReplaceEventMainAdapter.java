@@ -63,6 +63,7 @@ public class ReplaceEventMainAdapter extends RecyclerView.Adapter<ReplaceEventMa
                 @Override
                 public void onClick(View view) {
                     if(answersmap.size() == feedbackQuestionnaires.size()-1
+                            || answersmap.size()+1 == feedbackQuestionnaires.size()
                     || answersmap.size()== feedbackQuestionnaires.size()){
 
                         onRadioButtonClickListener.onMapListener(answersmap, multiinput);
