@@ -108,6 +108,7 @@ public class ViewHistoryFragment extends BaseFragment {
 
     @Override
     public boolean onBackPressed() {
+        context.getExecutedEvent();
         return false;
     }
 }

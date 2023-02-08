@@ -112,6 +112,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
         });
 
 
+
         eventSpinner = view.findViewById(R.id.eventspinner);
         eventPurpose = view.findViewById(R.id.eventPurpose);
         locationSpinner = view.findViewById(R.id.locationSpinner);
@@ -121,12 +122,19 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
 
         setEventSpinner(configurationResponse.events);
 
+        Calendar c= Calendar.getInstance();
+        c.add(Calendar.DATE, 30);
+
         tvDate = view.findViewById(R.id.date);
         llDateTime.setOnClickListener(new View.OnClickListener() {
 
             Long time = new Date().getTime();
             Date date = new Date(time - time % (24 * 60 * 60 * 1000));
-            Date datee = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+            Date datee = new Date(date.getTime() + (24 * 60 * 60 * 1000));
+
+//           Date maxDate = new Date(date.getTime() + 2592000000);
+            Date maxDate = c.getTime();
+
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
@@ -135,6 +143,7 @@ public class CreatePlanDialogue extends DialogFragment implements DatePickerDial
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(context, CreatePlanDialogue.this,year, month,day+1);
                 datePickerDialog.getDatePicker().setMinDate(datee.getTime());
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTime());
                 datePickerDialog.show();
             }
         });

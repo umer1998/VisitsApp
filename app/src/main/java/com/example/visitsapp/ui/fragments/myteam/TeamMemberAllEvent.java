@@ -252,7 +252,7 @@ public class TeamMemberAllEvent extends BaseFragment {
     }
     @Override
     public boolean onBackPressed() {
-
-        return true;
+        context.myTeam();
+        return false;
     }
 }

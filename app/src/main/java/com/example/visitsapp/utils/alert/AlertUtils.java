@@ -19,36 +19,73 @@ public class AlertUtils {
 
     public static void showAlert(final Context context, String message) {
 
+        if(message.contains("caused connection abort") ||
+                message.contains("Connection refused") ||
+                message.contains("Failed to connect to") ){
 
-        try {
-            LayoutInflater li = LayoutInflater.from(context);
-            View view = li.inflate(R.layout.dialog_title_text_layout, null);
+            try {
+                LayoutInflater li = LayoutInflater.from(context);
+                View view = li.inflate(R.layout.dialog_title_text_layout, null);
 
-            TextView textView = view.findViewById(R.id.tv_dialog_title);
-            textView.setText("Alert!");
-            TextView tvMessage = view.findViewById(R.id.tv_message);
-            tvMessage.setText(message);
+                TextView textView = view.findViewById(R.id.tv_dialog_title);
+                textView.setText("Alert!");
+                TextView tvMessage = view.findViewById(R.id.tv_message);
+                tvMessage.setText("Internet connection failed !");
 
-            AlertDialog dialog = new AlertDialog.Builder(context, R.style.MyDialogTheme)
-                    .setCustomTitle(view)
-                    //  .setIcon(R.mipmap.ic_launcher)
-                    //.setMessage(message)
-                    .setCancelable(false)
-                    //.setPositiveButton("Ok", null)
-                    .show();
+                AlertDialog dialog = new AlertDialog.Builder(context, R.style.MyDialogTheme)
+                        .setCustomTitle(view)
+                        //  .setIcon(R.mipmap.ic_launcher)
+                        //.setMessage(message)
+                        .setCancelable(false)
+                        //.setPositiveButton("Ok", null)
+                        .show();
 
-            Button button = view.findViewById(R.id.btn_ok);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                Button button = view.findViewById(R.id.btn_ok);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                    dialog.dismiss();
-                }
-            });
+                        dialog.dismiss();
+                    }
+                });
 
-        } catch (WindowManager.BadTokenException e) {
-            Log.e("ahmad", e.getMessage());
+            } catch (WindowManager.BadTokenException e) {
+                Log.e("ahmad", e.getMessage());
+            }
+
+        } else {
+            try {
+                LayoutInflater li = LayoutInflater.from(context);
+                View view = li.inflate(R.layout.dialog_title_text_layout, null);
+
+                TextView textView = view.findViewById(R.id.tv_dialog_title);
+                textView.setText("Alert!");
+                TextView tvMessage = view.findViewById(R.id.tv_message);
+                tvMessage.setText(message);
+
+                AlertDialog dialog = new AlertDialog.Builder(context, R.style.MyDialogTheme)
+                        .setCustomTitle(view)
+                        //  .setIcon(R.mipmap.ic_launcher)
+                        //.setMessage(message)
+                        .setCancelable(false)
+                        //.setPositiveButton("Ok", null)
+                        .show();
+
+                Button button = view.findViewById(R.id.btn_ok);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+            } catch (WindowManager.BadTokenException e) {
+                Log.e("ahmad", e.getMessage());
+            }
         }
+
+
 
 
     }

@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
     private RelativeLayout rlLogin;
     private EditText edPassword, edEmail;
     private TextView tvForgotPass;
-    private LinearLayout llpass, llpassword;
+    private LinearLayout  llpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +40,12 @@ public class Login extends AppCompatActivity {
         edPassword = findViewById(R.id.password);
 
         llpassword = findViewById(R.id.passll);
-        llpass = findViewById(R.id.pass);
-        llpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                llpassword.setVisibility(View.VISIBLE);
-                llpass.setVisibility(View.GONE);
-            }
-        });
+
 
         tvForgotPass = findViewById(R.id.forgot);
         tvForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPrefrences.getInstance().setIsLogin(true);
                 Intent intent = new Intent(Login.this, ForgotPassword.class);
                 startActivity(intent);
                 finish();

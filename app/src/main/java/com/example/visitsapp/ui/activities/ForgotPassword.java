@@ -21,6 +21,7 @@ import com.example.visitsapp.ui.MainActivity;
 import com.example.visitsapp.utils.SharedPrefrences;
 import com.example.visitsapp.utils.alert.AlertUtils;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,7 @@ public class ForgotPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+        edEmail = findViewById(R.id.email);
 
         getOTP = findViewById(R.id.getotp);
         getOTP.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +51,9 @@ public class ForgotPassword extends AppCompatActivity {
         tvGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPrefrences.getInstance().setIsLogin(true);
                 Intent intent = new Intent(ForgotPassword.this, Login.class);
                 startActivity(intent);
-                finish();
+
             }
         });
     }
@@ -79,14 +80,13 @@ public class ForgotPassword extends AppCompatActivity {
 
 
         Business serviceImp = new Business() ;
-        serviceImp.forgotPassword(loginRequest, new ResponseCallBack<ForgotPasswordResponce>() {
+        serviceImp.forgotPassword(loginRequest, new ResponseCallBack<ArrayList<ForgotPasswordResponce>>() {
             @Override
-            public void onSuccess(ForgotPasswordResponce body) {
+            public void onSuccess(ArrayList<ForgotPasswordResponce> body) {
 
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                SharedPrefrences.getInstance().setIsLogin(true);
                 Intent intent = new Intent(ForgotPassword.this, Login.class);
                 startActivity(intent);
                 finish();

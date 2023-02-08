@@ -84,16 +84,16 @@ public class Business {
 
 
     public void forgotPassword(final ForgotPasswordRequest requestInfo,
-                      final ResponseCallBack<ForgotPasswordResponce> responseCallBack) {
+                      final ResponseCallBack<ArrayList<ForgotPasswordResponce>> responseCallBack) {
 
         String json = new Gson().toJson(requestInfo);
         Log.d("myTag", json);
-        Call<ResponceObject<ForgotPasswordResponce>> call = businessService.forgotPassword(requestInfo);
+        Call<ResponceObject<ArrayList<ForgotPasswordResponce>>> call = businessService.forgotPassword(requestInfo);
 
-        call.enqueue(new Callback<ResponceObject<ForgotPasswordResponce>>() {
+        call.enqueue(new Callback<ResponceObject<ArrayList<ForgotPasswordResponce>>>() {
             @Override
-            public void onResponse(Call<ResponceObject<ForgotPasswordResponce>> call,
-                                   Response<ResponceObject<ForgotPasswordResponce>> response) {
+            public void onResponse(Call<ResponceObject<ArrayList<ForgotPasswordResponce>>> call,
+                                   Response<ResponceObject<ArrayList<ForgotPasswordResponce>>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null
                             && response.body().getResponsecode() == 200) {
@@ -107,7 +107,7 @@ public class Business {
                 }
             }
             @Override
-            public void onFailure(Call<ResponceObject<ForgotPasswordResponce>> call, Throwable t) {
+            public void onFailure(Call<ResponceObject<ArrayList<ForgotPasswordResponce>>> call, Throwable t) {
                 responseCallBack.onFailure(t.getMessage());
             }
         });

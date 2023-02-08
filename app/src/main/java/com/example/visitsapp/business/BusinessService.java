@@ -42,7 +42,7 @@ public interface BusinessService {
     Call<ResponceObject<LoginResponce>> login(@Body LoginRequest loginRequestInfo);
 
     @POST(AppConstantsUtils.FORGOT_PASSWORD)
-    Call<ResponceObject<ForgotPasswordResponce>> forgotPassword(@Body ForgotPasswordRequest forgotPasswordRequest);
+    Call<ResponceObject<ArrayList<ForgotPasswordResponce>>> forgotPassword(@Body ForgotPasswordRequest forgotPasswordRequest);
 
     @GET(AppConstantsUtils.DASHBOARD)
     Call<ResponceObject<DashboardResponce>> getDashboard();

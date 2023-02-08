@@ -16,6 +16,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        LoginResponce responce = SharedPrefrences.getInstance().getloginResponse();
 
         llcplan = findViewById(R.id.cplan);
 
@@ -154,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
+        Menu nav_Menu = navigationView.getMenu();
+        if(responce.designation.equalsIgnoreCase("Am")){
+            nav_Menu.findItem(R.id.myteam).setVisible(false);
+        } else {
+            nav_Menu.findItem(R.id.myteam).setVisible(true);
+        }
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -466,7 +475,7 @@ public class MainActivity extends AppCompatActivity {
 
             TeamMemberAllEvent recfrag = new TeamMemberAllEvent(this, id, llcplan, bottomNavigationView);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_container, recfrag)
+                    .add(R.id.main_container, recfrag)
                     .addToBackStack("")
                     .commit();
         }
@@ -538,6 +547,14 @@ public class MainActivity extends AppCompatActivity {
         } else if(fragment instanceof ApprovalListingFrag){
             bottomNavigationView.setVisibility(View.GONE);
             llcplan.setVisibility(View.GONE);
+        }
+
+        if(fragment instanceof ViewHistoryFragment){
+            executionFrag();
+        }
+
+        if(fragment instanceof TeamMemberAllEvent){
+            myTeam();
         }
 
 
