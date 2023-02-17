@@ -50,6 +50,7 @@ tools:context=".ui.fragments.viewhistory.ViewHistoryFragment">
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/cplan"
         android:layout_width="50dp"
         android:layout_height="50dp"

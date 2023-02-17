@@ -413,12 +413,12 @@
 
 
                 <TextView
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/i3"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/i3"
                     android:fontFamily="@font/regular"
                     android:text="Visits Not Executed"
                     android:textColor="@color/textcolor"
